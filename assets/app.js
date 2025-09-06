@@ -26,7 +26,6 @@
     // Cart sidebar elements (always visible in store)
     cartSidebarItems: document.getElementById('cart-sidebar-items'),
     cartSidebarTotal: document.getElementById('cart-sidebar-total'),
-    cartSidebarShipping: document.getElementById('cart-sidebar-shipping'),
     cartBadgeDesktop: document.getElementById('cart-badge-desktop'),
 
     // Admin
@@ -71,6 +70,7 @@
     activeCategory: '',
     searchQuery: '',
     aiSearch: null,
+    cacheManager: null,
   }
   state.lang = loadJSON(STORAGE_KEYS.lang, 'es')
   // Override language from URL param if provided (?lang=es|en)
@@ -238,8 +238,8 @@
   }
 
   function updateCartSidebarTotal(){
-    if(!els.cartSidebarTotal || !els.cartSidebarShipping) return
-    const shipType = els.cartSidebarShipping.value || 'sea'
+    if(!els.cartSidebarTotal) return
+    const shipType = document.getElementById('shippingType')?.value || 'sea'
     const base = cartTotal()
     const total = shipType === 'air' ? base * 1.10 : base
     els.cartSidebarTotal.textContent = fmtCurrency(total)
@@ -411,23 +411,78 @@
     return path.split('.').reduce((o,k)=> (o && o[k] != null ? o[k] : undefined), obj)
   }
 
-  // Data loading
+  // Data loading with cache management
   async function loadData(){
-    const [prodRes, catRes, featRes, configRes] = await Promise.all([
-      fetch('./products.json'), 
-      fetch('./categories.json'),
-      fetch('./destacados.json').catch(() => ({ featured: [] })),
-      fetch('./config.json').catch(() => ({}))
-    ])
-    state.products = await prodRes.json()
-    state.categories = await catRes.json()
-    state.featured = (await featRes.json()).featured || []
-    state.config = await configRes.json()
-    
-    // Initialize AI search if available
-    if (window.AISearch && state.config.ai) {
-      state.aiSearch = new window.AISearch(state.config.ai.gemini)
-      state.aiSearch.setProducts(state.products)
+    try {
+      // Initialize cache manager
+      if (window.CacheManager) {
+        state.cacheManager = new window.CacheManager({
+          cacheVersion: '2.0',
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+          compressionEnabled: true,
+          lazyLoadEnabled: true
+        })
+        await state.cacheManager.init()
+      }
+
+      // Load products with caching
+      let products = []
+      if (state.cacheManager) {
+        try {
+          products = await state.cacheManager.loadProducts()
+        } catch (error) {
+          console.warn('Cache failed, loading from network:', error)
+          const prodRes = await fetch('./products.json')
+          products = await prodRes.json()
+        }
+      } else {
+        const prodRes = await fetch('./products.json')
+        products = await prodRes.json()
+      }
+
+      // Load other data normally (smaller files)
+      const [catRes, featRes, configRes] = await Promise.all([
+        fetch('./categories.json'),
+        fetch('./destacados.json').catch(() => ({ featured: [] })),
+        fetch('./config.json').catch(() => ({}))
+      ])
+
+      state.products = products
+      state.categories = await catRes.json()
+      state.featured = (await featRes.json()).featured || []
+      state.config = await configRes.json()
+      
+      // Initialize AI search if available
+      if (window.AISearch && state.config.ai) {
+        state.aiSearch = new window.AISearch(state.config.ai.gemini)
+        state.aiSearch.setProducts(state.products)
+      }
+
+      // Log cache statistics
+      if (state.cacheManager) {
+        const stats = state.cacheManager.getCacheStats()
+        if (stats) {
+          console.log('Cache Stats:', {
+            entries: stats.entries,
+            sizeKB: stats.totalSizeKB,
+            version: stats.version
+          })
+        }
+      }
+
+    } catch (error) {
+      console.error('Data loading failed:', error)
+      // Fallback to basic loading
+      const [prodRes, catRes, featRes, configRes] = await Promise.all([
+        fetch('./products.json'), 
+        fetch('./categories.json'),
+        fetch('./destacados.json').catch(() => ({ featured: [] })),
+        fetch('./config.json').catch(() => ({}))
+      ])
+      state.products = await prodRes.json()
+      state.categories = await catRes.json()
+      state.featured = (await featRes.json()).featured || []
+      state.config = await configRes.json()
     }
   }
 
@@ -455,8 +510,8 @@
     }, 700)
   }
 
-  // Routing
-  function setActiveRoute(name, fromCartClick = false){
+  // Modern routing without hash
+  function setActiveRoute(name, fromCartClick = false, updateHistory = true){
     // Close any open modals when changing routes
     closeAllModals()
     
@@ -468,6 +523,16 @@
       if(a) a.classList.toggle('text-brand-700', r===name)
     })
     window.scrollTo({top:0, behavior:'smooth'})
+    
+    // Update browser history and URL
+    if(updateHistory) {
+      const url = name === 'home' ? '/' : `/${name}`
+      const currentUrl = location.pathname
+      if(currentUrl !== url) {
+        history.pushState({ route: name }, '', url)
+      }
+    }
+    
     // Update SEO for route change
     try { updateSEO(name) } catch(e) {}
 
@@ -485,16 +550,45 @@
         setTimeout(animateCartSidebar, 200)
       }
     }
+    if(name === 'home'){
+      renderFeaturedProducts()
+    }
     if(name === 'admin'){
       updateAdminUI()
       renderAdminRows()
     }
   }
+
+  function handleRouteChange(){
+    const path = location.pathname
+    let route = 'home'
+    
+    if(path === '/' || path === '/home') {
+      route = 'home'
+    } else if(path.startsWith('/')) {
+      const pathRoute = path.substring(1).split('/')[0]
+      if(routes.includes(pathRoute)) {
+        route = pathRoute
+      }
+    }
+    
+    setActiveRoute(route, false, false)
+  }
+
+  // Legacy hash support for backward compatibility
   function handleHashChange(){
-    const hash = location.hash || '#/home'
-    const route = hash.replace('#/','')
-    if(!routes.includes(route)) return setActiveRoute('home')
-    setActiveRoute(route)
+    const hash = location.hash
+    if(hash && hash.startsWith('#/')) {
+      const route = hash.replace('#/','')
+      if(routes.includes(route)) {
+        // Redirect hash to clean URL
+        const url = route === 'home' ? '/' : `/${route}`
+        history.replaceState({ route }, '', url)
+        setActiveRoute(route, false, false)
+        return
+      }
+    }
+    handleRouteChange()
   }
 
   // Store rendering
@@ -735,6 +829,16 @@
     const isAuthed = !!state.admin
     els.adminLogin.classList.toggle('hidden', isAuthed)
     els.adminDashboard.classList.toggle('hidden', !isAuthed)
+    
+    // Hide/show admin menu links
+    const adminLinks = document.querySelectorAll('[data-nav="admin"]')
+    adminLinks.forEach(link => {
+      if (isAuthed) {
+        link.classList.remove('hidden')
+      } else {
+        link.classList.add('hidden')
+      }
+    })
   }
 
   els.adminLoginForm?.addEventListener('submit', (e)=>{
@@ -834,8 +938,8 @@
   els.langES?.addEventListener('click', ()=> setLang('es'))
   els.langEN?.addEventListener('click', ()=> setLang('en'))
 
-  // Cart sidebar shipping change listener
-  els.cartSidebarShipping?.addEventListener('change', updateCartSidebarTotal)
+  // Cart sidebar shipping change listener - now handled by shippingType
+  document.getElementById('shippingType')?.addEventListener('change', updateCartSidebarTotal)
 
   // Mobile cart modal functionality
   function openMobileCartModal() {
@@ -1384,14 +1488,119 @@
     return b
   }
 
+  // Featured products rendering
+  function renderFeaturedProducts() {
+    const grid = document.getElementById('featured-products-grid')
+    if (!grid) return
+    
+    grid.innerHTML = ''
+    
+    // Get featured products from state
+    const featuredProducts = state.featured
+      .map(id => state.products.find(p => p.id === id))
+      .filter(p => p) // Remove any undefined products
+      .slice(0, 6) // Limit to 6 products
+    
+    if (featuredProducts.length === 0) {
+      // Fallback to first 6 products if no featured products found
+      const fallbackProducts = state.products.slice(0, 6)
+      fallbackProducts.forEach(product => {
+        const card = createFeaturedProductCard(product)
+        grid.appendChild(card)
+      })
+      return
+    }
+    
+    // Render featured products
+    featuredProducts.forEach(product => {
+      const card = createFeaturedProductCard(product)
+      grid.appendChild(card)
+    })
+  }
+
+  function createFeaturedProductCard(product) {
+    const card = document.createElement('div')
+    card.className = 'group border rounded-lg p-4 bg-white hover:shadow transition-shadow cursor-pointer'
+    
+    card.innerHTML = `
+      <div class="aspect-square bg-slate-100 rounded overflow-hidden mb-3">
+        ${product.image ? 
+          `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">` : 
+          `<div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+            <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+          </div>`
+        }
+      </div>
+      <div class="text-sm font-medium truncate">${product.name}</div>
+      <div class="text-xs text-slate-600 mt-1">${fmtCurrency(product.price)}</div>
+      <div class="text-xs text-brand-600 mt-2 group-hover:underline" data-i18n="home.seeStore">Ver en tienda</div>
+    `
+    
+    // Click handler to go to store and show product
+    card.onclick = () => {
+      // Go to store page
+      location.hash = '#/store'
+      
+      // After route change, find and highlight the product
+      setTimeout(() => {
+        setActiveRoute('store')
+        
+        // Scroll to product if it exists
+        setTimeout(() => {
+          const productCards = document.querySelectorAll('.product-card')
+          productCards.forEach(productCard => {
+            const productName = productCard.querySelector('.font-medium')?.textContent
+            if (productName === product.name) {
+              productCard.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              productCard.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.3)'
+              setTimeout(() => {
+                productCard.style.boxShadow = ''
+              }, 2000)
+            }
+          })
+        }, 300)
+      }, 50)
+    }
+    
+    return card
+  }
+
   // Boot
   window.addEventListener('hashchange', handleHashChange)
+  window.addEventListener('popstate', handleRouteChange)
+  
+  // Handle navigation clicks
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="/"], a[href^="#/"]')
+    if (link && !link.hasAttribute('target') && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault()
+      const href = link.getAttribute('href')
+      
+      if (href.startsWith('#/')) {
+        // Legacy hash link - convert to clean URL
+        const route = href.replace('#/', '')
+        const url = route === 'home' ? '/' : `/${route}`
+        history.pushState({ route }, '', url)
+        setActiveRoute(route, false, false)
+      } else if (href.startsWith('/')) {
+        // Clean URL
+        const route = href === '/' ? 'home' : href.substring(1).split('/')[0]
+        if (routes.includes(route)) {
+          history.pushState({ route }, '', href)
+          setActiveRoute(route, false, false)
+        }
+      }
+    }
+  })
+  
   ;(async function init(){
     await loadData()
     await loadTranslations()
     updateCartBadges() // Initialize cart badges
     setupMobileNavigation() // Setup mobile navigation
     setupSearch() // Setup search functionality
-    handleHashChange()
+    handleRouteChange() // Initialize routing
   })()
 })()

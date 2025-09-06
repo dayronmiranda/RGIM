@@ -1,29 +1,46 @@
 {
   "name": "rgim-website",
-  "version": "1.0.0",
-  "description": "RGIM USA & Panama - E-commerce website with shipping services",
-  "main": "server.js",
+  "version": "2.0.0",
+  "description": "RGIM - Compras internacionales y envíos desde Panamá",
+  "main": "index.html",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "optimize-images": "node scripts/optimizeImages.js",
-    "optimize-images:help": "node scripts/optimizeImages.js --help"
+    "build-css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/styles.css --watch",
+    "build-css-prod": "tailwindcss -i ./assets/css/input.css -o ./assets/css/styles.css --minify",
+    "dev": "npm run build-css",
+    "build": "npm run build-css-prod",
+    "optimize-images": "node scripts/optimize-images.js",
+    "serve": "python -m http.server 8000",
+    "serve-node": "npx http-server -p 8000 -c-1"
   },
-  "keywords": ["ecommerce", "shipping", "panama", "usa"],
+  "keywords": [
+    "ecommerce",
+    "international-shipping",
+    "panama",
+    "latin-america",
+    "caribbean"
+  ],
   "author": "RGIM",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "helmet": "^7.1.0",
-    "compression": "^1.7.4",
-    "sharp": "^0.33.0",
-    "multer": "^1.4.5-lts.1"
-  },
+  "license": "MIT",
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "tailwindcss": "^3.4.0",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/typography": "^0.5.10",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "sharp": "^0.33.0",
+    "http-server": "^14.1.1"
   },
-  "engines": {
-    "node": ">=14.0.0"
-  }
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rgim/website.git"
+  },
+  "homepage": "https://rgim.com"
 }

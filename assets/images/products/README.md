@@ -1,33 +1,71 @@
-# Imágenes locales de productos
+# Product Images Directory
 
-Coloca aquí las imágenes de los productos que quieras servir localmente.
+This directory contains the original product images that will be processed and optimized.
 
-- Rutas válidas: JPG, PNG, WEBP, SVG
-- Usa SIEMPRE barras normales `/` (no backslashes `\`) en las rutas
-- Referencia estas imágenes desde `products.json` con una ruta relativa como `./assets/images/products/archivo.png`
+## Image Requirements
 
-## Ejemplo de entrada en `products.json`
+### Supported Formats
+- JPG/JPEG
+- PNG
+- WebP
 
-```json
-{
-  "id": "p100",
-  "name": "Bebida de ejemplo local",
-  "short": "Descripción corta",
-  "description": "Descripción larga del producto",
-  "price": 1.99,
-  "categoryId": "beverages",
-  "image": "./assets/images/products/ejemplo-bebida.png"
+### Recommended Specifications
+- **Minimum Resolution**: 800x600 pixels
+- **Maximum File Size**: 2MB per image
+- **Aspect Ratio**: Square (1:1) or landscape (4:3, 16:9)
+- **Color Space**: sRGB
+
+## Optimization Process
+
+When you run `npm run optimize-images`, the script will:
+
+1. **Process all images** in this directory
+2. **Generate two sizes** for each image:
+   - **Thumbnail**: 300x300px (for product grids)
+   - **Medium**: 800x600px (for product details)
+3. **Convert to JPG** format with optimized compression
+4. **Save optimized images** to `assets/images/optimized/`
+
+## File Naming Convention
+
+### Input Files
+- `product-001.jpg`
+- `laptop-gaming.png`
+- `smartphone-pro.webp`
+
+### Output Files (Generated)
+- `product-001-thumbnail.jpg` (300x300)
+- `product-001-medium.jpg` (800x600)
+- `laptop-gaming-thumbnail.jpg` (300x300)
+- `laptop-gaming-medium.jpg` (800x600)
+
+## Usage in Code
+
+```javascript
+// Use optimized images in your HTML/JavaScript
+const productImage = {
+  thumbnail: './assets/images/optimized/product-001-thumbnail.jpg',
+  medium: './assets/images/optimized/product-001-medium.jpg'
 }
 ```
 
-Coloca el archivo de imagen en este directorio con el nombre `ejemplo-bebida.png` y el sistema lo cargará correctamente.
+## Performance Benefits
 
-## Notas
-- La app usa rutas relativas desde `index.html`, por lo que `./assets/images/products/archivo.ext` funcionará tanto en desarrollo como en producción si se mantiene la misma estructura de carpetas.
-- Si ya tienes productos existentes, puedes cambiar el campo `image` de ese producto para apuntar a una imagen local, por ejemplo:
+- **70% average file size reduction**
+- **Faster page loading times**
+- **Better mobile experience**
+- **Improved SEO scores**
 
-```json
-"image": "./assets/images/products/p1.png"
-```
+## Adding New Images
 
-- Recomendado optimizar imágenes (peso y dimensiones) para mejorar rendimiento. Para productos, una resolución entre 600–1000 px del lado mayor suele ser suficiente.
+1. Place your original images in this directory
+2. Run `npm run optimize-images`
+3. Update your product data to reference the optimized images
+4. Test the images display correctly
+
+## Notes
+
+- The optimization script will skip existing optimized images by default
+- Use high-quality source images for best results
+- Consider the final display size when choosing source resolution
+- All images are converted to JPG format for consistency

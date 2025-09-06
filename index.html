@@ -17,24 +17,9 @@
   <meta name="twitter:description" content="Compra internacional fácil con RGIM. Envíos marítimos y aéreos desde Panamá a Latinoamérica y el Caribe." />
   <meta name="theme-color" content="#2563eb" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛒</text></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/css/styles.css">
   <link rel="stylesheet" href="./assets/mobile.css" media="screen and (max-width: 430px)">
   <link rel="stylesheet" href="./assets/css/lazyLoading.css">
-  <script>
-    // Tailwind quick config (light brand colors)
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
-              400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a'
-            }
-          }
-        }
-      }
-    }
-  </script>
   <style>
     /* Smooth fade for route changes */
     .route { display: none; opacity: 0; transition: opacity 200ms ease; }
@@ -95,21 +80,40 @@
       </a>
 
       <nav class="hidden md:flex items-center gap-6 text-sm">
-        <a href="#/home" data-nav="home" class="py-2 hover:text-brand-700" data-i18n="nav.home">Inicio</a>
-        <a href="#/store" data-nav="store" class="py-2 hover:text-brand-700" data-i18n="nav.store">Tienda</a>
-        <a href="#/faq" data-nav="faq" class="py-2 hover:text-brand-700" data-i18n="nav.faq">Preguntas</a>
-        <a href="#/about" data-nav="about" class="py-2 hover:text-brand-700" data-i18n="nav.about">Nosotros</a>
-        <a href="#/admin" data-nav="admin" class="py-2 hover:text-brand-700" data-i18n="nav.admin" rel="nofollow">Admin</a>
+        <a href="/" data-nav="home" class="py-2 hover:text-brand-700" data-i18n="nav.home">Inicio</a>
+        <a href="/store" data-nav="store" class="py-2 hover:text-brand-700" data-i18n="nav.store">Tienda</a>
+        <a href="/faq" data-nav="faq" class="py-2 hover:text-brand-700" data-i18n="nav.faq">Preguntas</a>
+        <a href="/about" data-nav="about" class="py-2 hover:text-brand-700" data-i18n="nav.about">Nosotros</a>
+        <a href="/admin" data-nav="admin" class="py-2 hover:text-brand-700" data-i18n="nav.admin" rel="nofollow">Admin</a>
       </nav>
 
       <!-- Mobile Navigation Overlay -->
       <div id="mobile-nav-overlay" class="md:hidden">
         <button id="mobile-nav-close" aria-label="Cerrar menú">&times;</button>
-        <a href="#/home" data-nav="home" data-i18n="nav.home">Inicio</a>
-        <a href="#/store" data-nav="store" data-i18n="nav.store">Tienda</a>
-        <a href="#/faq" data-nav="faq" data-i18n="nav.faq">Preguntas</a>
-        <a href="#/about" data-nav="about" data-i18n="nav.about">Nosotros</a>
-        <a href="#/admin" data-nav="admin" data-i18n="nav.admin" rel="nofollow">Admin</a>
+        
+        <!-- Brand Section -->
+        <div class="mobile-nav-brand">
+          <div class="brand-icon">RG</div>
+          <div class="brand-text">
+            <h2 class="brand-title">RGIM</h2>
+            <p class="brand-subtitle">USA & Panamá</p>
+          </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="mobile-nav-links">
+          <a href="#/home" data-nav="home" data-i18n="nav.home">Inicio</a>
+          <a href="#/store" data-nav="store" data-i18n="nav.store">Tienda</a>
+          <a href="#/faq" data-nav="faq" data-i18n="nav.faq">Preguntas</a>
+          <a href="#/about" data-nav="about" data-i18n="nav.about">Nosotros</a>
+          <a href="#/admin" data-nav="admin" data-i18n="nav.admin" rel="nofollow">Admin</a>
+        </div>
+        
+        <!-- Footer Section -->
+        <div class="mobile-nav-footer">
+          <p>Compras globales, envíos desde Panamá</p>
+          <p class="version">v2.0</p>
+        </div>
       </div>
 
       <div class="flex items-center gap-2">
@@ -119,14 +123,20 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-        <button id="btn-lang-es" class="px-2 py-1 text-xs border rounded hover:bg-slate-100">ES</button>
-        <button id="btn-lang-en" class="px-2 py-1 text-xs border rounded hover:bg-slate-100">EN</button>
-        <button id="cart-toggle-desktop" class="ml-3 inline-flex items-center gap-3 bg-brand-600 text-white px-5 py-2.5 rounded-lg hover:bg-brand-700 transition-colors relative">
+        <button id="btn-lang-es" class="px-2 py-1 text-xs border rounded hover:bg-slate-100 flex items-center gap-1">
+          <span class="text-sm">🇪🇸</span>
+          <span>ES</span>
+        </button>
+        <button id="btn-lang-en" class="px-2 py-1 text-xs border rounded hover:bg-slate-100 flex items-center gap-1">
+          <span class="text-sm">🇺🇸</span>
+          <span>EN</span>
+        </button>
+        <button id="cart-toggle-desktop" class="ml-3 inline-flex items-center gap-3 bg-brand-600 text-white px-5 py-2.5 rounded-lg hover:bg-brand-700 transition-colors relative shadow-md hover:shadow-lg">
         <span class="hidden sm:inline font-medium" data-i18n="cart.toggle">Carrito</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 ml-1" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m4-9l2 9"/>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.7 9.2c-.1.4.2.8.7.8h15.8c.5 0 .8-.4.7-.8L19 13M9 19.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM20 19.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
         </svg>
-        <span id="cart-badge-desktop" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden font-semibold">0</span>
+        <span id="cart-badge-desktop" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden font-semibold shadow-sm">0</span>
         </button>
       </div>
     </div>
@@ -134,10 +144,10 @@
 
   <main id="main" class="flex-1">
     <!-- HOME / LANDING -->
-    <section id="route-home" class="route active">
+    <section id="route-home" class="route active w-[95%] mx-auto">
       <section class="relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-brand-100"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
+        <div class="relative max-w-none mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
           <div>
             <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
               <span data-i18n="hero.title">RG IM USA & PANAMÁ</span>
@@ -230,39 +240,9 @@
       <section class="py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 class="text-2xl font-bold" data-i18n="home.sampleTitle">Productos destacados</h2>
-          <p class="text-slate-600 mt-1" data-i18n="home.sampleSubtitle">Muestras ilustrativas. Visita la tienda para ver el catálogo.</p>
-          <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            <!-- Simple illustrative placeholders; real products en Tienda -->
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
-            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
-              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
-              <div class="mt-3 text-sm font-medium">Producto</div>
-              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
-            </a>
+          <p class="text-slate-600 mt-1" data-i18n="home.sampleSubtitle">Selección especial de nuestros productos más populares.</p>
+          <div id="featured-products-grid" class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- Featured products will be rendered here by JavaScript -->
           </div>
           <div class="mt-6">
             <a href="#/store" class="inline-flex items-center gap-2 text-brand-700 hover:underline" data-i18n="home.visitStore">Visitar la tienda</a>
@@ -308,9 +288,9 @@
     <section id="route-store" class="route">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Multi-column layout: Products on left, Cart sidebar on right -->
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <!-- Products section (3/4 width on large screens) -->
-          <div class="lg:col-span-3">
+        <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <!-- Products section (2/3 width on large screens, 3/4 on xl screens) -->
+          <div class="lg:col-span-2 xl:col-span-3">
             <h1 class="text-2xl font-bold" data-i18n="store.title">Tienda</h1>
             <p class="text-slate-600" data-i18n="store.subtitle">Explora categorías, ve detalles y añade al carrito.</p>
 
@@ -385,31 +365,25 @@
 
           <!-- Cart sidebar (1/4 width on large screens, always visible) -->
           <div class="lg:col-span-1">
-            <div class="sticky top-24 bg-white border rounded-lg shadow-sm">
+            <div class="sticky top-24 bg-white border-2 border-slate-200 rounded-lg shadow-lg">
               <!-- Cart Header -->
-              <div class="p-4 border-b">
-                <h2 class="text-lg font-semibold" data-i18n="cart.title">Carrito de compras</h2>
+              <div class="p-4 border-b-2 border-slate-200 bg-gradient-to-r from-brand-50 to-brand-100">
+                <h2 class="text-lg font-bold text-slate-800" data-i18n="cart.title">Carrito de compras</h2>
               </div>
               
               <!-- Cart Items -->
-              <div class="p-4 max-h-64 overflow-y-auto">
+              <div class="p-4 max-h-64 overflow-y-auto bg-white">
                 <div id="cart-sidebar-items" class="space-y-3">
                   <!-- Cart items rendered here -->
                 </div>
               </div>
               
               <!-- Cart Footer with Checkout -->
-              <div class="border-t p-4 bg-slate-50">
+              <div class="border-t-2 border-slate-200 p-4 bg-slate-100">
                 <div class="mb-4">
                   <div class="flex justify-between items-center mb-2">
                     <span data-i18n="checkout.total">Total:</span>
                     <span id="cart-sidebar-total" class="text-xl font-bold">$0.00</span>
-                  </div>
-                  <div class="text-sm text-slate-600">
-                    <select id="cart-sidebar-shipping" class="w-full border rounded px-3 py-2 mb-2">
-                      <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
-                      <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
-                    </select>
                   </div>
                 </div>
                 
@@ -663,6 +637,7 @@
 
   <script src="./assets/js/imageUtils.js" defer></script>
   <script src="./assets/js/lazyLoader.js" defer></script>
+  <script src="./assets/js/cacheManager.js" defer></script>
   <script src="./assets/js/aiSearch.js" defer></script>
   <script src="./assets/app.js" defer></script>
   <script>
