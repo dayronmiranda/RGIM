@@ -1,7 +1,30 @@
 [
-  { "id": "electronics", "name": "Electrónica" },
-  { "id": "fashion", "name": "Moda" },
-  { "id": "beauty", "name": "Belleza" },
-  { "id": "home", "name": "Hogar" },
-  { "id": "beverages", "name": "Bebidas" }
+  {
+    "id": "pantry",
+    "name": "Despensa y Abarrotes"
+  },
+  {
+    "id": "snacks",
+    "name": "Botanas y Galletas"
+  },
+  {
+    "id": "candy",
+    "name": "Dulces y Chocolates"
+  },
+  {
+    "id": "cereal",
+    "name": "Cereales"
+  },
+  {
+    "id": "beverages",
+    "name": "Bebidas"
+  },
+  {
+    "id": "dairy",
+    "name": "Lácteos"
+  },
+  {
+    "id": "tobacco",
+    "name": "Tabaco"
+  }
 ]
