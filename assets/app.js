@@ -90,38 +90,18 @@
     setTimeout(()=>{ node.remove() }, 3000)
   }
 
-  // Sound effect for adding to cart - Professional and pleasant
+  // Modern sound effect for adding to cart with vibration
   function playAddToCartSound(){
     try {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-      const oscillator = audioContext.createOscillator()
-      const gainNode = audioContext.createGain()
+      // Vibrate on mobile devices
+      if (navigator.vibrate) {
+        navigator.vibrate([50, 30, 50]); // Short vibration pattern
+      }
       
-      oscillator.connect(gainNode)
-      gainNode.connect(audioContext.destination)
-      
-      // Professional "pop" sound - C major chord progression
-      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime) // C5
-      oscillator.frequency.exponentialRampToValueAtTime(659.25, audioContext.currentTime + 0.1) // E5
-      oscillator.frequency.exponentialRampToValueAtTime(783.99, audioContext.currentTime + 0.2) // G5
-      
-      gainNode.gain.setValueAtTime(0.2, audioContext.currentTime)
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4)
-      
-      oscillator.start(audioContext.currentTime)
-      oscillator.stop(audioContext.currentTime + 0.4)
-    } catch(e) {
-      console.log('Sound not available')
-    }
-  }
-
-  // Sound effect for successful order submission - Email sent sound
-  function playOrderSentSound(){
-    try {
       const audioContext = new (window.AudioContext || window.webkitAudioContext)()
       
-      // Create a harmonious "sent" sound with multiple tones
-      const frequencies = [440, 554.37, 659.25] // A4, C#5, E5 (A major chord)
+      // Modern notification sound - ascending notes
+      const frequencies = [440, 523.25, 659.25, 783.99] // A4, C5, E5, G5
       
       frequencies.forEach((freq, index) => {
         const oscillator = audioContext.createOscillator()
@@ -133,17 +113,58 @@
         oscillator.frequency.setValueAtTime(freq, audioContext.currentTime)
         oscillator.type = 'sine'
         
-        // Stagger the notes slightly for harmony
-        const startTime = audioContext.currentTime + (index * 0.1)
+        const startTime = audioContext.currentTime + (index * 0.08)
         gainNode.gain.setValueAtTime(0, startTime)
-        gainNode.gain.linearRampToValueAtTime(0.15, startTime + 0.1)
-        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.8)
+        gainNode.gain.linearRampToValueAtTime(0.1, startTime + 0.05)
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3)
         
         oscillator.start(startTime)
-        oscillator.stop(startTime + 0.8)
+        oscillator.stop(startTime + 0.3)
       })
     } catch(e) {
-      console.log('Sound not available')
+      console.log('Sound/vibration not available')
+    }
+  }
+
+  // Modern success sound for order submission with vibration
+  function playOrderSentSound(){
+    try {
+      // Success vibration pattern
+      if (navigator.vibrate) {
+        navigator.vibrate([100, 50, 100, 50, 200]); // Success vibration pattern
+      }
+      
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+      
+      // Success chord progression - more modern and pleasant
+      const chords = [
+        [523.25, 659.25, 783.99], // C major
+        [587.33, 739.99, 880.00], // D major
+        [659.25, 830.61, 987.77]  // E major
+      ]
+      
+      chords.forEach((chord, chordIndex) => {
+        chord.forEach((freq, noteIndex) => {
+          const oscillator = audioContext.createOscillator()
+          const gainNode = audioContext.createGain()
+          
+          oscillator.connect(gainNode)
+          gainNode.connect(audioContext.destination)
+          
+          oscillator.frequency.setValueAtTime(freq, audioContext.currentTime)
+          oscillator.type = 'sine'
+          
+          const startTime = audioContext.currentTime + (chordIndex * 0.2) + (noteIndex * 0.02)
+          gainNode.gain.setValueAtTime(0, startTime)
+          gainNode.gain.linearRampToValueAtTime(0.08, startTime + 0.1)
+          gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.6)
+          
+          oscillator.start(startTime)
+          oscillator.stop(startTime + 0.6)
+        })
+      })
+    } catch(e) {
+      console.log('Sound/vibration not available')
     }
   }
 
@@ -675,12 +696,288 @@
   // Cart sidebar shipping change listener
   els.cartSidebarShipping?.addEventListener('change', updateCartSidebarTotal)
 
-  // Cart button click handler with animation
+  // Mobile cart modal functionality
+  function openMobileCartModal() {
+    if (window.innerWidth > 430) return // Only on mobile
+    
+    const modal = document.createElement('div')
+    modal.className = 'mobile-cart-modal'
+    modal.innerHTML = `
+      <div class="mobile-cart-modal-header">
+        <h2 class="text-lg font-semibold" data-i18n="cart.title">Carrito de compras</h2>
+        <button class="mobile-cart-modal-close" aria-label="Cerrar carrito">&times;</button>
+      </div>
+      <div class="p-4">
+        <div id="mobile-cart-items" class="space-y-3 mb-6">
+          <!-- Cart items will be rendered here -->
+        </div>
+        <div class="border-t pt-4">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-medium" data-i18n="checkout.total">Total:</span>
+            <span id="mobile-cart-total" class="text-xl font-bold">$0.00</span>
+          </div>
+          <select id="mobile-cart-shipping" class="w-full border rounded px-3 py-2 mb-4">
+            <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+            <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+          </select>
+          <form id="mobile-checkout-form" class="space-y-3">
+            <input id="mobile-buyer-name" type="text" placeholder="Nombre" class="w-full border rounded px-3 py-2" required />
+            <input id="mobile-buyer-whatsapp" type="tel" placeholder="WhatsApp (+507...)" class="w-full border rounded px-3 py-2" required />
+            <select id="mobile-shipping-type" class="w-full border rounded px-3 py-2">
+              <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+              <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+            </select>
+            <button type="submit" class="w-full bg-brand-600 text-white py-3 rounded-lg font-medium" data-i18n="checkout.submit">Enviar solicitud</button>
+            <p class="text-xs text-slate-500 text-center" data-i18n="checkout.note">No realizas pagos aquí. Te contactaremos por WhatsApp.</p>
+          </form>
+        </div>
+      </div>
+    `
+    
+    document.body.appendChild(modal)
+    
+    // Render cart items in mobile modal
+    renderMobileCartItems()
+    updateMobileCartTotal()
+    
+    // Show modal with animation
+    setTimeout(() => modal.classList.add('show'), 10)
+    
+    // Event listeners
+    modal.querySelector('.mobile-cart-modal-close').onclick = closeMobileCartModal
+    modal.querySelector('#mobile-cart-shipping').onchange = updateMobileCartTotal
+    modal.querySelector('#mobile-checkout-form').onsubmit = handleMobileCheckout
+    
+    // Apply translations to modal
+    applyTranslations()
+  }
+  
+  function closeMobileCartModal() {
+    const modal = document.querySelector('.mobile-cart-modal')
+    if (modal) {
+      modal.classList.remove('show')
+      setTimeout(() => modal.remove(), 300)
+    }
+  }
+  
+  function renderMobileCartItems() {
+    const container = document.getElementById('mobile-cart-items')
+    if (!container) return
+    
+    container.innerHTML = ''
+    
+    if (state.cart.length === 0) {
+      container.innerHTML = '<div class="text-slate-500 text-center py-8">Tu carrito está vacío</div>'
+      return
+    }
+    
+    state.cart.forEach(item => {
+      const product = state.products.find(p => p.id === item.id)
+      if (!product) return
+      
+      const itemEl = document.createElement('div')
+      itemEl.className = 'flex items-center gap-3 border rounded-lg p-3 bg-slate-50'
+      itemEl.innerHTML = `
+        <div class="w-16 h-16 bg-slate-200 rounded overflow-hidden flex-shrink-0">
+          ${product.image ? `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">` : ''}
+        </div>
+        <div class="flex-1 min-w-0">
+          <div class="font-medium truncate">${product.name}</div>
+          <div class="text-sm text-slate-600">${fmtCurrency(product.price)}</div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button class="w-8 h-8 border rounded flex items-center justify-center" data-dec>-</button>
+          <div class="w-8 text-center">${item.qty}</div>
+          <button class="w-8 h-8 border rounded flex items-center justify-center" data-inc>+</button>
+        </div>
+        <button class="text-red-500 p-2" data-del>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      `
+      
+      itemEl.querySelector('[data-dec]').onclick = () => {
+        changeQty(item.id, -1)
+        renderMobileCartItems()
+        updateMobileCartTotal()
+      }
+      itemEl.querySelector('[data-inc]').onclick = () => {
+        changeQty(item.id, 1)
+        renderMobileCartItems()
+        updateMobileCartTotal()
+      }
+      itemEl.querySelector('[data-del]').onclick = () => {
+        removeFromCart(item.id)
+        renderMobileCartItems()
+        updateMobileCartTotal()
+      }
+      
+      container.appendChild(itemEl)
+    })
+  }
+  
+  function updateMobileCartTotal() {
+    const totalEl = document.getElementById('mobile-cart-total')
+    const shippingEl = document.getElementById('mobile-cart-shipping')
+    if (!totalEl || !shippingEl) return
+    
+    const shipType = shippingEl.value || 'sea'
+    const base = cartTotal()
+    const total = shipType === 'air' ? base * 1.10 : base
+    totalEl.textContent = fmtCurrency(total)
+  }
+  
+  function handleMobileCheckout(e) {
+    e.preventDefault()
+    if (state.cart.length === 0) {
+      showToast(state.lang === 'es' ? 'Agrega productos al carrito' : 'Add items to cart')
+      return
+    }
+    
+    const name = document.getElementById('mobile-buyer-name').value.trim()
+    const phone = document.getElementById('mobile-buyer-whatsapp').value.trim()
+    const shipType = document.getElementById('mobile-shipping-type').value
+    const base = cartTotal()
+    const total = shipType === 'air' ? base * 1.10 : base
+    
+    const order = {
+      id: 'ORD-' + Date.now(),
+      date: new Date().toISOString(),
+      buyer: { name, phone },
+      shipping: shipType,
+      items: state.cart.map(it => ({ ...it })),
+      total,
+      status: 'new'
+    }
+    
+    // Save to history
+    state.history.unshift(order)
+    saveJSON(STORAGE_KEYS.history, state.history)
+    
+    // Play success sound and show message
+    playOrderSentSound()
+    showToast(state.lang === 'es' ? 'Solicitud enviada a la empresa' : 'Request sent to company')
+    
+    // Clear cart and close modal
+    setTimeout(() => {
+      state.cart = []
+      saveJSON(STORAGE_KEYS.cart, state.cart)
+      updateCartBadges()
+      renderCart()
+      renderCartSidebar()
+      updateTotal()
+      updateCartSidebarTotal()
+      renderHistory()
+      closeMobileCartModal()
+    }, 500)
+  }
+  
+  // Mobile navigation menu functionality
+  function setupMobileNavigation() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
+    const mobileNav = document.getElementById('mobile-nav')
+    const mobileNavClose = document.getElementById('mobile-nav-close')
+    
+    if (!mobileMenuToggle || !mobileNav) return
+    
+    mobileMenuToggle.onclick = () => {
+      mobileNav.classList.add('show')
+    }
+    
+    if (mobileNavClose) {
+      mobileNavClose.onclick = () => {
+        mobileNav.classList.remove('show')
+      }
+    }
+    
+    // Close menu when clicking on navigation links
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.onclick = () => {
+        mobileNav.classList.remove('show')
+      }
+    })
+    
+    // Close menu when clicking outside
+    mobileNav.onclick = (e) => {
+      if (e.target === mobileNav) {
+        mobileNav.classList.remove('show')
+      }
+    }
+  }
+  
+  // Enhanced product rendering for mobile
+  function renderProducts(){
+    const grid = els.productGrid
+    if(!grid) return
+    grid.innerHTML = ''
+    let list = state.products
+    if(state.activeCategory){ list = list.filter(p => p.categoryId === state.activeCategory) }
+
+    list.forEach(p => {
+      const card = document.createElement('div')
+      card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col'
+      card.innerHTML = `
+        <div class="aspect-square bg-slate-100 relative">
+          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover">` : ''}
+        </div>
+        <div class="p-4 flex-1 flex flex-col">
+          <div class="font-medium">${p.name}</div>
+          <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
+          <div class="mt-auto flex items-center justify-between gap-2 pt-3">
+            <div class="font-semibold">${fmtCurrency(p.price)}</div>
+            <div class="flex items-center gap-2">
+              <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
+              <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
+            </div>
+          </div>
+        </div>`
+      
+      // Mobile: make entire card clickable for details
+      if (window.innerWidth <= 430) {
+        card.style.cursor = 'pointer'
+        card.onclick = (e) => {
+          // Don't trigger if clicking on add button
+          if (!e.target.closest('[data-act="add"]')) {
+            openProductModal(p)
+          }
+        }
+      }
+      
+      card.querySelector('[data-act="add"]').onclick = (e) => {
+        e.stopPropagation()
+        addToCart(p.id)
+      }
+      card.querySelector('[data-act="details"]').onclick = (e) => {
+        e.stopPropagation()
+        openProductModal(p)
+      }
+      grid.appendChild(card)
+    })
+  }
+
+  // Cart button click handler with mobile modal support
   els.cartBadgeDesktop?.parentElement?.addEventListener('click', (e) => {
     e.preventDefault()
+    
+    // On mobile, open cart modal
+    if (window.innerWidth <= 430) {
+      const currentRoute = location.hash.replace('#/', '') || 'home'
+      if (currentRoute === 'store') {
+        openMobileCartModal()
+      } else {
+        location.hash = '#/store'
+        setTimeout(() => {
+          setActiveRoute('store', true)
+          setTimeout(openMobileCartModal, 300)
+        }, 50)
+      }
+      return
+    }
+    
+    // Desktop behavior
     const currentRoute = location.hash.replace('#/', '') || 'home'
     if(currentRoute !== 'store') {
-      // Navigate to store with animation
       location.hash = '#/store'
       setTimeout(() => setActiveRoute('store', true), 50)
     }
@@ -692,6 +989,7 @@
     await loadData()
     await loadTranslations()
     updateCartBadges() // Initialize cart badges
+    setupMobileNavigation() // Setup mobile navigation
     handleHashChange()
   })()
 })()
