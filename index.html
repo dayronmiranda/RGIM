@@ -19,6 +19,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛒</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./assets/mobile.css" media="screen and (max-width: 430px)">
+  <link rel="stylesheet" href="./assets/css/lazyLoading.css">
   <script>
     // Tailwind quick config (light brand colors)
     tailwind.config = {
@@ -313,8 +314,64 @@
             <h1 class="text-2xl font-bold" data-i18n="store.title">Tienda</h1>
             <p class="text-slate-600" data-i18n="store.subtitle">Explora categorías, ve detalles y añade al carrito.</p>
 
+            <!-- Search Bar -->
+            <div class="mt-6 relative">
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="product-search" 
+                  placeholder="Buscar productos..." 
+                  class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+                  data-i18n-placeholder="search.placeholder"
+                >
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </div>
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                  <button id="clear-search" class="text-gray-400 hover:text-gray-600 hidden">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                  <div id="search-loading" class="hidden">
+                    <svg class="animate-spin h-5 w-5 text-brand-600" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Search Suggestions -->
+              <div id="search-suggestions" class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg hidden">
+                <div class="py-2">
+                  <!-- Suggestions will be rendered here -->
+                </div>
+              </div>
+              
+              <!-- AI Search Indicator -->
+              <div id="ai-search-indicator" class="mt-2 text-xs text-gray-500 hidden">
+                <span class="inline-flex items-center gap-1">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  Búsqueda potenciada por IA
+                </span>
+              </div>
+            </div>
+
             <!-- Categories -->
             <div id="category-bar" class="mt-6 flex flex-wrap gap-2"></div>
+
+            <!-- Search Results Info -->
+            <div id="search-results-info" class="mt-4 text-sm text-gray-600 hidden">
+              <span id="results-count">0</span> productos encontrados
+              <button id="clear-all-filters" class="ml-2 text-brand-600 hover:text-brand-700 underline hidden">
+                Limpiar filtros
+              </button>
+            </div>
 
             <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4" id="product-grid">
               <!-- Rendered by JS -->
@@ -599,6 +656,9 @@
     <div class="max-w-7xl mx-auto p-4 text-red-700">Este sitio requiere JavaScript para funcionar correctamente.</div>
   </noscript>
 
+  <script src="./assets/js/imageUtils.js" defer></script>
+  <script src="./assets/js/lazyLoader.js" defer></script>
+  <script src="./assets/js/aiSearch.js" defer></script>
   <script src="./assets/app.js" defer></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

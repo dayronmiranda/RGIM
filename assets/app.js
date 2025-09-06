@@ -61,12 +61,16 @@
   const state = {
     products: [],
     categories: [],
+    featured: [],
+    config: {},
     lang: 'es',
     t: {},
     cart: loadJSON(STORAGE_KEYS.cart, []),
     history: loadJSON(STORAGE_KEYS.history, []),
     admin: loadJSON(STORAGE_KEYS.adminSession, null),
     activeCategory: '',
+    searchQuery: '',
+    aiSearch: null,
   }
   state.lang = loadJSON(STORAGE_KEYS.lang, 'es')
   // Override language from URL param if provided (?lang=es|en)
@@ -409,11 +413,22 @@
 
   // Data loading
   async function loadData(){
-    const [prodRes, catRes] = await Promise.all([
-      fetch('./products.json'), fetch('./categories.json')
+    const [prodRes, catRes, featRes, configRes] = await Promise.all([
+      fetch('./products.json'), 
+      fetch('./categories.json'),
+      fetch('./destacados.json').catch(() => ({ featured: [] })),
+      fetch('./config.json').catch(() => ({}))
     ])
     state.products = await prodRes.json()
     state.categories = await catRes.json()
+    state.featured = (await featRes.json()).featured || []
+    state.config = await configRes.json()
+    
+    // Initialize AI search if available
+    if (window.AISearch && state.config.ai) {
+      state.aiSearch = new window.AISearch(state.config.ai.gemini)
+      state.aiSearch.setProducts(state.products)
+    }
   }
 
   // Cart animation function
