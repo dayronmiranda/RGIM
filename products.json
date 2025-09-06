@@ -1,434 +1,443 @@
 [
   {
     "id": "p1",
-    "name": "Windmill Holland Beer",
-    "short": "Cerveza lager holandesa",
-    "description": "Refrescante cerveza tipo lager, elaborada siguiendo la tradición holandesa. Ideal para acompañar comidas o disfrutar sola.",
+    "name": "Selmi Galo Pena",
+    "short": "Macarrão de Sêmola",
+    "description": "Pasta de sêmola tipo pena, ideal para diversos molhos. Tempo de cozimento de 5 a 7 minutos.",
     "price": 1.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/windmill-holland-beer.png"
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0002_Capa-1.png"
   },
   {
     "id": "p2",
-    "name": "Claro Beer",
-    "short": "Cerveza clara y ligera",
-    "description": "Una cerveza suave y fácil de beber, con un sabor limpio y refrescante. Perfecta para días calurosos.",
-    "price": 1.6,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/claro-beer.png"
+    "name": "Ricolino Kranky",
+    "short": "Hojuela de maíz con cobertura de chocolate",
+    "description": "Crujientes hojuelas de maíz cubiertas con un delicioso sabor a chocolate. Un snack divertido y sabroso.",
+    "price": 0.5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0003_20231206_132442.png"
   },
   {
     "id": "p3",
-    "name": "Yelo Limón",
-    "short": "Refresco con sabor a limón",
-    "description": "Bebida carbonatada con un intenso y refrescante sabor a limón, ideal para calmar la sed.",
-    "price": 1.2,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/yelo-limon.png"
+    "name": "Ricolino Bubu Lubu Mini",
+    "short": "Malvavisco con relleno de fresa",
+    "description": "Pequeño malvavisco con un delicioso relleno de jalea sabor a fresa y una cobertura de chocolate.",
+    "price": 0.4,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0004_20231206_132434.png"
   },
   {
     "id": "p4",
-    "name": "Yelo Cola",
-    "short": "Refresco de cola clásico",
-    "description": "El clásico sabor de la cola en una bebida carbonatada y refrescante para disfrutar en cualquier momento.",
-    "price": 1.2,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/yelo-cola.png"
+    "name": "Arcor Sapito Cacahuate",
+    "short": "Chocolate relleno con cacahuate",
+    "description": "Divertida figura con sabor a chocolate, rellena con maní y cereal crocante.",
+    "price": 0.3,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0005_20231206_132428.png"
   },
   {
     "id": "p5",
-    "name": "Yelo Naranja",
-    "short": "Refresco con sabor a naranja",
-    "description": "Bebida burbujeante con el dulce y cítrico sabor de la naranja, perfecta para toda la familia.",
+    "name": "Muibon Roll",
+    "short": "Barquillo relleno de crema de avellana",
+    "description": "Crujiente barquillo relleno de crema de avellana con una deliciosa cubierta de chocolate y cacahuates.",
+    "price": 0.6,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0006_20231206_132420.png"
+  },
+  {
+    "id": "p6",
+    "name": "Hershey's Cookies 'N' Creme",
+    "short": "Dulce sabor a crema con galletas",
+    "description": "La clásica barra de chocolate blanco Hershey's con trocitos de galleta de chocolate.",
     "price": 1.2,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/yelo-naranja.png"
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0007_20231206_132347.png"
   },
   {
     "id": "p7",
-    "name": "Gold Partner Tequila",
-    "short": "Tequila dorado suave",
-    "description": "Un tequila dorado de sabor suave con notas de agave, perfecto para cócteles como margaritas o para tomar solo.",
-    "price": 18.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/gold-partner-tequila.png"
+    "name": "MilkyWay Bar",
+    "short": "Chocolate con caramelo y nougat",
+    "description": "Una combinación perfecta de nougat, caramelo y chocolate con leche.",
+    "price": 1.1,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0008_20231206_132341.png"
   },
   {
     "id": "p8",
-    "name": "Jean Marcheur Whisky",
-    "short": "Whisky de grano envejecido",
-    "description": "Whisky blended con un carácter suave y notas de madera y vainilla, resultado de su cuidadoso envejecimiento.",
-    "price": 22.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/jean-marcheur-whisky.png"
+    "name": "Vieira Príncipe Sabor Chocolate",
+    "short": "Galletas rellenas de chocolate",
+    "description": "Crujientes galletas tipo sándwich con un cremoso relleno de chocolate.",
+    "price": 2,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0009_20231206_132315.png"
   },
   {
     "id": "p9",
-    "name": "Airisbei Irish Cream Liqueur",
-    "short": "Crema de licor irlandés",
-    "description": "Deliciosa y cremosa combinación de whisky irlandés y crema de leche, ideal para tomar con hielo o en el café.",
-    "price": 15.75,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/airisbei-irish-cream-liqueur.png"
+    "name": "Jell-O Gelatina Sabor Frambuesa",
+    "short": "Polvo para preparar gelatina",
+    "description": "Polvo para preparar una deliciosa gelatina sabor frambuesa, fortificada con vitamina C.",
+    "price": 0.8,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0010_20231206_132305.png"
   },
   {
     "id": "p10",
-    "name": "Elliot Hall Whisky Cream",
-    "short": "Crema de whisky suave",
-    "description": "Licor cremoso a base de whisky, con una textura sedosa y un sabor dulce y equilibrado.",
-    "price": 16.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/elliot-hall-whisky-cream.png"
+    "name": "Jell-O Gelatina Sabor Naranja",
+    "short": "Polvo para preparar gelatina",
+    "description": "Polvo para preparar una refrescante gelatina sabor naranja, fortificada con vitamina C.",
+    "price": 0.8,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0011_20231206_132242.png"
   },
   {
     "id": "p11",
-    "name": "Ron Tabay Añejo",
-    "short": "Ron añejo caribeño",
-    "description": "Ron envejecido en barricas de roble que le confieren un sabor complejo con notas de caramelo y especias.",
-    "price": 19.99,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/ron-tabay-anejo.png"
+    "name": "Jell-O Gelatina Sabor Limón",
+    "short": "Polvo para preparar gelatina",
+    "description": "Polvo para preparar una ácida y deliciosa gelatina sabor limón, fortificada con vitamina C.",
+    "price": 0.8,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0012_20231206_132237.png"
   },
   {
     "id": "p12",
-    "name": "Vodka Tabarish",
-    "short": "Vodka puro y cristalino",
-    "description": "Vodka de grano de alta pureza, destilado varias veces para obtener un sabor neutro y una claridad excepcional.",
-    "price": 14.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/vodka-tabarish.png"
+    "name": "Gourmet Barquillos Sabor Coco",
+    "short": "Barquillos rellenos de crema de coco",
+    "description": "Crujientes barquillos tipo wafer rellenos con una suave crema de coco.",
+    "price": 1.8,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0013_20231206_132218.png"
   },
   {
     "id": "p13",
-    "name": "Cream Heroes Mango Liqueur",
-    "short": "Crema de tequila con mango",
-    "description": "Innovador licor que combina la suavidad de la crema y el tequila con el sabor exótico del mango.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-mango-liqueur.png"
+    "name": "Gourmet Barquillos Sabor a Nata",
+    "short": "Barquillos rellenos de crema de nata",
+    "description": "Crujientes barquillos tipo wafer rellenos con una cremosa y dulce nata.",
+    "price": 1.8,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0014_20231206_132211.png"
   },
   {
     "id": "p14",
-    "name": "Cream Heroes Horchata Liqueur",
-    "short": "Crema de horchata con canela",
-    "description": "Un licor cremoso inspirado en la horchata tradicional, con toques de canela y un dulzor equilibrado.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-horchata-liqueur.png"
+    "name": "Knorr Sopa Mickey y Amigos",
+    "short": "Sopa de pasta con forma de Mickey",
+    "description": "Divertida sopa de pasta con figuras de Mickey Mouse y sus amigos, ideal para niños.",
+    "price": 1.2,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0015_20231206_132155.png"
   },
   {
     "id": "p15",
-    "name": "Cream Heroes Coffee Liqueur",
-    "short": "Crema de tequila con café",
-    "description": "La combinación perfecta de tequila, crema y un intenso sabor a café. Ideal para postres o para tomar solo.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-coffee-liqueur.png"
+    "name": "Knorr Sopa Estrellas",
+    "short": "Sopa de pasta sabor casero",
+    "description": "Clásica sopa de estrellas con sabor casero, lista en 10 minutos.",
+    "price": 1.1,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0016_20231206_132147.png"
   },
   {
     "id": "p16",
-    "name": "Cream Heroes Watermelon Liqueur",
-    "short": "Crema de tequila con sandía",
-    "description": "Un licor refrescante y original con el sabor veraniego de la sandía, mezclado con crema y tequila.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-watermelon-liqueur.png"
+    "name": "Trident Extra Strong",
+    "short": "Goma de mascar sabor a menta fuerte",
+    "description": "Chicle sin azúcar con microcápsulas para un sabor fresco y duradero con extra fuerza.",
+    "price": 1.5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0017_20231206_132138.png"
   },
   {
     "id": "p17",
-    "name": "Ron Lupe Añejo",
-    "short": "Ron oscuro estilo caribeño",
-    "description": "Ron añejo con un perfil de sabor robusto, notas de melaza y madera, perfecto para cócteles clásicos.",
-    "price": 18.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/ron-lupe-anejo.png"
+    "name": "Trident Freshmint",
+    "short": "Goma de mascar sabor a menta fresca",
+    "description": "Chicle sin azúcar con microcápsulas para un sabor a menta refrescante y duradero.",
+    "price": 1.5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0018_20231206_132133.png"
   },
   {
     "id": "p18",
-    "name": "Ron Lupe Negro",
-    "short": "Ron negro intenso",
-    "description": "Ron oscuro de sabor profundo y complejo, ideal para combinados que requieran un ron con carácter.",
-    "price": 18.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/ron-lupe-negro.png"
+    "name": "Nutro Chocolate Cream Wafers",
+    "short": "Wafers de crema sabor a chocolate",
+    "description": "Capas cremosas de diversión crujiente. Wafers con sabor a chocolate.",
+    "price": 1.3,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0019_20231206_132120.png"
   },
   {
     "id": "p19",
-    "name": "Dagger Dry Gin",
-    "short": "Ginebra seca y aromática",
-    "description": "Una ginebra clásica tipo London Dry, con notas botánicas de enebro y cítricos. Perfecta para un gin-tonic.",
-    "price": 21.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/dagger-dry-gin.png"
+    "name": "Pop Mania Assorted Fruits",
+    "short": "Chupetes de frutas surtidas rellenos de chicle",
+    "description": "Bolsa de 50 chupetes de sabores surtidos: manzana verde, mandarina y fresa, rellenos de chicle.",
+    "price": 5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0020_20231206_132112.png"
   },
   {
     "id": "p20",
-    "name": "Royal Guards London Dry Gin",
-    "short": "Ginebra premium equilibrada",
-    "description": "Ginebra premium destilada con una selección de botánicos que le otorgan un sabor sofisticado y equilibrado.",
-    "price": 24.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/royal-guards-london-dry-gin.png"
+    "name": "Pop Mania Strawberry Tongue Painting",
+    "short": "Chupetes de fresa pinta lengua",
+    "description": "Bolsa de 50 chupetes de fresa que pintan la lengua, rellenos de chicle.",
+    "price": 5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0021_20231206_132100.png"
   },
   {
     "id": "p21",
-    "name": "Sobei Licor de Manzana Verde",
-    "short": "Licor de manzana ácido y dulce",
-    "description": "Licor vibrante con el sabor característico de la manzana verde, un equilibrio perfecto entre acidez y dulzor.",
-    "price": 12.9,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/sobei-licor-de-manzana-verde.png"
+    "name": "Pop Mania Extra Tongue Painting",
+    "short": "Chupetes de uva y fresa pinta lengua",
+    "description": "Bolsa de 50 chupetes de sabores uva y fresa que pintan la lengua, rellenos de chicle.",
+    "price": 5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0022_20231206_132047.png"
   },
   {
     "id": "p22",
-    "name": "Cocobay Coconut Liqueur",
-    "short": "Licor de coco tropical",
-    "description": "Exótico licor con el sabor auténtico del coco caribeño, ideal para crear cócteles tropicales como la piña colada.",
-    "price": 14.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cocobay-coconut-liqueur.png"
+    "name": "Sabritas Adobadas",
+    "short": "Papas fritas sabor adobo",
+    "description": "Crujientes papas fritas con el clásico y delicioso sabor a adobo.",
+    "price": 1,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0023_20231206_132021.png"
   },
   {
     "id": "p23",
-    "name": "Landar Bräu Premium Beer",
-    "short": "Cerveza premium tipo pilsner",
-    "description": "Una cerveza rubia y equilibrada, con un sabor suave y un aroma a lúpulo fresco. Perfecta para cualquier ocasión.",
-    "price": 1.4,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/landar-brau-premium-beer.png"
+    "name": "Sabritas Original",
+    "short": "Papas fritas con sal",
+    "description": "Las papas fritas originales, con solo tres ingredientes: papa, aceite y sal.",
+    "price": 1,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0024_20231206_132013.png"
   },
   {
     "id": "p24",
-    "name": "8.6 Original Beer",
-    "short": "Cerveza lager fuerte",
-    "description": "Cerveza de malta con un alto contenido de alcohol y un sabor intenso y con cuerpo. Para los que buscan una experiencia cervecera más potente.",
-    "price": 1.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/8-6-original-beer.png"
+    "name": "Diamir Tomate Frito",
+    "short": "Tomate frito en conserva",
+    "description": "Tomate frito estilo casero, listo para usar en tus guisos y platos. Sin gluten.",
+    "price": 2.5,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0025_20231206_131932.png"
   },
   {
     "id": "p25",
-    "name": "Hollandia Premium Beer",
-    "short": "Cerveza lager holandesa",
-    "description": "Cerveza lager importada de Holanda, conocida por su sabor refrescante y su acabado limpio y crujiente.",
-    "price": 1.65,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/hollandia-premium-beer.png"
+    "name": "Kellogg's Zucaritas",
+    "short": "Hojuelas de maíz escarchadas",
+    "description": "Clásicas hojuelas de maíz azucaradas, adicionadas con vitaminas y hierro. Para snackear.",
+    "price": 1,
+    "categoryId": "cereal",
+    "image": "./assets/images/products/products_0026_20231206_132500.png"
   },
   {
     "id": "p26",
-    "name": "Tigon Energy Drink",
-    "short": "Bebida energética carbonatada",
-    "description": "Bebida energética para darte un impulso cuando más lo necesitas, con un sabor intenso y refrescante.",
-    "price": 1.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/tigon-energy-drink.png"
+    "name": "Kellogg's Froot Loops",
+    "short": "Cereal de maíz, trigo y avena",
+    "description": "Aros de cereal con sabores naturales a frutas, adicionado con vitaminas y minerales.",
+    "price": 1,
+    "categoryId": "cereal",
+    "image": "./assets/images/products/products_0027_20231206_132510.png"
   },
   {
     "id": "p27",
-    "name": "Cream Heroes Coco Loco",
-    "short": "Crema de tequila con coco",
-    "description": "Exótica y cremosa combinación de tequila con el sabor tropical del coco. Ideal para cócteles o para tomar muy frío.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-coco-loco.png"
+    "name": "Kellogg's Zucaritas Chocolate",
+    "short": "Hojuelas de maíz sabor chocolate",
+    "description": "Hojuelas de maíz escarchadas con sabor a chocolate y con malvaviscos, adicionadas con vitaminas y hierro.",
+    "price": 1.1,
+    "categoryId": "cereal",
+    "image": "./assets/images/products/products_0028_20231206_132525.png"
   },
   {
     "id": "p28",
-    "name": "Cream Heroes Lujuria Pasión",
-    "short": "Crema de tequila con maracuyá",
-    "description": "Un licor seductor con la acidez y el dulzor del maracuyá (fruta de la pasión), mezclado con una base de crema y tequila.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-lujuria-pasion.png"
+    "name": "Kellogg's Corn Pops",
+    "short": "Maíz inflado y endulzado",
+    "description": "Cereal de maíz inflado y endulzado, perfecto para el snack. Adicionado con vitaminas y hierro.",
+    "price": 1,
+    "categoryId": "cereal",
+    "image": "./assets/images/products/products_0029_20231206_132532.png"
   },
   {
     "id": "p29",
-    "name": "Louisville Bourbon Whisky",
-    "short": "Whisky bourbon americano",
-    "description": "Auténtico bourbon de Kentucky, envejecido en barricas de roble nuevas, con notas de vainilla, caramelo y un final ahumado.",
-    "price": 25.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/louisville-bourbon-whisky.png"
+    "name": "Nestlé Coffee-Mate",
+    "short": "Sustituto de crema para café",
+    "description": "Sustituto de crema en polvo no lácteo, para un café rico y cremoso. Venta individual.",
+    "price": 0.2,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0030_20231206_132539.png"
   },
   {
     "id": "p30",
-    "name": "Clan MacMillan Scotch Whisky",
-    "short": "Whisky escocés blended",
-    "description": "Un whisky escocés de mezcla suave y accesible, con un ligero sabor a malta y notas ahumadas.",
-    "price": 23.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/clan-macmillan-scotch-whisky.png"
+    "name": "Ricolino Panditas Clásicos",
+    "short": "Gomitas de sabores frutales",
+    "description": "Clásicas gomitas en forma de oso con deliciosos sabores frutales.",
+    "price": 0.5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0031_20231206_132551.png"
   },
   {
     "id": "p31",
-    "name": "Krilof Vodka",
-    "short": "Vodka premium de grano",
-    "description": "Vodka de alta calidad, destilado para conseguir una pureza excepcional y un sabor suave y neutro, perfecto para coctelería.",
-    "price": 16.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/krilof-vodka.png"
+    "name": "Gamesa Mini Mamut",
+    "short": "Galletas con malvavisco",
+    "description": "Pequeñas galletas con malvavisco y cobertura sabor a chocolate. Un clásico para disfrutar.",
+    "price": 0.4,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0032_20231206_132602.png"
   },
   {
     "id": "p32",
-    "name": "Pistolero Silver Tequila",
-    "short": "Tequila blanco 100% agave",
-    "description": "Tequila blanco de sabor puro a agave, ideal para margaritas o para disfrutar solo, apreciando sus notas herbales y cítricas.",
-    "price": 19.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/pistolero-silver-tequila.png"
+    "name": "The King Capsule",
+    "short": "Cigarrillos con cápsula de sabor",
+    "description": "Caja de cigarrillos The King con cápsula de sabor para una experiencia refrescante.",
+    "price": 6,
+    "categoryId": "tobacco",
+    "image": "./assets/images/products/products_0033_20231206_132631.png"
   },
   {
     "id": "p33",
-    "name": "Apache Spiced",
-    "short": "Bebida espirituosa con especias",
-    "description": "Bebida a base de ron caribeño infusionada con una mezcla de especias exóticas, creando un sabor cálido y complejo.",
-    "price": 15.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/apache-spiced.png"
+    "name": "Kitt Maní Barbacoa",
+    "short": "Maní con sabor a barbacoa",
+    "description": "Delicioso maní tostado con un intenso sabor a barbacoa. El snack perfecto.",
+    "price": 0.9,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0034_20231206_132642.png"
   },
   {
     "id": "p34",
-    "name": "Blackpool Dry Gin",
-    "short": "Ginebra seca clásica",
-    "description": "Ginebra de estilo London Dry, con un perfil botánico clásico dominado por el enebro, ideal para un gin-tonic tradicional.",
-    "price": 20.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/blackpool-dry-gin.png"
+    "name": "Cremica Cremelo Orange",
+    "short": "Galletas de crema sabor naranja",
+    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a naranja.",
+    "price": 0.7,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0035_20231206_132718.png"
   },
   {
     "id": "p35",
-    "name": "5th Black Air Gin",
-    "short": "Ginebra negra infusionada",
-    "description": "Una ginebra innovadora de color negro, infusionada con botánicos que le otorgan un sabor complejo y un aroma único.",
-    "price": 28.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/5th-black-air-gin.png"
+    "name": "Cremica Cremelo Strawberry",
+    "short": "Galletas de crema sabor fresa",
+    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a fresa.",
+    "price": 0.7,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0036_20231206_132722.png"
   },
   {
     "id": "p36",
-    "name": "Limoncello Mazzapicco",
-    "short": "Licor de limón italiano",
-    "description": "Licor tradicional italiano elaborado con cáscaras de limón, con un sabor dulce y cítrico. Se sirve tradicionalmente muy frío.",
-    "price": 14.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/limoncello-mazzapicco.png"
+    "name": "Cremica Cremelo Vanilla",
+    "short": "Galletas de crema sabor vainilla",
+    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a vainilla.",
+    "price": 0.7,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0037_20231206_132728.png"
   },
   {
     "id": "p37",
-    "name": "Romina Sambuca",
-    "short": "Licor de anís estrellado",
-    "description": "Clásico licor italiano con un intenso sabor a anís. Perfecto como digestivo, solo, con hielo o con un grano de café (con la mosca).",
-    "price": 13.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/romina-sambuca.png"
+    "name": "Cremica Cremelo Chocolate",
+    "short": "Galletas de crema sabor chocolate",
+    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a chocolate.",
+    "price": 0.7,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0038_20231206_132733.png"
   },
   {
     "id": "p38",
-    "name": "Regis More Brandy",
-    "short": "Brandy reserva tradicional",
-    "description": "Brandy envejecido en barricas de roble, con un sabor suave y aterciopelado, y aromas de frutos secos y madera.",
-    "price": 19.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/regis-more-brandy.png"
+    "name": "Kirkland Signature Palomitas",
+    "short": "Palomitas de maíz sabor mantequilla",
+    "description": "Palomitas para microondas con saborizante natural a mantequilla. Hechas con grano entero de maíz y sin gluten.",
+    "price": 1.2,
+    "categoryId": "snacks",
+    "image": "./assets/images/products/products_0039_20231206_132759.png"
   },
   {
     "id": "p39",
-    "name": "Trial Coconut Liqueur",
-    "short": "Licor de coco caribeño",
-    "description": "Un licor dulce y cremoso con el auténtico sabor del coco, perfecto para dar un toque tropical a tus cócteles.",
-    "price": 12.5,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/trial-coconut-liqueur.png"
+    "name": "Member's Mark Malvaviscos",
+    "short": "Malvaviscos sabor fresa y vainilla",
+    "description": "Bolsa de 1kg de suaves malvaviscos con sabores de fresa y vainilla.",
+    "price": 4.5,
+    "categoryId": "candy",
+    "image": "./assets/images/products/products_0040_20231206_133000.png"
   },
   {
     "id": "p40",
-    "name": "Sorel Menta",
-    "short": "Licor de menta verde",
-    "description": "Licor refrescante y aromático con un intenso sabor a menta verde. Ideal para cócteles o para tomar con hielo.",
-    "price": 11.0,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/sorel-menta.png"
+    "name": "Knorr Caldo de Pollo en Polvo",
+    "short": "Caldo de pollo en polvo 1kg",
+    "description": "Caldo de pollo en polvo para sazonar tus comidas. Bolsa resellable de 1kg, fácil disolución.",
+    "price": 8,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0041_20231206_133230.png"
   },
   {
     "id": "p41",
-    "name": "Cream Heroes Fresa",
-    "short": "Crema de tequila con fresa",
-    "description": "Dulce y cremoso licor que combina el sabor del tequila con la frescura de las fresas. Ideal para tomar solo, con hielo o en postres.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-fresa.png"
+    "name": "Knorr Caldo de Pollo en Cubos",
+    "short": "24 cubos de caldo de pollo",
+    "description": "Caldo de pollo en cubos para un irresistible sabor casero. Caja con 24 cubos.",
+    "price": 3,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0042_20231206_133237.png"
   },
   {
     "id": "p42",
-    "name": "Cream Heroes Piña Colada",
-    "short": "Crema de tequila sabor piña colada",
-    "description": "Todo el sabor del cóctel piña colada en un licor cremoso. Una mezcla tropical de piña, coco y tequila.",
-    "price": 17.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/cream-heroes-pina-colada.png"
+    "name": "Kellogg's Choco Krispis",
+    "short": "Arroz inflado sabor a chocolate",
+    "description": "Cereal de granos de arroz inflados con el clásico sabor a chocolate, adicionados con vitaminas y minerales.",
+    "price": 1.1,
+    "categoryId": "cereal",
+    "image": "./assets/images/products/products_0043_20231206_133243.png"
   },
   {
     "id": "p43",
-    "name": "Jacquierot Crème de Cassis",
-    "short": "Licor de grosella negra",
-    "description": "Licor francés de grosella negra, dulce y con un sabor profundo a frutos del bosque. Ingrediente esencial para el cóctel Kir Royal.",
-    "price": 15.5,
+    "name": "Zuko Sabor Naranja",
+    "short": "Polvo para preparar bebida",
+    "description": "Polvo para preparar 2 litros de bebida sabor naranja. Adicionado con vitamina C, no requiere azúcar.",
+    "price": 0.5,
     "categoryId": "beverages",
-    "image": "./assets/images/products/jacquierot-creme-de-cassis.png"
+    "image": "./assets/images/products/products_0044_20231206_133251.png"
   },
   {
     "id": "p44",
-    "name": "Hollandia Malta",
-    "short": "Bebida de malta sin alcohol",
-    "description": "Bebida nutritiva y refrescante a base de malta, con un sabor dulce característico. Una alternativa sin alcohol llena de energía.",
-    "price": 1.3,
+    "name": "Zuko Sabor Manzana",
+    "short": "Polvo para preparar bebida",
+    "description": "Polvo para preparar 2 litros de bebida sabor manzana. Adicionado con vitamina C, no requiere azúcar.",
+    "price": 0.5,
     "categoryId": "beverages",
-    "image": "./assets/images/products/hollandia-malta.png"
+    "image": "./assets/images/products/products_0045_20231206_133257.png"
   },
   {
-    "id": "p1",
-    "name": "Vodka Tabarish 37,5% 70cl",
-    "short": "Vodka puro y cristalino",
-    "description": "Vodka destilado varias veces para obtener un sabor neutro y una claridad excepcional.",
-    "price": 14.5,
+    "id": "p45",
+    "name": "Zuko Sabor Limón",
+    "short": "Polvo para preparar bebida",
+    "description": "Polvo para preparar 2 litros de bebida sabor limón. Adicionado con vitamina C, no requiere azúcar.",
+    "price": 0.5,
     "categoryId": "beverages",
-    "image": "https://districaribe.com/wp-content/uploads/2022/12/tabarish-vodka-70cl.jpg"
+    "image": "./assets/images/products/products_0046_20231206_133302.png"
   },
   {
-    "id": "p2",
-    "name": "Vodka Tabarish VDK Spirit 30% 70cl",
-    "short": "Vodka suave y refrescante",
-    "description": "Vodka de sabor más ligero, ideal para cócteles y mezclas.",
-    "price": 12.0,
-    "categoryId": "beverages",
-    "image": "https://districaribe.com/wp-content/uploads/2022/12/tabarish-vodka-spirit-70cl.jpg"
+    "id": "p46",
+    "name": "RikoPollo Caldito de Pollo",
+    "short": "Sazonador sabor a caldito de pollo",
+    "description": "Sazonador con delicioso sabor a caldito de pollo para realzar el sabor de tus comidas.",
+    "price": 0.6,
+    "categoryId":. pantry",
+    "image": "./assets/images/products/products_0047_20231206_133319.png"
   },
   {
-    "id": "p3",
-    "name": "Lyubov Vodka 40% 70cl",
-    "short": "Vodka clásico ruso",
-    "description": "Vodka tradicional, claro y de grano de alta pureza.",
-    "price": 6.27,
-    "categoryId": "beverages",
-    "image": "https://districaribe.com/wp-content/uploads/2020/03/lyubov-vodka-70cl.jpg"
+    "id": "p47",
+    "name": "Maizena Fécula de Maíz",
+    "short": "Fécula de maíz",
+    "description": "La original fécula de maíz Maizena. Ideal para hacer tus platillos más crujientes, cremosos y esponjosos.",
+    "price": 1,
+    "categoryId": "pantry",
+    "image": "./assets/images/products/products_0048_Capa-1.png"
   },
   {
-    "id": "p4",
-    "name": "Koltsova Barcepal Vodka",
-    "short": "Vodka premium de grano",
-    "description": "Vodka de alta calidad con sabor suave y limpio.",
-    "price": 15.0,
-    "categoryId": "beverages",
-    "image": "https://districaribe.com/wp-content/uploads/2023/04/barcepal-koltsova-vodka.jpg"
+    "id": "p48",
+    "name": "DoBon Composto Lácteo",
+    "short": "Compuesto lácteo en polvo",
+    "description": "Compuesto lácteo en polvo de 1kg. Fuente de Calcio, Hierro y Vitaminas A, C y D.",
+    "price": 7.5,
+    "categoryId": "dairy",
+    "image": "./assets/images/products/products_0049_Capa-2.png"
   },
   {
-    "id": "p5",
-    "name": "Krilof Barcepal Vodka",
-    "short": "Vodka refinado y elegante",
-    "description": "Vodka cristalino con notas suaves, perfecto para beber puro o en cócteles.",
-    "price": 16.0,
+    "id": "p49",
+    "name": "WS Blended Spirit Drink",
+    "short": "Bebida espirituosa mezclada",
+    "description": "Bebida espirituosa mezclada, 'Rare Luxury', una selección de calidad para disfrutar.",
+    "price": 15,
     "categoryId": "beverages",
-    "image": "https://districaribe.com/wp-content/uploads/2023/04/barcepal-krilof-vodka.jpg"
+    "image": "./assets/images/products/products_0050_IMG_20231206_123431.png"
   }
 ]
