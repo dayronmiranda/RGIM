@@ -45,15 +45,6 @@
     "image": "./assets/images/products/yelo-naranja.png"
   },
   {
-    "id": "p6",
-    "name": "Yelo Water",
-    "short": "Agua mineral natural",
-    "description": "Agua mineral sin gas, pura y equilibrada, ideal para una hidratación saludable durante todo el día.",
-    "price": 0.8,
-    "categoryId": "beverages",
-    "image": "./assets/images/products/yelo-water.png"
-  },
-  {
     "id": "p7",
     "name": "Gold Partner Tequila",
     "short": "Tequila dorado suave",
@@ -394,5 +385,50 @@
     "price": 1.3,
     "categoryId": "beverages",
     "image": "./assets/images/products/hollandia-malta.png"
+  },
+  {
+    "id": "p1",
+    "name": "Vodka Tabarish 37,5% 70cl",
+    "short": "Vodka puro y cristalino",
+    "description": "Vodka destilado varias veces para obtener un sabor neutro y una claridad excepcional.",
+    "price": 14.5,
+    "categoryId": "beverages",
+    "image": "https://districaribe.com/wp-content/uploads/2022/12/tabarish-vodka-70cl.jpg"
+  },
+  {
+    "id": "p2",
+    "name": "Vodka Tabarish VDK Spirit 30% 70cl",
+    "short": "Vodka suave y refrescante",
+    "description": "Vodka de sabor más ligero, ideal para cócteles y mezclas.",
+    "price": 12.0,
+    "categoryId": "beverages",
+    "image": "https://districaribe.com/wp-content/uploads/2022/12/tabarish-vodka-spirit-70cl.jpg"
+  },
+  {
+    "id": "p3",
+    "name": "Lyubov Vodka 40% 70cl",
+    "short": "Vodka clásico ruso",
+    "description": "Vodka tradicional, claro y de grano de alta pureza.",
+    "price": 6.27,
+    "categoryId": "beverages",
+    "image": "https://districaribe.com/wp-content/uploads/2020/03/lyubov-vodka-70cl.jpg"
+  },
+  {
+    "id": "p4",
+    "name": "Koltsova Barcepal Vodka",
+    "short": "Vodka premium de grano",
+    "description": "Vodka de alta calidad con sabor suave y limpio.",
+    "price": 15.0,
+    "categoryId": "beverages",
+    "image": "https://districaribe.com/wp-content/uploads/2023/04/barcepal-koltsova-vodka.jpg"
+  },
+  {
+    "id": "p5",
+    "name": "Krilof Barcepal Vodka",
+    "short": "Vodka refinado y elegante",
+    "description": "Vodka cristalino con notas suaves, perfecto para beber puro o en cócteles.",
+    "price": 16.0,
+    "categoryId": "beverages",
+    "image": "https://districaribe.com/wp-content/uploads/2023/04/barcepal-krilof-vodka.jpg"
   }
 ]
