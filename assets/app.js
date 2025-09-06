@@ -873,40 +873,44 @@
     }, 500)
   }
   
-  // Mobile navigation menu functionality
+  // Mobile navigation menu functionality - FIXED
   function setupMobileNavigation() {
     const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
-    const mobileNav = document.getElementById('mobile-nav')
+    const mobileNavOverlay = document.getElementById('mobile-nav-overlay')
     const mobileNavClose = document.getElementById('mobile-nav-close')
     
-    if (!mobileMenuToggle || !mobileNav) return
+    if (!mobileMenuToggle || !mobileNavOverlay) return
     
     mobileMenuToggle.onclick = () => {
-      mobileNav.classList.add('show')
+      mobileNavOverlay.classList.add('show')
+      document.body.style.overflow = 'hidden' // Prevent scrolling when menu is open
     }
     
     if (mobileNavClose) {
       mobileNavClose.onclick = () => {
-        mobileNav.classList.remove('show')
+        mobileNavOverlay.classList.remove('show')
+        document.body.style.overflow = '' // Restore scrolling
       }
     }
     
     // Close menu when clicking on navigation links
-    mobileNav.querySelectorAll('a').forEach(link => {
+    mobileNavOverlay.querySelectorAll('a').forEach(link => {
       link.onclick = () => {
-        mobileNav.classList.remove('show')
+        mobileNavOverlay.classList.remove('show')
+        document.body.style.overflow = '' // Restore scrolling
       }
     })
     
     // Close menu when clicking outside
-    mobileNav.onclick = (e) => {
-      if (e.target === mobileNav) {
-        mobileNav.classList.remove('show')
+    mobileNavOverlay.onclick = (e) => {
+      if (e.target === mobileNavOverlay) {
+        mobileNavOverlay.classList.remove('show')
+        document.body.style.overflow = '' // Restore scrolling
       }
     }
   }
   
-  // Enhanced product rendering for mobile
+  // Enhanced product rendering for mobile - FIXED
   function renderProducts(){
     const grid = els.productGrid
     if(!grid) return
@@ -916,42 +920,60 @@
 
     list.forEach(p => {
       const card = document.createElement('div')
-      card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col'
-      card.innerHTML = `
-        <div class="aspect-square bg-slate-100 relative">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover">` : ''}
-        </div>
-        <div class="p-4 flex-1 flex flex-col">
-          <div class="font-medium">${p.name}</div>
-          <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
-          <div class="mt-auto flex items-center justify-between gap-2 pt-3">
-            <div class="font-semibold">${fmtCurrency(p.price)}</div>
-            <div class="flex items-center gap-2">
-              <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
-              <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
-            </div>
-          </div>
-        </div>`
+      card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col product-card'
       
-      // Mobile: make entire card clickable for details
-      if (window.innerWidth <= 430) {
+      // Mobile-optimized layout
+      const isMobile = window.innerWidth <= 430
+      
+      if (isMobile) {
+        // Mobile: simplified layout without details button
+        card.innerHTML = `
+          <div class="aspect-square bg-slate-100 relative">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+          </div>
+          <div class="p-3 flex-1 flex flex-col">
+            <div class="font-medium text-sm">${p.name}</div>
+            <div class="text-xs text-slate-600 mt-1">${p.short || ''}</div>
+            <div class="mt-auto pt-2">
+              <div class="font-semibold text-sm mb-2">${fmtCurrency(p.price)}</div>
+              <button class="w-full px-3 py-2 bg-brand-600 text-white rounded hover:bg-brand-700 text-sm font-medium" data-act="add">Añadir al carrito</button>
+            </div>
+          </div>`
+        
+        // Make entire card clickable for details on mobile
         card.style.cursor = 'pointer'
         card.onclick = (e) => {
-          // Don't trigger if clicking on add button
           if (!e.target.closest('[data-act="add"]')) {
             openProductModal(p)
           }
         }
+      } else {
+        // Desktop: full layout with details button
+        card.innerHTML = `
+          <div class="aspect-square bg-slate-100 relative">
+            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+          </div>
+          <div class="p-4 flex-1 flex flex-col">
+            <div class="font-medium">${p.name}</div>
+            <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
+            <div class="mt-auto flex items-center justify-between gap-2 pt-3">
+              <div class="font-semibold">${fmtCurrency(p.price)}</div>
+              <div class="flex items-center gap-2">
+                <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
+                <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
+              </div>
+            </div>
+          </div>`
+        
+        card.querySelector('[data-act="details"]').onclick = () => openProductModal(p)
       }
       
+      // Add to cart button handler
       card.querySelector('[data-act="add"]').onclick = (e) => {
         e.stopPropagation()
         addToCart(p.id)
       }
-      card.querySelector('[data-act="details"]').onclick = (e) => {
-        e.stopPropagation()
-        openProductModal(p)
-      }
+      
       grid.appendChild(card)
     })
   }
