@@ -1,0 +1,83 @@
+<section id="route-store">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Multi-column layout: Products on left, Cart sidebar on right -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <!-- Products section (3/4 width on large screens) -->
+      <div class="lg:col-span-3">
+        <h1 class="text-2xl font-bold" data-i18n="store.title">Tienda</h1>
+        <p class="text-slate-600" data-i18n="store.subtitle">Explora categorías, ve detalles y añade al carrito.</p>
+
+        <!-- Categories -->
+        <div id="category-bar" class="mt-6 flex flex-wrap gap-2"></div>
+
+        <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4" id="product-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Cart sidebar (1/4 width on large screens, always visible) -->
+      <div class="lg:col-span-1">
+        <div class="sticky top-24 bg-white border rounded-lg shadow-sm">
+          <!-- Cart Header -->
+          <div class="p-4 border-b">
+            <h2 class="text-lg font-semibold" data-i18n="cart.title">Carrito de compras</h2>
+          </div>
+          
+          <!-- Cart Items -->
+          <div class="p-4 max-h-64 overflow-y-auto">
+            <div id="cart-sidebar-items" class="space-y-3">
+              <!-- Cart items rendered here -->
+            </div>
+          </div>
+          
+          <!-- Cart Footer with Checkout -->
+          <div class="border-t p-4 bg-slate-50">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <span data-i18n="checkout.total">Total:</span>
+                <span id="cart-sidebar-total" class="text-xl font-bold">$0.00</span>
+              </div>
+              <div class="text-sm text-slate-600">
+                <select id="cart-sidebar-shipping" class="w-full border rounded px-3 py-2 mb-2">
+                  <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+                  <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+                </select>
+              </div>
+            </div>
+            
+            <!-- Checkout Form -->
+            <form id="checkout-form" class="space-y-3">
+              <div>
+                <label class="block text-xs font-medium mb-1" for="buyerName" data-i18n="checkout.name">Nombre</label>
+                <input id="buyerName" type="text" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" required />
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1" for="buyerWhatsapp" data-i18n="checkout.whatsapp">WhatsApp</label>
+                <input id="buyerWhatsapp" type="tel" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="+507..." required />
+              </div>
+              <div>
+                <label class="block text-xs font-medium mb-1" for="shippingType" data-i18n="checkout.shipping">Tipo de envío</label>
+                <select id="shippingType" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                  <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+                  <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+                </select>
+              </div>
+              <button type="submit" class="w-full bg-brand-600 text-white py-2 rounded hover:bg-brand-700 font-medium text-sm transition-colors" data-i18n="checkout.submit">Enviar solicitud</button>
+              <p class="text-xs text-slate-500 text-center" data-i18n="checkout.note">No realizas pagos aquí. Te contactaremos por WhatsApp para completar la compra vía Zelle o transferencia.</p>
+            </form>
+            
+            <!-- History Section -->
+            <div class="mt-4 pt-4 border-t">
+              <h4 class="font-medium text-xs mb-2" data-i18n="history.title">Historial (sesión)</h4>
+              <ul id="session-history" class="space-y-1 text-xs text-slate-600 max-h-24 overflow-y-auto"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden cart items container (for compatibility) -->
+    <div id="cart-items" class="hidden"></div>
+    <div id="order-total" class="hidden">$0.00</div>
+  </div>
+</section>

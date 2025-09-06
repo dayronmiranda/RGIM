@@ -1,0 +1,398 @@
+[
+  {
+    "id": "p1",
+    "name": "Windmill Holland Beer",
+    "short": "Cerveza lager holandesa",
+    "description": "Refrescante cerveza tipo lager, elaborada siguiendo la tradición holandesa. Ideal para acompañar comidas o disfrutar sola.",
+    "price": 1.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/windmill-holland-beer.png"
+  },
+  {
+    "id": "p2",
+    "name": "Claro Beer",
+    "short": "Cerveza clara y ligera",
+    "description": "Una cerveza suave y fácil de beber, con un sabor limpio y refrescante. Perfecta para días calurosos.",
+    "price": 1.6,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/claro-beer.png"
+  },
+  {
+    "id": "p3",
+    "name": "Yelo Limón",
+    "short": "Refresco con sabor a limón",
+    "description": "Bebida carbonatada con un intenso y refrescante sabor a limón, ideal para calmar la sed.",
+    "price": 1.2,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/yelo-limon.png"
+  },
+  {
+    "id": "p4",
+    "name": "Yelo Cola",
+    "short": "Refresco de cola clásico",
+    "description": "El clásico sabor de la cola en una bebida carbonatada y refrescante para disfrutar en cualquier momento.",
+    "price": 1.2,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/yelo-cola.png"
+  },
+  {
+    "id": "p5",
+    "name": "Yelo Naranja",
+    "short": "Refresco con sabor a naranja",
+    "description": "Bebida burbujeante con el dulce y cítrico sabor de la naranja, perfecta para toda la familia.",
+    "price": 1.2,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/yelo-naranja.png"
+  },
+  {
+    "id": "p6",
+    "name": "Yelo Water",
+    "short": "Agua mineral natural",
+    "description": "Agua mineral sin gas, pura y equilibrada, ideal para una hidratación saludable durante todo el día.",
+    "price": 0.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/yelo-water.png"
+  },
+  {
+    "id": "p7",
+    "name": "Gold Partner Tequila",
+    "short": "Tequila dorado suave",
+    "description": "Un tequila dorado de sabor suave con notas de agave, perfecto para cócteles como margaritas o para tomar solo.",
+    "price": 18.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/gold-partner-tequila.png"
+  },
+  {
+    "id": "p8",
+    "name": "Jean Marcheur Whisky",
+    "short": "Whisky de grano envejecido",
+    "description": "Whisky blended con un carácter suave y notas de madera y vainilla, resultado de su cuidadoso envejecimiento.",
+    "price": 22.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/jean-marcheur-whisky.png"
+  },
+  {
+    "id": "p9",
+    "name": "Airisbei Irish Cream Liqueur",
+    "short": "Crema de licor irlandés",
+    "description": "Deliciosa y cremosa combinación de whisky irlandés y crema de leche, ideal para tomar con hielo o en el café.",
+    "price": 15.75,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/airisbei-irish-cream-liqueur.png"
+  },
+  {
+    "id": "p10",
+    "name": "Elliot Hall Whisky Cream",
+    "short": "Crema de whisky suave",
+    "description": "Licor cremoso a base de whisky, con una textura sedosa y un sabor dulce y equilibrado.",
+    "price": 16.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/elliot-hall-whisky-cream.png"
+  },
+  {
+    "id": "p11",
+    "name": "Ron Tabay Añejo",
+    "short": "Ron añejo caribeño",
+    "description": "Ron envejecido en barricas de roble que le confieren un sabor complejo con notas de caramelo y especias.",
+    "price": 19.99,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/ron-tabay-anejo.png"
+  },
+  {
+    "id": "p12",
+    "name": "Vodka Tabarish",
+    "short": "Vodka puro y cristalino",
+    "description": "Vodka de grano de alta pureza, destilado varias veces para obtener un sabor neutro y una claridad excepcional.",
+    "price": 14.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/vodka-tabarish.png"
+  },
+  {
+    "id": "p13",
+    "name": "Cream Heroes Mango Liqueur",
+    "short": "Crema de tequila con mango",
+    "description": "Innovador licor que combina la suavidad de la crema y el tequila con el sabor exótico del mango.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-mango-liqueur.png"
+  },
+  {
+    "id": "p14",
+    "name": "Cream Heroes Horchata Liqueur",
+    "short": "Crema de horchata con canela",
+    "description": "Un licor cremoso inspirado en la horchata tradicional, con toques de canela y un dulzor equilibrado.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-horchata-liqueur.png"
+  },
+  {
+    "id": "p15",
+    "name": "Cream Heroes Coffee Liqueur",
+    "short": "Crema de tequila con café",
+    "description": "La combinación perfecta de tequila, crema y un intenso sabor a café. Ideal para postres o para tomar solo.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-coffee-liqueur.png"
+  },
+  {
+    "id": "p16",
+    "name": "Cream Heroes Watermelon Liqueur",
+    "short": "Crema de tequila con sandía",
+    "description": "Un licor refrescante y original con el sabor veraniego de la sandía, mezclado con crema y tequila.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-watermelon-liqueur.png"
+  },
+  {
+    "id": "p17",
+    "name": "Ron Lupe Añejo",
+    "short": "Ron oscuro estilo caribeño",
+    "description": "Ron añejo con un perfil de sabor robusto, notas de melaza y madera, perfecto para cócteles clásicos.",
+    "price": 18.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/ron-lupe-anejo.png"
+  },
+  {
+    "id": "p18",
+    "name": "Ron Lupe Negro",
+    "short": "Ron negro intenso",
+    "description": "Ron oscuro de sabor profundo y complejo, ideal para combinados que requieran un ron con carácter.",
+    "price": 18.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/ron-lupe-negro.png"
+  },
+  {
+    "id": "p19",
+    "name": "Dagger Dry Gin",
+    "short": "Ginebra seca y aromática",
+    "description": "Una ginebra clásica tipo London Dry, con notas botánicas de enebro y cítricos. Perfecta para un gin-tonic.",
+    "price": 21.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/dagger-dry-gin.png"
+  },
+  {
+    "id": "p20",
+    "name": "Royal Guards London Dry Gin",
+    "short": "Ginebra premium equilibrada",
+    "description": "Ginebra premium destilada con una selección de botánicos que le otorgan un sabor sofisticado y equilibrado.",
+    "price": 24.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/royal-guards-london-dry-gin.png"
+  },
+  {
+    "id": "p21",
+    "name": "Sobei Licor de Manzana Verde",
+    "short": "Licor de manzana ácido y dulce",
+    "description": "Licor vibrante con el sabor característico de la manzana verde, un equilibrio perfecto entre acidez y dulzor.",
+    "price": 12.9,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/sobei-licor-de-manzana-verde.png"
+  },
+  {
+    "id": "p22",
+    "name": "Cocobay Coconut Liqueur",
+    "short": "Licor de coco tropical",
+    "description": "Exótico licor con el sabor auténtico del coco caribeño, ideal para crear cócteles tropicales como la piña colada.",
+    "price": 14.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cocobay-coconut-liqueur.png"
+  },
+  {
+    "id": "p23",
+    "name": "Landar Bräu Premium Beer",
+    "short": "Cerveza premium tipo pilsner",
+    "description": "Una cerveza rubia y equilibrada, con un sabor suave y un aroma a lúpulo fresco. Perfecta para cualquier ocasión.",
+    "price": 1.4,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/landar-brau-premium-beer.png"
+  },
+  {
+    "id": "p24",
+    "name": "8.6 Original Beer",
+    "short": "Cerveza lager fuerte",
+    "description": "Cerveza de malta con un alto contenido de alcohol y un sabor intenso y con cuerpo. Para los que buscan una experiencia cervecera más potente.",
+    "price": 1.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/8-6-original-beer.png"
+  },
+  {
+    "id": "p25",
+    "name": "Hollandia Premium Beer",
+    "short": "Cerveza lager holandesa",
+    "description": "Cerveza lager importada de Holanda, conocida por su sabor refrescante y su acabado limpio y crujiente.",
+    "price": 1.65,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/hollandia-premium-beer.png"
+  },
+  {
+    "id": "p26",
+    "name": "Tigon Energy Drink",
+    "short": "Bebida energética carbonatada",
+    "description": "Bebida energética para darte un impulso cuando más lo necesitas, con un sabor intenso y refrescante.",
+    "price": 1.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/tigon-energy-drink.png"
+  },
+  {
+    "id": "p27",
+    "name": "Cream Heroes Coco Loco",
+    "short": "Crema de tequila con coco",
+    "description": "Exótica y cremosa combinación de tequila con el sabor tropical del coco. Ideal para cócteles o para tomar muy frío.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-coco-loco.png"
+  },
+  {
+    "id": "p28",
+    "name": "Cream Heroes Lujuria Pasión",
+    "short": "Crema de tequila con maracuyá",
+    "description": "Un licor seductor con la acidez y el dulzor del maracuyá (fruta de la pasión), mezclado con una base de crema y tequila.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-lujuria-pasion.png"
+  },
+  {
+    "id": "p29",
+    "name": "Louisville Bourbon Whisky",
+    "short": "Whisky bourbon americano",
+    "description": "Auténtico bourbon de Kentucky, envejecido en barricas de roble nuevas, con notas de vainilla, caramelo y un final ahumado.",
+    "price": 25.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/louisville-bourbon-whisky.png"
+  },
+  {
+    "id": "p30",
+    "name": "Clan MacMillan Scotch Whisky",
+    "short": "Whisky escocés blended",
+    "description": "Un whisky escocés de mezcla suave y accesible, con un ligero sabor a malta y notas ahumadas.",
+    "price": 23.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/clan-macmillan-scotch-whisky.png"
+  },
+  {
+    "id": "p31",
+    "name": "Krilof Vodka",
+    "short": "Vodka premium de grano",
+    "description": "Vodka de alta calidad, destilado para conseguir una pureza excepcional y un sabor suave y neutro, perfecto para coctelería.",
+    "price": 16.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/krilof-vodka.png"
+  },
+  {
+    "id": "p32",
+    "name": "Pistolero Silver Tequila",
+    "short": "Tequila blanco 100% agave",
+    "description": "Tequila blanco de sabor puro a agave, ideal para margaritas o para disfrutar solo, apreciando sus notas herbales y cítricas.",
+    "price": 19.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/pistolero-silver-tequila.png"
+  },
+  {
+    "id": "p33",
+    "name": "Apache Spiced",
+    "short": "Bebida espirituosa con especias",
+    "description": "Bebida a base de ron caribeño infusionada con una mezcla de especias exóticas, creando un sabor cálido y complejo.",
+    "price": 15.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/apache-spiced.png"
+  },
+  {
+    "id": "p34",
+    "name": "Blackpool Dry Gin",
+    "short": "Ginebra seca clásica",
+    "description": "Ginebra de estilo London Dry, con un perfil botánico clásico dominado por el enebro, ideal para un gin-tonic tradicional.",
+    "price": 20.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/blackpool-dry-gin.png"
+  },
+  {
+    "id": "p35",
+    "name": "5th Black Air Gin",
+    "short": "Ginebra negra infusionada",
+    "description": "Una ginebra innovadora de color negro, infusionada con botánicos que le otorgan un sabor complejo y un aroma único.",
+    "price": 28.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/5th-black-air-gin.png"
+  },
+  {
+    "id": "p36",
+    "name": "Limoncello Mazzapicco",
+    "short": "Licor de limón italiano",
+    "description": "Licor tradicional italiano elaborado con cáscaras de limón, con un sabor dulce y cítrico. Se sirve tradicionalmente muy frío.",
+    "price": 14.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/limoncello-mazzapicco.png"
+  },
+  {
+    "id": "p37",
+    "name": "Romina Sambuca",
+    "short": "Licor de anís estrellado",
+    "description": "Clásico licor italiano con un intenso sabor a anís. Perfecto como digestivo, solo, con hielo o con un grano de café (con la mosca).",
+    "price": 13.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/romina-sambuca.png"
+  },
+  {
+    "id": "p38",
+    "name": "Regis More Brandy",
+    "short": "Brandy reserva tradicional",
+    "description": "Brandy envejecido en barricas de roble, con un sabor suave y aterciopelado, y aromas de frutos secos y madera.",
+    "price": 19.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/regis-more-brandy.png"
+  },
+  {
+    "id": "p39",
+    "name": "Trial Coconut Liqueur",
+    "short": "Licor de coco caribeño",
+    "description": "Un licor dulce y cremoso con el auténtico sabor del coco, perfecto para dar un toque tropical a tus cócteles.",
+    "price": 12.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/trial-coconut-liqueur.png"
+  },
+  {
+    "id": "p40",
+    "name": "Sorel Menta",
+    "short": "Licor de menta verde",
+    "description": "Licor refrescante y aromático con un intenso sabor a menta verde. Ideal para cócteles o para tomar con hielo.",
+    "price": 11.0,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/sorel-menta.png"
+  },
+  {
+    "id": "p41",
+    "name": "Cream Heroes Fresa",
+    "short": "Crema de tequila con fresa",
+    "description": "Dulce y cremoso licor que combina el sabor del tequila con la frescura de las fresas. Ideal para tomar solo, con hielo o en postres.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-fresa.png"
+  },
+  {
+    "id": "p42",
+    "name": "Cream Heroes Piña Colada",
+    "short": "Crema de tequila sabor piña colada",
+    "description": "Todo el sabor del cóctel piña colada en un licor cremoso. Una mezcla tropical de piña, coco y tequila.",
+    "price": 17.8,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/cream-heroes-pina-colada.png"
+  },
+  {
+    "id": "p43",
+    "name": "Jacquierot Crème de Cassis",
+    "short": "Licor de grosella negra",
+    "description": "Licor francés de grosella negra, dulce y con un sabor profundo a frutos del bosque. Ingrediente esencial para el cóctel Kir Royal.",
+    "price": 15.5,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/jacquierot-creme-de-cassis.png"
+  },
+  {
+    "id": "p44",
+    "name": "Hollandia Malta",
+    "short": "Bebida de malta sin alcohol",
+    "description": "Bebida nutritiva y refrescante a base de malta, con un sabor dulce característico. Una alternativa sin alcohol llena de energía.",
+    "price": 1.3,
+    "categoryId": "beverages",
+    "image": "./assets/images/products/hollandia-malta.png"
+  }
+]

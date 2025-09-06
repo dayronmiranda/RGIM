@@ -1,0 +1,123 @@
+/*
+  RGIM Mobile Styles (iPhone-focused)
+  - Optimized for iPhone widths (up to 430px)
+  - Improves tap targets, spacing, grid density, safe-area padding, and modal behavior
+*/
+
+:root {
+  --container-padding: 16px;
+  --tap-target: 44px;
+  --radius: 14px;
+}
+
+html, body {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+a, button, input, select, textarea {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+/* Prevent iOS zoom on inputs */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select, textarea {
+  font-size: 16px;
+}
+
+/* Toast safe-area padding */
+#toast-root { padding-bottom: calc(env(safe-area-inset-bottom) + 8px); }
+
+/* Header polish */
+header.sticky { backdrop-filter: saturate(1.05) blur(10px); }
+
+/* Modal: mobile-friendly sizing */
+#modal-root .fixed.inset-0 > div { width: 600px; max-width: 92vw; max-height: 90vh; overflow: auto; border-radius: var(--radius); }
+
+/* General mobile layout rules */
+@media screen and (max-width: 430px) {
+  /* Container padding harmonization */
+  .max-w-7xl { padding-left: var(--container-padding) !important; padding-right: var(--container-padding) !important; }
+
+  /* Headings and spacing */
+  h1, .text-5xl { line-height: 1.15; }
+  .py-16 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+  .lg\:py-24 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+
+  /* Buttons and interactive controls */
+  button, .btn { min-height: var(--tap-target); }
+  .rounded-lg { border-radius: var(--radius); }
+
+  /* Store layout: stack columns on mobile */
+  #route-store .grid.lg\:grid-cols-4 { 
+    display: block !important; 
+  }
+  
+  /* Products section on mobile */
+  #route-store .lg\:col-span-3 { 
+    margin-bottom: 2rem; 
+  }
+
+  /* Cart sidebar on mobile: full width, not sticky */
+  #route-store .lg\:col-span-1 .sticky { 
+    position: static !important; 
+    margin-bottom: 2rem;
+  }
+
+  /* Category bar: horizontal scroll chips */
+  #category-bar { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 8px; padding-bottom: 6px; }
+  #category-bar > * { flex: 0 0 auto; }
+  #category-bar button { min-height: 36px; padding: 6px 12px; }
+
+  /* Product grid: ensure 2 columns, tighter gap */
+  #product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
+  #product-grid .p-4 { padding: 12px !important; }
+  #product-grid .font-medium { font-size: 0.95rem; }
+  #product-grid .text-sm { font-size: 0.8rem; }
+
+  /* Product images stay crisp */
+  #product-grid .aspect-square img { image-rendering: -webkit-optimize-contrast; }
+
+  /* Cart sidebar items: more compact on mobile */
+  #cart-sidebar-items .flex.items-center { gap: 8px !important; }
+  #cart-sidebar-items .w-12.h-12 { width: 48px; height: 48px; }
+  #cart-sidebar-items .text-sm { font-size: 0.8rem; }
+  #cart-sidebar-items .text-xs { font-size: 0.75rem; }
+
+  /* Checkout form: more compact */
+  #checkout-form .space-y-3 > * + * { margin-top: 0.5rem !important; }
+  #checkout-form input, #checkout-form select { padding: 8px 12px !important; }
+  #checkout-form button { padding: 10px 16px !important; }
+
+  /* Admin table readability */
+  #route-admin table { font-size: 12px; }
+  #route-admin th, #route-admin td { padding: 8px; }
+
+  /* Glass sections more opaque on mobile */
+  .glass { background: rgba(255,255,255,0.9); }
+}
+
+/* Device-tuned breakpoints (common modern iPhones)
+   These ensure polish on different 16:9/19.5:9 screens, including 430px-wide devices. */
+@media screen and (device-width: 430px) and (-webkit-min-device-pixel-ratio: 3) {
+  /* Large iPhones (Pro Max sizes): slightly increase spacing */
+  #product-grid { gap: 14px !important; }
+}
+
+@media screen and (device-width: 393px) and (-webkit-min-device-pixel-ratio: 3) {
+  /* iPhone 15 Pro / similar widths */
+  #product-grid .font-medium { font-size: 1rem; }
+}
+
+@media screen and (device-width: 390px) and (-webkit-min-device-pixel-ratio: 3) {
+  /* iPhone 14/15 */
+  #product-grid { gap: 12px !important; }
+}

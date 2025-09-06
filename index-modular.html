@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RGIM | Tienda y Envíos</title>
+  <meta name="description" content="RG IM USA & PANAMÁ - Tienda prototipo con carrito, cotización y envíos marítimos y aéreos." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛒</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/mobile.css" media="screen and (max-width: 430px)">
+  <script>
+    // Tailwind quick config (light brand colors)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+              400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth fade for route changes */
+    .route { display: none; opacity: 0; transition: opacity 200ms ease; }
+    .route.active { display: block; opacity: 1; }
+    .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(10px); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-brand-600 text-white px-3 py-2 rounded">Saltar al contenido</a>
+
+  <!-- Header Component -->
+  <div id="header-component"></div>
+
+  <main id="main" class="flex-1">
+    <!-- Route Components -->
+    <div id="home-component" class="route active"></div>
+    <div id="store-component" class="route"></div>
+    <div id="faq-component" class="route"></div>
+    <div id="about-component" class="route"></div>
+    <div id="admin-component" class="route"></div>
+  </main>
+
+  <!-- Footer Component -->
+  <div id="footer-component"></div>
+
+  <!-- Portals -->
+  <div id="modal-root"></div>
+  <div id="toast-root" class="fixed bottom-4 left-0 right-0 flex justify-center pointer-events-none"></div>
+
+  <noscript>
+    <div class="max-w-7xl mx-auto p-4 text-red-700">Este sitio requiere JavaScript para funcionar correctamente.</div>
+  </noscript>
+
+  <!-- Component Loader -->
+  <script>
+    // Component loader utility
+    async function loadComponent(componentName, targetId) {
+      try {
+        const response = await fetch(`./components/${componentName}.html`)
+        const html = await response.text()
+        document.getElementById(targetId).innerHTML = html
+      } catch (error) {
+        console.error(`Error loading component ${componentName}:`, error)
+      }
+    }
+
+    // Load all components
+    async function loadAllComponents() {
+      await Promise.all([
+        loadComponent('header', 'header-component'),
+        loadComponent('home', 'home-component'),
+        loadComponent('store', 'store-component'),
+        loadComponent('faq', 'faq-component'),
+        loadComponent('about', 'about-component'),
+        loadComponent('admin', 'admin-component'),
+        loadComponent('footer', 'footer-component')
+      ])
+      
+      // Initialize app after components are loaded
+      if (window.initApp) {
+        window.initApp()
+      }
+    }
+
+    // Load components when DOM is ready
+    document.addEventListener('DOMContentLoaded', loadAllComponents)
+  </script>
+
+  <script src="./assets/app-modular.js" defer></script>
+  <script>
+    // Set year after components load
+    setTimeout(() => {
+      const yearEl = document.getElementById('year')
+      if (yearEl) yearEl.textContent = new Date().getFullYear()
+    }, 100)
+  </script>
+</body>
+</html>

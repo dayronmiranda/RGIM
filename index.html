@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RGIM | Tienda y Envíos</title>
+  <meta name="description" content="RG IM USA & PANAMÁ - Tienda prototipo con carrito, cotización y envíos marítimos y aéreos." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛒</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/mobile.css" media="screen and (max-width: 430px)">
+  <script>
+    // Tailwind quick config (light brand colors)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+              400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth fade for route changes */
+    .route { display: none; opacity: 0; transition: opacity 200ms ease; }
+    .route.active { display: block; opacity: 1; }
+    .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(10px); }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-brand-600 text-white px-3 py-2 rounded">Saltar al contenido</a>
+
+  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white/80 backdrop-blur">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      <a href="#/home" class="flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded bg-brand-600 text-white grid place-items-center font-bold">RG</div>
+        <div>
+          <div class="text-lg font-semibold">RGIM</div>
+          <div class="text-xs text-slate-500" data-i18n="header.subtitle">USA & Panamá</div>
+        </div>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#/home" data-nav="home" class="py-2 hover:text-brand-700" data-i18n="nav.home">Inicio</a>
+        <a href="#/store" data-nav="store" class="py-2 hover:text-brand-700" data-i18n="nav.store">Tienda</a>
+        <a href="#/faq" data-nav="faq" class="py-2 hover:text-brand-700" data-i18n="nav.faq">Preguntas</a>
+        <a href="#/about" data-nav="about" class="py-2 hover:text-brand-700" data-i18n="nav.about">Nosotros</a>
+        <a href="#/admin" data-nav="admin" class="py-2 hover:text-brand-700" data-i18n="nav.admin">Admin</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <button id="btn-lang-es" class="px-2 py-1 text-xs border rounded hover:bg-slate-100">ES</button>
+        <button id="btn-lang-en" class="px-2 py-1 text-xs border rounded hover:bg-slate-100">EN</button>
+        <button id="cart-toggle-desktop" class="ml-3 inline-flex items-center gap-3 bg-brand-600 text-white px-5 py-2.5 rounded-lg hover:bg-brand-700 transition-colors relative">
+        <span class="hidden sm:inline font-medium" data-i18n="cart.toggle">Carrito</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0 ml-1" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 3h2l.4 2M7 13h10l3-8H6.4M7 13L5.4 5M7 13l-2 9m5-9v9m4-9v9m4-9l2 9"/>
+        </svg>
+        <span id="cart-badge-desktop" class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center hidden font-semibold">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="flex-1">
+    <!-- HOME / LANDING -->
+    <section id="route-home" class="route active">
+      <section class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-50 via-white to-brand-100"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900">
+              <span data-i18n="hero.title">RG IM USA & PANAMÁ</span>
+            </h1>
+            <p class="mt-4 text-lg text-slate-600" data-i18n="hero.subtitle">
+              Compras desde cualquier parte del mundo. Envíos desde Panamá a Latinoamérica y el Caribe.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <a href="#/store" class="inline-flex items-center gap-2 bg-brand-600 text-white px-5 py-3 rounded-lg shadow hover:bg-brand-700" data-i18n="hero.ctaPrimary">Explorar Tienda</a>
+              <a href="#/about" class="inline-flex items-center gap-2 px-5 py-3 rounded-lg border hover:bg-white" data-i18n="hero.ctaSecondary">Conoce RGIM</a>
+            </div>
+            <div class="mt-6 text-sm text-slate-500" data-i18n="hero.uspanama">Sedes en Estados Unidos y Panamá</div>
+          </div>
+          <div aria-hidden="true" class="grid grid-cols-3 gap-3 sm:gap-4">
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-slate-100 to-slate-200"></div>
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-brand-200 to-brand-400 row-span-2"></div>
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-slate-100 to-slate-200"></div>
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-slate-100 to-slate-200"></div>
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-brand-300 to-brand-500"></div>
+            <div class="aspect-square rounded-lg bg-gradient-to-br from-slate-100 to-slate-200"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature: three columns with small icons -->
+      <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-2xl">
+            <h2 class="text-2xl font-bold">¿Por qué elegir RGIM?</h2>
+            <p class="mt-2 text-slate-600">Operación confiable, cobertura regional y atención cercana para tu compra internacional.</p>
+          </div>
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="flex gap-4 p-5 bg-white border rounded-lg">
+              <div class="h-10 w-10 rounded-full bg-brand-100 text-brand-700 grid place-items-center">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.1L18 21l-6-4-6 4 1.5-7.9L2 9h7z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold">Confianza y respaldo</div>
+                <p class="text-sm text-slate-600">Garantías y seguro de mercancía con comunicación transparente.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 p-5 bg-white border rounded-lg">
+              <div class="h-10 w-10 rounded-full bg-brand-100 text-brand-700 grid place-items-center">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v2H3V3zm3 6h12v2H6V9zm-3 6h18v2H3v-2z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold">Catálogo flexible</div>
+                <p class="text-sm text-slate-600">Productos bajo pedido y opciones de compra a medida.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 p-5 bg-white border rounded-lg">
+              <div class="h-10 w-10 rounded-full bg-brand-100 text-brand-700 grid place-items-center">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l8 4v6c0 5-8 8-8 8s-8-3-8-8V7l8-4z"/></svg>
+              </div>
+              <div>
+                <div class="font-semibold">Logística optimizada</div>
+                <p class="text-sm text-slate-600">Envíos marítimos y aéreos desde Panamá a la región.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feature: with product screenshot -->
+      <section class="py-12 bg-white border-y">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h3 class="text-2xl font-bold">Compra simple, atención real</h3>
+            <p class="mt-3 text-slate-600">Añade al carrito, envía tu solicitud y recibe acompañamiento por WhatsApp para confirmar pago y envío.</p>
+            <ul class="mt-6 space-y-2 text-slate-700">
+              <li class="flex gap-2"><span class="text-brand-600">•</span> Carrito con historial por sesión</li>
+              <li class="flex gap-2"><span class="text-brand-600">•</span> Pagos por Zelle o transferencia</li>
+              <li class="flex gap-2"><span class="text-brand-600">•</span> Envío marítimo o aéreo</li>
+            </ul>
+            <div class="mt-6">
+              <a href="#/store" class="inline-flex items-center gap-2 bg-brand-600 text-white px-4 py-2.5 rounded-lg hover:bg-brand-700">Ver catálogo</a>
+            </div>
+          </div>
+          <div class="relative">
+            <div class="rounded-xl border bg-gradient-to-br from-slate-100 to-slate-200 aspect-[4/3] shadow-inner"></div>
+            <div class="absolute -bottom-6 -left-6 hidden sm:block rounded-lg border bg-white/80 backdrop-blur px-4 py-3 shadow">
+              <div class="text-sm font-medium">Total estimado</div>
+              <div class="text-slate-700 font-semibold">$1,250.00</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Product teaser grid -->
+      <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-2xl font-bold" data-i18n="home.sampleTitle">Productos destacados</h2>
+          <p class="text-slate-600 mt-1" data-i18n="home.sampleSubtitle">Muestras ilustrativas. Visita la tienda para ver el catálogo.</p>
+          <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            <!-- Simple illustrative placeholders; real products en Tienda -->
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+            <a href="#/store" class="group border rounded-lg p-4 bg-white hover:shadow">
+              <div class="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 rounded"></div>
+              <div class="mt-3 text-sm font-medium">Producto</div>
+              <div class="text-xs text-slate-500" data-i18n="home.seeStore">Ver en tienda</div>
+            </a>
+          </div>
+          <div class="mt-6">
+            <a href="#/store" class="inline-flex items-center gap-2 text-brand-700 hover:underline" data-i18n="home.visitStore">Visitar la tienda</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ embedded -->
+      <section class="py-12 bg-white border-t border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="text-2xl font-bold" data-i18n="faq.title">Preguntas frecuentes</h2>
+          <div class="mt-6 grid md:grid-cols-2 gap-6">
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q1">¿Cómo funciona la compra?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a1">Añades productos al carrito, ingresas tu nombre y WhatsApp, y nos llega tu solicitud.</p>
+            </div>
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q2">¿Cómo me contactan?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a2">Te escribimos por WhatsApp para confirmar la compra y coordinar el pago.</p>
+            </div>
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q3">¿Qué métodos de pago usan?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a3">Zelle o transferencia bancaria, fuera de la web, directamente con nuestro equipo.</p>
+            </div>
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q4">¿Cómo calculan el envío?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a4">Marítimo: solo el costo de los productos. Aéreo: +10% adicional.</p>
+            </div>
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q5">¿Desde dónde envían?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a5">Siempre desde Panamá hacia el país que elijas en Latinoamérica y el Caribe.</p>
+            </div>
+            <div class="p-5 rounded-lg border bg-slate-50">
+              <h3 class="font-semibold" data-i18n="faq.q6">¿Guardan historial?</h3>
+              <p class="text-slate-600 mt-2" data-i18n="faq.a6">Sí, tu sesión guarda el carrito y el historial de solicitudes mientras navegas.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- STORE -->
+    <section id="route-store" class="route">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Multi-column layout: Products on left, Cart sidebar on right -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Products section (3/4 width on large screens) -->
+          <div class="lg:col-span-3">
+            <h1 class="text-2xl font-bold" data-i18n="store.title">Tienda</h1>
+            <p class="text-slate-600" data-i18n="store.subtitle">Explora categorías, ve detalles y añade al carrito.</p>
+
+            <!-- Categories -->
+            <div id="category-bar" class="mt-6 flex flex-wrap gap-2"></div>
+
+            <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4" id="product-grid">
+              <!-- Rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Cart sidebar (1/4 width on large screens, always visible) -->
+          <div class="lg:col-span-1">
+            <div class="sticky top-24 bg-white border rounded-lg shadow-sm">
+              <!-- Cart Header -->
+              <div class="p-4 border-b">
+                <h2 class="text-lg font-semibold" data-i18n="cart.title">Carrito de compras</h2>
+              </div>
+              
+              <!-- Cart Items -->
+              <div class="p-4 max-h-64 overflow-y-auto">
+                <div id="cart-sidebar-items" class="space-y-3">
+                  <!-- Cart items rendered here -->
+                </div>
+              </div>
+              
+              <!-- Cart Footer with Checkout -->
+              <div class="border-t p-4 bg-slate-50">
+                <div class="mb-4">
+                  <div class="flex justify-between items-center mb-2">
+                    <span data-i18n="checkout.total">Total:</span>
+                    <span id="cart-sidebar-total" class="text-xl font-bold">$0.00</span>
+                  </div>
+                  <div class="text-sm text-slate-600">
+                    <select id="cart-sidebar-shipping" class="w-full border rounded px-3 py-2 mb-2">
+                      <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+                      <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <!-- Checkout Form -->
+                <form id="checkout-form" class="space-y-3">
+                  <div>
+                    <label class="block text-xs font-medium mb-1" for="buyerName" data-i18n="checkout.name">Nombre</label>
+                    <input id="buyerName" type="text" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" required />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium mb-1" for="buyerWhatsapp" data-i18n="checkout.whatsapp">WhatsApp</label>
+                    <input id="buyerWhatsapp" type="tel" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500" placeholder="+507..." required />
+                  </div>
+                  <div>
+                    <label class="block text-xs font-medium mb-1" for="shippingType" data-i18n="checkout.shipping">Tipo de envío</label>
+                    <select id="shippingType" class="w-full border rounded px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500">
+                      <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
+                      <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
+                    </select>
+                  </div>
+                  <button type="submit" class="w-full bg-brand-600 text-white py-2 rounded hover:bg-brand-700 font-medium text-sm transition-colors" data-i18n="checkout.submit">Enviar solicitud</button>
+                  <p class="text-xs text-slate-500 text-center" data-i18n="checkout.note">No realizas pagos aquí. Te contactaremos por WhatsApp para completar la compra vía Zelle o transferencia.</p>
+                </form>
+                
+                <!-- History Section -->
+                <div class="mt-4 pt-4 border-t">
+                  <h4 class="font-medium text-xs mb-2" data-i18n="history.title">Historial (sesión)</h4>
+                  <ul id="session-history" class="space-y-1 text-xs text-slate-600 max-h-24 overflow-y-auto"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden cart items container (for compatibility) -->
+        <div id="cart-items" class="hidden"></div>
+        <div id="order-total" class="hidden">$0.00</div>
+      </div>
+    </section>
+
+    <!-- FAQ PAGE -->
+    <section id="route-faq" class="route">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid lg:grid-cols-3 gap-10">
+          <div>
+            <h1 class="text-3xl font-bold" data-i18n="faq.title">Preguntas frecuentes</h1>
+            <p class="mt-3 text-slate-600">Encuentra respuestas claras sobre compras, pagos y envíos. Si necesitas apoyo, nuestro equipo está disponible.</p>
+          </div>
+          <div class="lg:col-span-2 space-y-4">
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q1">¿Cómo funciona el proceso de compra?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a1">Nuestro proceso es simple y seguro: selecciona los productos deseados, agrégalos al carrito, completa tus datos de contacto y envía la solicitud. Recibiremos tu pedido inmediatamente y nos pondremos en contacto contigo para coordinar los detalles finales.</p>
+            </div>
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q2">¿Cómo se realiza la comunicación y seguimiento?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a2">Una vez recibida tu solicitud, nuestro equipo de atención al cliente se comunicará contigo vía WhatsApp dentro de las próximas 24 horas para confirmar tu pedido, coordinar el método de pago y brindarte información detallada sobre el envío.</p>
+            </div>
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q3">¿Qué métodos de pago están disponibles?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a3">Aceptamos pagos a través de Zelle y transferencias bancarias. Estos métodos garantizan transacciones seguras y rápidas. El proceso de pago se coordina directamente con nuestro equipo de ventas para mayor seguridad.</p>
+            </div>
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q4">¿Cómo se calculan los costos de envío?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a4">Ofrecemos dos modalidades: Envío marítimo sin costo adicional (solo pagas el precio de los productos) y envío aéreo con un 10% adicional sobre el valor total. El tiempo de entrega varía según la modalidad seleccionada.</p>
+            </div>
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q5">¿Cuál es el alcance geográfico de sus envíos?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a5">Realizamos envíos desde nuestras instalaciones en Panamá hacia todos los países de Latinoamérica y el Caribe. Contamos con una red logística confiable que garantiza la entrega segura de tu pedido.</p>
+            </div>
+            <div class="bg-white border rounded-lg p-5">
+              <h3 class="font-semibold" data-i18n="faq.q6">¿Se mantiene un registro de mis compras?</h3>
+              <p class="mt-2 text-slate-600" data-i18n="faq.a6">Sí, mantenemos un historial completo de tus solicitudes durante tu sesión de navegación. Esto te permite revisar pedidos anteriores y facilita el proceso de seguimiento con nuestro equipo de atención al cliente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="route-about" class="route">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid lg:grid-cols-3 gap-10">
+          <div class="lg:col-span-2">
+            <h1 class="text-3xl font-bold" data-i18n="about.title">Acerca de la empresa</h1>
+            <p class="mt-3 text-slate-600" data-i18n="about.desc">RGIM opera con sedes en Estados Unidos y Panamá, enviando productos desde Panamá hacia Latinoamérica y el Caribe.</p>
+            <div class="mt-8">
+              <ol class="relative border-s border-slate-200">
+                <li class="ps-6 py-4">
+                  <span class="absolute -start-2.5 top-5 h-5 w-5 rounded-full bg-brand-600"></span>
+                  <div class="text-xs uppercase text-slate-500">2018</div>
+                  <div class="font-semibold mt-1">Inicio de operaciones</div>
+                  <p class="text-slate-600 text-sm mt-1">Consolidamos una oferta de compras internacionales con enfoque en servicio y cumplimiento.</p>
+                </li>
+                <li class="ps-6 py-4">
+                  <span class="absolute -start-2.5 top-5 h-5 w-5 rounded-full bg-brand-600"></span>
+                  <div class="text-xs uppercase text-slate-500">2020</div>
+                  <div class="font-semibold mt-1">Expansión logística</div>
+                  <p class="text-slate-600 text-sm mt-1">Operación regional con rutas marítimas y aéreas a Latinoamérica y el Caribe.</p>
+                </li>
+                <li class="ps-6 py-4">
+                  <span class="absolute -start-2.5 top-5 h-5 w-5 rounded-full bg-brand-600"></span>
+                  <div class="text-xs uppercase text-slate-500">2022</div>
+                  <div class="font-semibold mt-1">Optimización del catálogo</div>
+                  <p class="text-slate-600 text-sm mt-1">Gestión de productos bajo pedido y trazabilidad de solicitudes por sesión.</p>
+                </li>
+                <li class="ps-6 py-4">
+                  <span class="absolute -start-2.5 top-5 h-5 w-5 rounded-full bg-brand-600"></span>
+                  <div class="text-xs uppercase text-slate-500">2024</div>
+                  <div class="font-semibold mt-1">Atención omnicanal</div>
+                  <p class="text-slate-600 text-sm mt-1">Coordinación por WhatsApp para cierre de compra segura (Zelle/transferencia).</p>
+                </li>
+              </ol>
+            </div>
+          </div>
+          <aside>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="rounded-lg border bg-white p-5 text-center">
+                <div class="text-3xl font-extrabold text-slate-900">+5k</div>
+                <div class="text-slate-600 text-sm">Productos gestionados</div>
+              </div>
+              <div class="rounded-lg border bg-white p-5 text-center">
+                <div class="text-3xl font-extrabold text-slate-900">15+</div>
+                <div class="text-slate-600 text-sm">Países de destino</div>
+              </div>
+              <div class="rounded-lg border bg-white p-5 text-center">
+                <div class="text-3xl font-extrabold text-slate-900">24-48h</div>
+                <div class="text-slate-600 text-sm">Tiempo de respuesta</div>
+              </div>
+              <div class="rounded-lg border bg-white p-5 text-center">
+                <div class="text-3xl font-extrabold text-slate-900">2</div>
+                <div class="text-slate-600 text-sm">Sedes: USA y Panamá</div>
+              </div>
+            </div>
+            <div class="mt-6 rounded-lg border bg-white p-5">
+              <div class="font-semibold" data-i18n="about.usa">Sede USA</div>
+              <div class="text-slate-600">RG IM USA MULTISERVICES LLC</div>
+              <div class="text-slate-600">12458 sw 220 st Miami fl 33170</div>
+              <div class="mt-4 font-semibold" data-i18n="about.panama">Sede Panamá</div>
+              <div class="text-slate-600">RG IM PANAMA MULTISERVICES SA</div>
+              <div class="text-slate-600">Calle 50, F&F Tower. Piso 43, Oficina 43-C, Ciudad de Panamá, Panamá</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN (Login + Dashboard) -->
+    <section id="route-admin" class="route">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <h1 class="text-2xl font-bold" data-i18n="admin.title">Panel de solicitudes</h1>
+        <div id="admin-login" class="max-w-md mt-6 border rounded-lg p-5 bg-white">
+          <h2 class="font-semibold" data-i18n="admin.loginTitle">Acceso</h2>
+          <form id="admin-login-form" class="mt-3 space-y-3">
+            <div>
+              <label class="block text-sm" for="adminUser" data-i18n="admin.user">Usuario</label>
+              <input id="adminUser" type="text" class="mt-1 w-full border rounded px-3 py-2" required />
+            </div>
+            <div>
+              <label class="block text-sm" for="adminPass" data-i18n="admin.pass">Contraseña</label>
+              <input id="adminPass" type="password" class="mt-1 w-full border rounded px-3 py-2" required />
+            </div>
+            <button class="w-full bg-brand-600 text-white py-2 rounded hover:bg-brand-700" data-i18n="admin.loginBtn">Entrar</button>
+          </form>
+        </div>
+
+        <div id="admin-dashboard" class="hidden mt-6">
+          <div class="flex items-center justify-between gap-3">
+            <h2 class="text-xl font-semibold" data-i18n="admin.dashboard">Solicitudes de compra</h2>
+            <div class="flex items-center gap-2">
+              <button id="btn-export-csv" class="px-3 py-2 border rounded bg-white hover:bg-slate-50 text-sm" data-i18n="admin.export">Exportar CSV</button>
+              <button id="btn-admin-logout" class="px-3 py-2 border rounded bg-white hover:bg-slate-50 text-sm" data-i18n="admin.logout">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-wrap items-end gap-3">
+            <div>
+              <label class="block text-xs text-slate-500" for="admin-search" data-i18n="admin.search">Buscar</label>
+              <input id="admin-search" type="text" class="border rounded px-3 py-2" placeholder="Nombre o WhatsApp" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-500" for="admin-filter-shipping" data-i18n="admin.filterShipping">Envío</label>
+              <select id="admin-filter-shipping" class="border rounded px-3 py-2">
+                <option value="" data-i18n="admin.any">Cualquiera</option>
+                <option value="sea" data-i18n="shipping.sea">Marítimo</option>
+                <option value="air" data-i18n="shipping.air">Aéreo</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-slate-500" for="admin-filter-status" data-i18n="admin.filterStatus">Estado</label>
+              <select id="admin-filter-status" class="border rounded px-3 py-2">
+                <option value="" data-i18n="admin.any">Cualquiera</option>
+                <option value="new" data-i18n="admin.statusNew">Nuevo</option>
+                <option value="contacted" data-i18n="admin.statusContacted">Contactado</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-4 overflow-x-auto">
+            <table class="min-w-full text-sm border bg-white">
+              <thead class="bg-slate-100 text-slate-700">
+                <tr>
+                  <th class="p-2 text-left" data-i18n="admin.thDate">Fecha</th>
+                  <th class="p-2 text-left" data-i18n="admin.thBuyer">Cliente</th>
+                  <th class="p-2 text-left" data-i18n="admin.thWhatsapp">WhatsApp</th>
+                  <th class="p-2 text-left" data-i18n="admin.thShipping">Envío</th>
+                  <th class="p-2 text-left" data-i18n="admin.thTotal">Total</th>
+                  <th class="p-2 text-left" data-i18n="admin.thItems">Items</th>
+                  <th class="p-2 text-left" data-i18n="admin.thStatus">Estado</th>
+                  <th class="p-2 text-left" data-i18n="admin.thActions">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="admin-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 grid md:grid-cols-3 gap-6 text-sm">
+      <div>
+        <div class="font-semibold">RGIM</div>
+        <div class="text-slate-600" data-i18n="footer.tag">Compras globales, envíos desde Panamá.</div>
+      </div>
+      <div>
+        <div class="font-semibold" data-i18n="about.usa">Sede USA</div>
+        <div class="text-slate-600">RG IM USA MULTISERVICES LLC</div>
+        <div class="text-slate-600">12458 sw 220 st Miami fl 33170</div>
+      </div>
+      <div>
+        <div class="font-semibold" data-i18n="about.panama">Sede Panamá</div>
+        <div class="text-slate-600">RG IM PANAMA MULTISERVICES SA</div>
+        <div class="text-slate-600">Calle 50, F&F Tower. Piso 43, Oficina 43-C, Ciudad de Panamá, Panamá</div>
+      </div>
+    </div>
+    <div class="text-center text-xs text-slate-500 pb-6">© <span id="year"></span> RGIM</div>
+  </footer>
+
+  
+  <!-- Portals -->
+  <div id="modal-root"></div>
+  <div id="toast-root" class="fixed bottom-4 left-0 right-0 flex justify-center pointer-events-none"></div>
+
+  <noscript>
+    <div class="max-w-7xl mx-auto p-4 text-red-700">Este sitio requiere JavaScript para funcionar correctamente.</div>
+  </noscript>
+
+  <script src="./assets/app.js" defer></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
