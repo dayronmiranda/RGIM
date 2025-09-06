@@ -8,8 +8,8 @@ class ImageUtils {
     this.config = {
       basePath: '/assets/images/optimized/',
       placeholder: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23d1d5db" font-family="sans-serif" font-size="18"%3ECargando...%3C/text%3E%3C/svg%3E',
-      sizes: ['thumbnail', 'medium', 'large'],
-      formats: ['avif', 'webp', 'jpeg']
+      sizes: ['thumbnail', 'medium'],
+      formats: ['jpeg']
     };
   }
 

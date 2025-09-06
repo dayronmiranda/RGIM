@@ -34,46 +34,29 @@ class ImageOptimizer {
       const image = sharp(inputPath);
       const metadata = await image.metadata();
       
-      // Generate different sizes and formats
+      // Generate different sizes (only JPEG format)
       for (const [sizeName, sizeConfig] of Object.entries(this.config.sizes)) {
         results.optimized[sizeName] = {};
         
-        for (const [format, formatConfig] of Object.entries(this.config.formats)) {
-          const outputFilename = `${filename}_${sizeName}.${format}`;
-          const outputPath = path.join(this.outputDir, outputFilename);
-          
-          let pipeline = image.clone()
-            .resize(sizeConfig.width, sizeConfig.height, { 
-              fit: sizeConfig.fit,
-              withoutEnlargement: true 
-            });
+        // Only generate JPEG format
+        const format = 'jpeg';
+        const formatConfig = this.config.formats.jpeg;
+        const outputFilename = `${filename}_${sizeName}.jpg`;
+        const outputPath = path.join(this.outputDir, outputFilename);
+        
+        let pipeline = image.clone()
+          .resize(sizeConfig.width, sizeConfig.height, { 
+            fit: sizeConfig.fit,
+            withoutEnlargement: true 
+          })
+          .jpeg({
+            quality: formatConfig.quality,
+            progressive: formatConfig.progressive,
+            mozjpeg: formatConfig.mozjpeg
+          });
 
-          // Apply format-specific optimizations
-          switch (format) {
-            case 'webp':
-              pipeline = pipeline.webp({
-                quality: formatConfig.quality,
-                effort: formatConfig.effort
-              });
-              break;
-            case 'avif':
-              pipeline = pipeline.avif({
-                quality: formatConfig.quality,
-                effort: formatConfig.effort
-              });
-              break;
-            case 'jpeg':
-              pipeline = pipeline.jpeg({
-                quality: formatConfig.quality,
-                progressive: formatConfig.progressive,
-                mozjpeg: formatConfig.mozjpeg
-              });
-              break;
-          }
-
-          await pipeline.toFile(outputPath);
-          results.optimized[sizeName][format] = `/assets/images/optimized/${outputFilename}`;
-        }
+        await pipeline.toFile(outputPath);
+        results.optimized[sizeName][format] = `/assets/images/optimized/${outputFilename}`;
       }
 
       return results;
@@ -129,31 +112,9 @@ class ImageOptimizer {
     
     return `
       <picture class="lazy-image ${className}">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_large.avif" 
-          type="image/avif" 
-          media="(min-width: 768px)">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_medium.avif" 
-          type="image/avif" 
-          media="(min-width: 480px)">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_thumbnail.avif" 
-          type="image/avif">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_large.webp" 
-          type="image/webp" 
-          media="(min-width: 768px)">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_medium.webp" 
-          type="image/webp" 
-          media="(min-width: 480px)">
-        <source 
-          data-srcset="/assets/images/optimized/${imageName}_thumbnail.webp" 
-          type="image/webp">
         <img 
           src="${placeholder}"
-          data-src="/assets/images/optimized/${imageName}_medium.jpeg"
+          data-src="/assets/images/optimized/${imageName}_medium.jpg"
           alt="${alt}"
           class="lazy-img"
           loading="lazy">

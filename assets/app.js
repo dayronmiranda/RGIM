@@ -1146,6 +1146,244 @@
     }
   })
 
+  // Search functionality
+  function setupSearch() {
+    const searchInput = document.getElementById('product-search')
+    const searchButton = document.getElementById('search-button')
+    const clearButton = document.getElementById('clear-search')
+    const searchLoading = document.getElementById('search-loading')
+    const searchResults = document.getElementById('search-results-info')
+    const resultsCount = document.getElementById('results-count')
+    const clearAllFilters = document.getElementById('clear-all-filters')
+    const aiIndicator = document.getElementById('ai-search-indicator')
+
+    if (!searchInput) return
+
+    let searchTimeout = null
+
+    // Show AI indicator if available
+    if (state.aiSearch && state.aiSearch.isAIEnabled()) {
+      aiIndicator?.classList.remove('hidden')
+    }
+
+    // Search function
+    async function performSearch(query) {
+      if (!query || query.trim().length < 2) {
+        state.searchQuery = ''
+        state.activeCategory = ''
+        renderProducts()
+        searchResults?.classList.add('hidden')
+        clearButton?.classList.add('hidden')
+        return
+      }
+
+      // Show loading
+      searchLoading?.classList.remove('hidden')
+      searchButton?.classList.add('hidden')
+
+      try {
+        let results = []
+        
+        if (state.aiSearch) {
+          results = await state.aiSearch.search(query.trim())
+        } else {
+          // Basic search fallback
+          const searchTerm = query.toLowerCase().trim()
+          results = state.products.filter(product => {
+            const searchableText = [
+              product.name,
+              product.short || '',
+              product.description || '',
+              product.categoryId || ''
+            ].join(' ').toLowerCase()
+            
+            return searchableText.includes(searchTerm)
+          })
+        }
+
+        // Update state and render
+        state.searchQuery = query.trim()
+        state.activeCategory = '' // Clear category filter when searching
+        
+        // Render filtered products
+        renderFilteredProducts(results)
+        
+        // Show results info
+        if (resultsCount) resultsCount.textContent = results.length
+        searchResults?.classList.remove('hidden')
+        clearButton?.classList.remove('hidden')
+        clearAllFilters?.classList.remove('hidden')
+
+      } catch (error) {
+        console.error('Search error:', error)
+        showToast('Error en la búsqueda')
+      } finally {
+        // Hide loading
+        searchLoading?.classList.add('hidden')
+        searchButton?.classList.remove('hidden')
+      }
+    }
+
+    // Render filtered products
+    function renderFilteredProducts(products) {
+      const grid = document.getElementById('product-grid')
+      if (!grid) return
+      
+      grid.innerHTML = ''
+      
+      if (products.length === 0) {
+        const noResults = document.createElement('div')
+        noResults.className = 'col-span-full text-center py-12 text-slate-500'
+        noResults.innerHTML = `
+          <svg class="mx-auto h-12 w-12 text-slate-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <p class="text-lg font-medium">No se encontraron productos</p>
+          <p class="text-sm">Intenta con otros términos de búsqueda</p>
+        `
+        grid.appendChild(noResults)
+        return
+      }
+
+      products.forEach(p => {
+        const card = document.createElement('div')
+        card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col product-card'
+        
+        // Mobile-optimized layout
+        const isMobile = window.innerWidth <= 430
+        
+        if (isMobile) {
+          // Mobile: simplified layout without details button
+          card.innerHTML = `
+            <div class="aspect-square bg-slate-100 relative">
+              ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+            </div>
+            <div class="p-3 flex-1 flex flex-col">
+              <div class="font-medium text-sm">${p.name}</div>
+              <div class="text-xs text-slate-600 mt-1">${p.short || ''}</div>
+              <div class="mt-auto pt-2">
+                <div class="font-semibold text-sm mb-2">${fmtCurrency(p.price)}</div>
+                <button class="w-full px-3 py-2 bg-brand-600 text-white rounded hover:bg-brand-700 text-sm font-medium" data-act="add">Añadir al carrito</button>
+              </div>
+            </div>`
+          
+          // Make entire card clickable for details on mobile
+          card.style.cursor = 'pointer'
+          card.onclick = (e) => {
+            if (!e.target.closest('[data-act="add"]')) {
+              openProductModal(p)
+            }
+          }
+        } else {
+          // Desktop: full layout with details button
+          card.innerHTML = `
+            <div class="aspect-square bg-slate-100 relative">
+              ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+            </div>
+            <div class="p-4 flex-1 flex flex-col">
+              <div class="font-medium">${p.name}</div>
+              <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
+              <div class="mt-auto flex items-center justify-between gap-2 pt-3">
+                <div class="font-semibold">${fmtCurrency(p.price)}</div>
+                <div class="flex items-center gap-2">
+                  <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
+                  <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
+                </div>
+              </div>
+            </div>`
+          
+          card.querySelector('[data-act="details"]').onclick = () => openProductModal(p)
+        }
+        
+        // Add to cart button handler
+        card.querySelector('[data-act="add"]').onclick = (e) => {
+          e.stopPropagation()
+          addToCart(p.id)
+        }
+        
+        grid.appendChild(card)
+      })
+    }
+
+    // Clear search
+    function clearSearch() {
+      searchInput.value = ''
+      state.searchQuery = ''
+      state.activeCategory = ''
+      renderProducts()
+      renderCategories() // Re-render categories to reset active state
+      searchResults?.classList.add('hidden')
+      clearButton?.classList.add('hidden')
+      clearAllFilters?.classList.add('hidden')
+    }
+
+    // Event listeners
+    searchButton?.addEventListener('click', () => {
+      performSearch(searchInput.value)
+    })
+
+    searchInput?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        performSearch(searchInput.value)
+      }
+    })
+
+    searchInput?.addEventListener('input', (e) => {
+      const query = e.target.value
+      
+      // Clear timeout
+      if (searchTimeout) {
+        clearTimeout(searchTimeout)
+      }
+      
+      // Show/hide clear button
+      if (query.length > 0) {
+        clearButton?.classList.remove('hidden')
+      } else {
+        clearButton?.classList.add('hidden')
+      }
+      
+      // Auto-search with debounce (optional)
+      if (query.length >= 3) {
+        searchTimeout = setTimeout(() => {
+          performSearch(query)
+        }, 500)
+      } else if (query.length === 0) {
+        clearSearch()
+      }
+    })
+
+    clearButton?.addEventListener('click', clearSearch)
+    clearAllFilters?.addEventListener('click', clearSearch)
+  }
+
+  // Fix category button active state
+  function makeCatButton(id, label){
+    const b = document.createElement('button')
+    b.className = `px-3 py-1 rounded-full border transition-colors ${
+      id === state.activeCategory && !state.searchQuery ? 
+      'bg-brand-600 text-white border-brand-600' : 
+      'bg-white hover:bg-slate-50 text-slate-700 border-slate-300'
+    }`
+    b.textContent = label
+    b.onclick = ()=> { 
+      // Clear search when selecting category
+      const searchInput = document.getElementById('product-search')
+      if (searchInput) searchInput.value = ''
+      state.searchQuery = ''
+      
+      state.activeCategory = id
+      renderProducts()
+      renderCategories() // Re-render to update active states
+      
+      // Hide search results
+      const searchResults = document.getElementById('search-results-info')
+      searchResults?.classList.add('hidden')
+    }
+    return b
+  }
+
   // Boot
   window.addEventListener('hashchange', handleHashChange)
   ;(async function init(){
@@ -1153,6 +1391,7 @@
     await loadTranslations()
     updateCartBadges() // Initialize cart badges
     setupMobileNavigation() // Setup mobile navigation
+    setupSearch() // Setup search functionality
     handleHashChange()
   })()
 })()
