@@ -1316,9 +1316,10 @@
         
         if (isMobile) {
           // Mobile: simplified layout without details button
+          const optimizedImageMobile = getOptimizedImagePath(p.image, 'thumbnail')
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
-              ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+              ${optimizedImageMobile ? `<img src="${optimizedImageMobile}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
             </div>
             <div class="p-3 flex-1 flex flex-col">
               <div class="font-medium text-sm">${p.name}</div>
@@ -1338,9 +1339,10 @@
           }
         } else {
           // Desktop: full layout with details button
+          const optimizedImageDesktop = getOptimizedImagePath(p.image, 'thumbnail')
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
-              ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+              ${optimizedImageDesktop ? `<img src="${optimizedImageDesktop}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
             </div>
             <div class="p-4 flex-1 flex flex-col">
               <div class="font-medium">${p.name}</div>
