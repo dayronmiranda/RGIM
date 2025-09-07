@@ -93,39 +93,6 @@ export function setState(state, key, value, persist = false, storageKey = null) 
 
 // State helper functions for common operations
 export const stateHelpers = {
-  // Cart operations
-  addToCart(state, productId, quantity = 1) {
-    const item = state.cart.find(it => it.id === productId)
-    if(item) {
-      item.qty += quantity
-    } else {
-      state.cart.push({ id: productId, qty: quantity })
-    }
-    saveJSON(STORAGE_KEYS.cart, state.cart)
-    return state.cart
-  },
-  
-  removeFromCart(state, productId) {
-    state.cart = state.cart.filter(it => it.id !== productId)
-    saveJSON(STORAGE_KEYS.cart, state.cart)
-    return state.cart
-  },
-  
-  updateCartQuantity(state, productId, quantity) {
-    const item = state.cart.find(it => it.id === productId)
-    if(item) {
-      item.qty = Math.max(1, quantity)
-      saveJSON(STORAGE_KEYS.cart, state.cart)
-    }
-    return state.cart
-  },
-  
-  clearCart(state) {
-    state.cart = []
-    saveJSON(STORAGE_KEYS.cart, state.cart)
-    return state.cart
-  },
-  
   // History operations
   addToHistory(state, order) {
     state.history.unshift(order)
@@ -151,5 +118,12 @@ export const stateHelpers = {
     state.admin = null
     localStorage.removeItem(STORAGE_KEYS.adminSession)
     return null
+  },
+  
+  // Cart operations - delegated to cart module
+  clearCart(state) {
+    state.cart = []
+    saveJSON(STORAGE_KEYS.cart, state.cart)
+    return state.cart
   }
 }

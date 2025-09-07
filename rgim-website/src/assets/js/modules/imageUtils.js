@@ -1,16 +1,75 @@
 /**
  * Image Utilities for RGIM Website
  * Provides helper functions for responsive images and lazy loading
+ * Merged from app.js getImagePath() and createImageElement() functions
  */
 
 class ImageUtils {
   constructor() {
     this.config = {
-      basePath: '/assets/images/optimized/',
+      basePath: './src/assets/images/optimized/',
       placeholder: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect width="400" height="300" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" dy=".3em" fill="%23d1d5db" font-family="sans-serif" font-size="18"%3ECargando...%3C/text%3E%3C/svg%3E',
-      sizes: ['thumbnail', 'medium'],
-      formats: ['jpeg']
+      sizes: ['thumbnail', 'medium', 'large'],
+      formats: ['jpg', 'png', 'webp']
     };
+  }
+
+  /**
+   * Smart image path resolver with fallback support
+   * Merged from app.js getImagePath() function
+   * @param {string} filename - Original filename
+   * @returns {string|null} Optimized image path
+   */
+  getImagePath(filename) {
+    if (!filename) return null
+    
+    // Remove file extension to get base name
+    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
+    
+    // Return the most likely to exist format first
+    // Based on the file listing, most images have -medium.jpg format
+    return `${this.config.basePath}${baseName}-medium.jpg`
+  }
+
+  /**
+   * Enhanced image element creator with fallback support
+   * Merged from app.js createImageElement() function
+   * @param {string} filename - Original filename
+   * @param {string} alt - Alt text
+   * @param {string} className - CSS classes
+   * @param {Object} attributes - Additional attributes
+   * @returns {string} HTML string
+   */
+  createImageElement(filename, alt = '', className = '', attributes = {}) {
+    if (!filename) return ''
+    
+    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
+    
+    // Define fallback chain in order of preference
+    const fallbacks = [
+      `${this.config.basePath}${baseName}-medium.jpg`,
+      `${this.config.basePath}${baseName}_medium.jpg`,
+      `${this.config.basePath}${baseName}-medium.png`,
+      `${this.config.basePath}${baseName}_medium.webp`,
+      `${this.config.basePath}${baseName}-thumbnail.jpg`,
+      `${this.config.basePath}${baseName}_thumbnail.jpg`
+    ]
+    
+    const attrs = Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ')
+    
+    return `<img src="${fallbacks[0]}" alt="${alt}" class="${className}" ${attrs} 
+      onerror="
+        const fallbacks = ${JSON.stringify(fallbacks)};
+        const currentIndex = fallbacks.indexOf(this.src.split('/').pop().includes('${baseName}') ? this.src : '');
+        if (currentIndex < fallbacks.length - 1) {
+          this.src = fallbacks[currentIndex + 1];
+        } else {
+          this.style.display = 'none';
+          console.log('❌ All image fallbacks failed for: ${filename}');
+        }
+      "
+      onload="console.log('✅ Image loaded: ' + this.src)"
+    >`
   }
 
   /**

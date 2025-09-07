@@ -81,6 +81,9 @@ import {
   updateHreflangLinks
 } from './seo/meta.js'
 
+// Import image utilities
+import './modules/imageUtils.js'
+
 ;(function(){
   const els = {
     routes: routes.reduce((acc, r) => { acc[r] = document.getElementById(`route-${r}`); return acc }, {}),
@@ -127,49 +130,13 @@ import {
 
   function fmtCurrency(n){ return new Intl.NumberFormat(state.lang === 'es' ? 'es-PA' : 'en-US', { style:'currency', currency:'USD' }).format(n) }
 
-  // Smart image path resolver with fallback support
+  // Image utility functions - delegated to imageUtils module
   function getImagePath(filename) {
-    if (!filename) return null
-    
-    // Remove file extension to get base name
-    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
-    
-    // Return the most likely to exist format first
-    // Based on the file listing, most images have -medium.jpg format
-    return `./src/assets/images/optimized/${baseName}-medium.jpg`
+    return window.imageUtils ? window.imageUtils.getImagePath(filename) : null
   }
 
-  // Enhanced image element creator with fallback support
   function createImageElement(filename, alt, className = '', attributes = {}) {
-    if (!filename) return ''
-    
-    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
-    
-    // Define fallback chain in order of preference
-    const fallbacks = [
-      `./src/assets/images/optimized/${baseName}-medium.jpg`,
-      `./src/assets/images/optimized/${baseName}_medium.jpg`,
-      `./src/assets/images/optimized/${baseName}-medium.png`,
-      `./src/assets/images/optimized/${baseName}_medium.webp`,
-      `./src/assets/images/optimized/${baseName}-thumbnail.jpg`,
-      `./src/assets/images/optimized/${baseName}_thumbnail.jpg`
-    ]
-    
-    const attrs = Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ')
-    
-    return `<img src="${fallbacks[0]}" alt="${alt}" class="${className}" ${attrs} 
-      onerror="
-        const fallbacks = ${JSON.stringify(fallbacks)};
-        const currentIndex = fallbacks.indexOf(this.src.split('/').pop().includes('${baseName}') ? this.src : '');
-        if (currentIndex < fallbacks.length - 1) {
-          this.src = fallbacks[currentIndex + 1];
-        } else {
-          this.style.display = 'none';
-          console.log('❌ All image fallbacks failed for: ${filename}');
-        }
-      "
-      onload="console.log('✅ Image loaded: ' + this.src)"
-    >`
+    return window.imageUtils ? window.imageUtils.createImageElement(filename, alt, className, attributes) : ''
   }
 
   function showToast(msg){
@@ -202,110 +169,7 @@ import {
     })
     // Update SEO meta based on current route and language
     const currentRoute = (location.hash || '#/home').replace('#/','')
-    try { updateSEO(currentRoute) } catch(e) {}
-  }
-
-  // SEO helpers
-  function upsertMetaByName(name, content){
-    let el = document.querySelector('meta[name="'+name+'"]')
-    if(!el){
-      el = document.createElement('meta')
-      el.setAttribute('name', name)
-      document.head.appendChild(el)
-    }
-    el.setAttribute('content', content)
-  }
-  function upsertMetaByProp(prop, content){
-    let el = document.querySelector('meta[property="'+prop+'"]')
-    if(!el){
-      el = document.createElement('meta')
-      el.setAttribute('property', prop)
-      document.head.appendChild(el)
-    }
-    el.setAttribute('content', content)
-  }
-  function setCanonical(href){
-    let link = document.querySelector('link[rel="canonical"]')
-    if(!link){
-      link = document.createElement('link')
-      link.setAttribute('rel', 'canonical')
-      document.head.appendChild(link)
-    }
-    link.setAttribute('href', href)
-    upsertMetaByProp('og:url', href)
-  }
-  function ensureAltLink(hreflang){
-    let link = document.querySelector('link[rel="alternate"][hreflang="'+hreflang+'"]')
-    if(!link){
-      link = document.createElement('link')
-      link.setAttribute('rel', 'alternate')
-      link.setAttribute('hreflang', hreflang)
-      document.head.appendChild(link)
-    }
-    return link
-  }
-  function updateHreflangLinks(){
-    const base = location.origin + location.pathname
-    const hash = location.hash || '#/home'
-    const esUrl = base + '?lang=es' + hash
-    const enUrl = base + '?lang=en' + hash
-    const defUrl = base + hash
-    ensureAltLink('es').setAttribute('href', esUrl)
-    ensureAltLink('en').setAttribute('href', enUrl)
-    ensureAltLink('x-default').setAttribute('href', defUrl)
-  }
-  function updateSEO(route){
-    const seo = (state.t.seo && state.t.seo[route]) || (state.t.seo && state.t.seo.home) || null
-    if(seo && seo.title){ document.title = seo.title }
-    const desc = seo && seo.description ? seo.description : ''
-    if(desc){
-      upsertMetaByName('description', desc)
-      upsertMetaByName('twitter:description', desc)
-      upsertMetaByProp('og:description', desc)
-    }
-    const title = seo && seo.title ? seo.title : document.title
-    upsertMetaByName('twitter:title', title)
-    upsertMetaByProp('og:title', title)
-    // Robots per route
-    const robots = route === 'admin' ? 'noindex,nofollow' : 'index,follow'
-    upsertMetaByName('robots', robots)
-    // Locale
-    upsertMetaByProp('og:locale', state.lang === 'es' ? 'es_PA' : 'en_US')
-    // Canonical per language (avoid hash)
-    const canonical = location.origin + location.pathname + '?lang=' + (state.lang || 'es')
-    setCanonical(canonical)
-    // Hreflang alternates
-    updateHreflangLinks()
-    try { updateFAQSchema(route) } catch(e) {}
-  }
-  // JSON-LD: FAQ schema per route
-  function updateFAQSchema(route){
-    const prev = document.getElementById('faq-jsonld')
-    if(prev) prev.remove()
-    if(route !== 'faq' && route !== 'home') return
-    const faq = state.t.faq || {}
-    const items = []
-    for(let i=1;i<=10;i++){
-      const q = faq['q'+i], a = faq['a'+i]
-      if(q && a){
-        items.push({
-          '@type': 'Question',
-          'name': q,
-          'acceptedAnswer': { '@type': 'Answer', 'text': a }
-        })
-      }
-    }
-    if(items.length === 0) return
-    const data = {
-      '@context': 'https://schema.org',
-      '@type': 'FAQPage',
-      'mainEntity': items
-    }
-    const script = document.createElement('script')
-    script.type = 'application/ld+json'
-    script.id = 'faq-jsonld'
-    script.textContent = JSON.stringify(data)
-    document.head.appendChild(script)
+    try { updateSEO(currentRoute, state) } catch(e) {}
   }
   function getNested(obj, path){
     return path.split('.').reduce((o,k)=> (o && o[k] != null ? o[k] : undefined), obj)
@@ -407,7 +271,7 @@ import {
   // Create callbacks object for routing module
   const routingCallbacks = {
     closeAllModals,
-    updateSEO,
+    updateSEO: (route) => updateSEO(route, state),
     store: {
       renderCategories: renderCategoriesLocal,
       renderProducts: renderProductsLocal,
@@ -556,11 +420,11 @@ import {
     // Clear cart after a short delay
     setTimeout(()=>{
       stateHelpers.clearCart(state)
-      updateCartBadges()
-      renderCart()
-      renderCartSidebar()
+      updateCartBadges(state, els)
+      renderCart(state, els, fmtCurrency, getImagePath)
+      renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
       updateTotal()
-      updateCartSidebarTotal()
+      updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
       renderHistory()
     }, 500)
   })
