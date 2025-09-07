@@ -18,7 +18,7 @@
   },
   "ai": {
     "gemini": {
-      "apiKey": "AIzaSyBJhJhJhJhJhJhJhJhJhJhJhJhJhJhJhJh",
+      "apiKey": "AIzaSyCVQHypR4aK23BZpT7rLSBmBay-HYNLH2k",
       "model": "gemini-2.0-flash-exp"
     }
   }
