@@ -6,6 +6,7 @@ import { aiProductSearch } from '../utils/aiSearch.js';
 import { addToCart, getCartItemCount, getCart, getCartTotal, removeFromCart, updateProductQuantity } from '../utils/cart.js';
 import { renderCartSidebar } from '../utils/cartUI.js';
 import { renderCheckout } from '../utils/checkoutUI.js';
+import { cartFeedback } from '../utils/feedback.js';
 
 export async function renderStore(container) {
   container.innerHTML = `
@@ -351,6 +352,9 @@ export async function renderStore(container) {
         // Update mobile cart immediately
         renderMobileCart();
         
+        // Sonido y vibración al agregar al carrito
+        cartFeedback.addToCartFeedback();
+        
         // Visual feedback
         btn.innerHTML = `
           <div class="flex items-center justify-center gap-2">
@@ -362,6 +366,15 @@ export async function renderStore(container) {
         `;
         btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
         btn.classList.add('bg-green-600');
+        
+        // Animación del contador del carrito
+        const cartCount = document.getElementById('cart-count');
+        if (cartCount) {
+          cartCount.classList.add('cart-badge-pulse');
+          setTimeout(() => {
+            cartCount.classList.remove('cart-badge-pulse');
+          }, 300);
+        }
         
         setTimeout(() => {
           btn.innerHTML = `
@@ -495,6 +508,8 @@ export async function renderStore(container) {
     renderMobileCart();
     renderCartSidebar();
     document.getElementById('cart-count').textContent = getCartItemCount();
+    // Feedback al eliminar
+    cartFeedback.removeFromCartFeedback();
   };
   
   window.increaseMobileQty = (id) => {

@@ -1,6 +1,7 @@
 // utils/checkoutUI.js
 // Renderizado y lógica de checkout minimalista
 import { getCart, getCartTotal, clearCart } from './cart.js';
+import { cartFeedback } from './feedback.js';
 
 export function renderCheckout(containerId = 'checkout-modal') {
   const cart = getCart();
@@ -119,16 +120,21 @@ export function renderCheckout(containerId = 'checkout-modal') {
     // Crear URL de WhatsApp
     const whatsappUrl = `https://wa.me/${rgimWhatsApp}?text=${encodeURIComponent(message)}`;
     
-    // Abrir WhatsApp
-    window.open(whatsappUrl, '_blank');
+    // Feedback de éxito antes de abrir WhatsApp
+    cartFeedback.successFeedback();
     
-    // Limpiar carrito y cerrar modal
-    clearCart();
-    container.innerHTML = '';
-    
-    // Recargar página para actualizar el carrito
+    // Abrir WhatsApp después de un pequeño delay para que se escuche el sonido
     setTimeout(() => {
-      window.location.reload();
-    }, 500);
+      window.open(whatsappUrl, '_blank');
+      
+      // Limpiar carrito y cerrar modal
+      clearCart();
+      container.innerHTML = '';
+      
+      // Recargar página para actualizar el carrito
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }, 300);
   };
 }
