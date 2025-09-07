@@ -853,12 +853,27 @@ import './modules/imageUtils.js'
     searchResults?.classList.add('hidden')
   }
 
+  // Setup navigation event listeners
+  function setupNavigation() {
+    // Setup navigation links
+    document.querySelectorAll('[data-nav]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault()
+        const route = link.getAttribute('data-nav')
+        if (route && routes.includes(route)) {
+          location.hash = route === 'home' ? '#/' : `#/${route}`
+        }
+      })
+    })
+  }
+
   // Boot
   ;(async function init(){
     await loadData()
     await loadTranslations()
     updateCartBadges() // Initialize cart badges
     setupMobileNavigation() // Setup mobile navigation
+    setupNavigation() // Setup navigation event listeners
     setupSearch(state, showToast, renderFilteredProducts, renderProductsLocal, renderCategoriesLocal) // Setup search functionality
     setupFilters() // Setup price and sort filters
     

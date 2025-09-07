@@ -83,7 +83,7 @@ const requiredFiles = [
   'dist/src/data/store/products.json',
   'dist/src/data/store/categories.json',
   'dist/src/data/config/translations.json',
-  'dist/config/config.json'
+  'dist/src/data/config/config.json'
 ];
 
 let allFilesExist = true;
