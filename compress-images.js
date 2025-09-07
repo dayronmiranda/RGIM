@@ -92,6 +92,7 @@ async function createBackup() {
 async function processImage(filePath, filename) {
   try {
     const startSize = await getFileSizeKB(filePath);
+    const ext = path.extname(filePath).toLowerCase();
     
     // Obtener metadata de la imagen
     const metadata = await sharp(filePath).metadata();
@@ -101,34 +102,79 @@ async function processImage(filePath, filename) {
     console.log(`${colors.blue}🖼️  Procesando: ${filename}${colors.reset}`);
     console.log(`   Dimensiones originales: ${originalWidth}x${originalHeight}`);
     console.log(`   Tamaño original: ${startSize} KB`);
+    console.log(`   Formato: ${ext.substring(1).toUpperCase()}`);
     
-    // Crear un buffer temporal con la imagen procesada
-    const processedBuffer = await sharp(filePath)
+    // Configurar sharp según el formato original
+    let sharpInstance = sharp(filePath)
       .resize(CONFIG.targetSize, CONFIG.targetSize, {
         fit: 'cover', // 'cover' mantiene el aspect ratio y recorta si es necesario
         position: 'center' // Centra la imagen al recortar
-      })
-      .jpeg({ 
-        quality: CONFIG.quality,
-        progressive: true // JPEG progresivo para mejor carga web
-      })
-      .toBuffer();
+      });
     
-    // Sobrescribir el archivo original
-    await fs.writeFile(filePath.replace(path.extname(filePath), '.jpg'), processedBuffer);
+    // Aplicar compresión según el formato original
+    let processedBuffer;
     
-    // Si el archivo original no era .jpg, eliminarlo
-    if (path.extname(filePath).toLowerCase() !== '.jpg') {
-      await fs.unlink(filePath);
-      console.log(`   ${colors.yellow}Formato convertido a JPG${colors.reset}`);
+    switch(ext) {
+      case '.png':
+        processedBuffer = await sharpInstance
+          .png({ 
+            quality: CONFIG.quality,
+            compressionLevel: 9, // Máxima compresión para PNG
+            adaptiveFiltering: true,
+            palette: true // Usar paleta cuando sea posible para reducir tamaño
+          })
+          .toBuffer();
+        break;
+        
+      case '.webp':
+        processedBuffer = await sharpInstance
+          .webp({ 
+            quality: CONFIG.quality,
+            lossless: false,
+            nearLossless: false,
+            smartSubsample: true,
+            effort: 6 // Mayor esfuerzo = mejor compresión
+          })
+          .toBuffer();
+        break;
+        
+      case '.jpg':
+      case '.jpeg':
+        processedBuffer = await sharpInstance
+          .jpeg({ 
+            quality: CONFIG.quality,
+            progressive: true, // JPEG progresivo para mejor carga web
+            mozjpeg: true // Usar mozjpeg para mejor compresión
+          })
+          .toBuffer();
+        break;
+        
+      default:
+        // Para otros formatos, convertir a JPEG
+        processedBuffer = await sharpInstance
+          .jpeg({ 
+            quality: CONFIG.quality,
+            progressive: true,
+            mozjpeg: true
+          })
+          .toBuffer();
+        console.log(`   ${colors.yellow}Formato no soportado, convirtiendo a JPEG${colors.reset}`);
     }
     
-    const endSize = await getFileSizeKB(filePath.replace(path.extname(filePath), '.jpg'));
+    // Sobrescribir el archivo original manteniendo la extensión
+    await fs.writeFile(filePath, processedBuffer);
+    
+    const endSize = await getFileSizeKB(filePath);
     const reduction = ((1 - endSize/startSize) * 100).toFixed(1);
     
     console.log(`   Nuevas dimensiones: ${CONFIG.targetSize}x${CONFIG.targetSize}`);
     console.log(`   Nuevo tamaño: ${endSize} KB`);
-    console.log(`   ${colors.green}✓ Reducción: ${reduction}%${colors.reset}\n`);
+    
+    if (parseFloat(reduction) > 0) {
+      console.log(`   ${colors.green}✓ Reducción: ${reduction}%${colors.reset}\n`);
+    } else {
+      console.log(`   ${colors.yellow}⚠ Sin reducción (imagen ya optimizada)${colors.reset}\n`);
+    }
     
     return {
       success: true,
