@@ -1,41 +1,25 @@
 {
-  "ai": {
-    "gemini": {
-      "apiKey": "AIzaSyCVQHypR4aK23BZpT7rLSBmBay-HYNLH2k",
-      "model": "gemini-2.5-flash-lite",
-      "searchEnabled": true
-    }
-  },
   "images": {
-    "compression": {
-      "quality": 100,
-      "progressive": true,
-      "mozjpeg": true
-    },
+    "optimized": true,
     "sizes": {
       "thumbnail": {
         "width": 300,
         "height": 300,
-        "fit": "cover"
+        "quality": 85
       },
       "medium": {
-        "width": 600,
+        "width": 800,
         "height": 600,
-        "fit": "cover"
+        "quality": 90
       }
     },
-    "formats": {
-      "jpeg": {
-        "quality": 85,
-        "progressive": true,
-        "mozjpeg": true
-      }
-    },
-    "lazyLoading": {
-      "enabled": true,
-      "rootMargin": "50px",
-      "threshold": 0.1,
-      "placeholder": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23d1d5db' font-family='sans-serif' font-size='18'%3ECargando...%3C/text%3E%3C/svg%3E"
+    "lazyLoading": true,
+    "format": "jpg"
+  },
+  "ai": {
+    "gemini": {
+      "apiKey": "AIzaSyBJhJhJhJhJhJhJhJhJhJhJhJhJhJhJhJh",
+      "model": "gemini-2.0-flash-exp"
     }
   }
 }

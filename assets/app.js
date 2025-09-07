@@ -102,8 +102,13 @@
     const filename = originalPath.split('/').pop()
     const nameWithoutExt = filename.replace(/\.[^/.]+$/, "")
     
-    // Return optimized image path
-    return `./assets/images/optimized/${nameWithoutExt}-${size}.jpg`
+    // Return optimized image path - try both naming conventions
+    const optimizedPath1 = `./assets/images/optimized/${nameWithoutExt}-${size}.jpg`
+    const optimizedPath2 = `./assets/images/optimized/${nameWithoutExt}_${size}.jpg`
+    
+    // For now, return the first format (with dash)
+    // In production, you might want to check which file exists
+    return optimizedPath1
   }
 
   function showToast(msg){
@@ -1175,74 +1180,7 @@
     }
   }
   
-  // Enhanced product rendering for mobile - FIXED
-  function renderProducts(){
-    const grid = els.productGrid
-    if(!grid) return
-    grid.innerHTML = ''
-    let list = state.products
-    if(state.activeCategory){ list = list.filter(p => p.categoryId === state.activeCategory) }
-
-    list.forEach(p => {
-      const card = document.createElement('div')
-      card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col product-card'
-      
-      // Mobile-optimized layout
-      const isMobile = window.innerWidth <= 430
-      
-      if (isMobile) {
-        // Mobile: simplified layout without details button
-        card.innerHTML = `
-          <div class="aspect-square bg-slate-100 relative">
-            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
-          </div>
-          <div class="p-3 flex-1 flex flex-col">
-            <div class="font-medium text-sm">${p.name}</div>
-            <div class="text-xs text-slate-600 mt-1">${p.short || ''}</div>
-            <div class="mt-auto pt-2">
-              <div class="font-semibold text-sm mb-2">${fmtCurrency(p.price)}</div>
-              <button class="w-full px-3 py-2 bg-brand-600 text-white rounded hover:bg-brand-700 text-sm font-medium" data-act="add">Añadir al carrito</button>
-            </div>
-          </div>`
-        
-        // Make entire card clickable for details on mobile
-        card.style.cursor = 'pointer'
-        card.onclick = (e) => {
-          if (!e.target.closest('[data-act="add"]')) {
-            openProductModal(p)
-          }
-        }
-      } else {
-        // Desktop: full layout with details button
-        card.innerHTML = `
-          <div class="aspect-square bg-slate-100 relative">
-            ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
-          </div>
-          <div class="p-4 flex-1 flex flex-col">
-            <div class="font-medium">${p.name}</div>
-            <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
-            <div class="mt-auto flex items-center justify-between gap-2 pt-3">
-              <div class="font-semibold">${fmtCurrency(p.price)}</div>
-              <div class="flex items-center gap-2">
-                <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
-                <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
-              </div>
-            </div>
-          </div>`
-        
-        card.querySelector('[data-act="details"]').onclick = () => openProductModal(p)
-      }
-      
-      // Add to cart button handler
-      card.querySelector('[data-act="add"]').onclick = (e) => {
-        e.stopPropagation()
-        addToCart(p.id)
-      }
-      
-      grid.appendChild(card)
-    })
-  }
-
+  
   // Cart button click handler with mobile modal support
   els.cartBadgeDesktop?.parentElement?.addEventListener('click', (e) => {
     e.preventDefault()
