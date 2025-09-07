@@ -103,7 +103,10 @@ export function renderCheckout(containerId = 'checkout-modal') {
     let message = `¡Hola! Soy ${name} y me gustaría hacer el siguiente pedido:\n\n`;
     
     cart.forEach(item => {
-      message += `• ${item.qty}x ${item.name} - ${(item.price * item.qty).toFixed(2)}\n`;
+    const qty = item.qty || item.quantity || 0;
+    const name = item.name || 'Producto';
+    const price = item.price || 0;
+    message += `• ${qty}x ${name} - $${(price * qty).toFixed(2)}\n`;
     });
     
     message += `\n*Total: ${total.toFixed(2)}*\n\n`;

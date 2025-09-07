@@ -3,63 +3,110 @@ import { renderFeatured } from '../utils/products.js';
 
 export async function renderHome(container) {
   container.innerHTML = `
-    <!-- Hero Section with modern gradient and improved layout -->
-    <div class="relative overflow-hidden bg-white">
+    <!-- Hero Section with professional copywriting and corporate imagery -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
       <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div class="sm:max-w-lg">
+            <div class="mb-4">
+              <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                🌎 Líder en comercio internacional
+              </span>
+            </div>
             <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              RG IM USA & PANAMÁ
+              <span class="text-blue-600">RGIM</span><br>
+              <span class="text-gray-800">USA & PANAMÁ</span>
             </h1>
-            <p class="mt-4 text-xl text-gray-500">
-              Compras desde cualquier parte del mundo. Envíos desde Panamá a Latinoamérica y el Caribe.
+            <p class="mt-6 text-xl leading-8 text-gray-600">
+              <strong>Conectamos mercados globales</strong> con Latinoamérica y el Caribe. 
+              Soluciones integrales de importación con la confianza de más de una década de experiencia.
             </p>
             <div class="mt-10 flex items-center gap-x-6">
-              <a href="#/store" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Explorar Tienda
+              <a href="#/store" class="rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200">
+                Explorar Catálogo
               </a>
-              <a href="#/about" class="text-sm font-semibold leading-6 text-gray-900 hover:text-indigo-600">
-                Conoce RGIM <span aria-hidden="true">→</span>
+              <a href="#/about" class="text-base font-semibold leading-6 text-gray-900 hover:text-blue-600 transition-colors duration-200">
+                Nuestra Historia <span aria-hidden="true">→</span>
               </a>
             </div>
-            <div class="mt-6 flex items-center gap-x-2 text-sm text-gray-500">
-              <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.757.433l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
-              </svg>
-              Sedes en Estados Unidos y Panamá
+            <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div class="flex items-center gap-x-3 text-sm text-gray-600">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.757.433l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <span><strong>Oficinas:</strong> Miami & Ciudad de Panamá</span>
+              </div>
+              <div class="flex items-center gap-x-3 text-sm text-gray-600">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                </div>
+                <span><strong>Garantía:</strong> 100% en cada envío</span>
+              </div>
             </div>
           </div>
           <div>
             <div class="mt-10">
-              <!-- Decorative image grid -->
+              <!-- Corporate imagery grid -->
               <div aria-hidden="true" class="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl">
                 <div class="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
                   <div class="flex items-center space-x-6 lg:space-x-8">
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-indigo-100 to-indigo-200 sm:opacity-0 lg:opacity-100">
-                        <div class="h-full w-full bg-gradient-to-br from-indigo-200 to-indigo-300"></div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white sm:opacity-0 lg:opacity-100">
+                        <div class="h-full w-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
+                          </svg>
+                        </div>
                       </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-purple-100 to-purple-200">
-                        <div class="h-full w-full bg-gradient-to-br from-purple-200 to-purple-300"></div>
-                      </div>
-                    </div>
-                    <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-blue-100 to-blue-200">
-                        <div class="h-full w-full bg-gradient-to-br from-blue-200 to-blue-300"></div>
-                      </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-cyan-100 to-cyan-200">
-                        <div class="h-full w-full bg-gradient-to-br from-cyan-200 to-cyan-300"></div>
-                      </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-teal-100 to-teal-200">
-                        <div class="h-full w-full bg-gradient-to-br from-teal-200 to-teal-300"></div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-green-100 to-green-200">
-                        <div class="h-full w-full bg-gradient-to-br from-green-200 to-green-300"></div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H4.5m2.25 0v3m0 0v.75A.75.75 0 016 9h-.75m0 0h-.375c-.621 0-1.125-.504-1.125-1.125v-.75m0 0V7.5m0 0H3.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H4.5m0 0V4.5" />
+                          </svg>
+                        </div>
                       </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg bg-gradient-to-br from-yellow-100 to-yellow-200">
-                        <div class="h-full w-full bg-gradient-to-br from-yellow-200 to-yellow-300"></div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        <div class="h-full w-full bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center">
+                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
+                          </svg>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -137,6 +184,124 @@ export async function renderHome(container) {
       </div>
     </div>
 
+    <!-- Commercial Partnerships Section -->
+    <div class="bg-gradient-to-br from-slate-50 to-blue-50 py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Nuestras Alianzas Comerciales
+          </h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Trabajamos con las mejores empresas para ofrecerte productos de calidad mundial y servicios excepcionales
+          </p>
+        </div>
+        
+        <!-- Partners Grid -->
+        <div class="mx-auto mt-16 max-w-5xl">
+          <div class="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
+            <!-- Partner 1: Amazon -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M.045 18.02c.072-.116.187-.124.348-.022 3.636 2.11 8.206 3.166 12.758 3.166 2.639 0 5.462-.394 8.29-1.275.232-.072.29-.058.348.072.058.13.014.174-.145.232-2.898 1.073-6.22 1.608-9.608 1.608-4.33 0-8.742-.921-11.976-3.534-.145-.116-.145-.203-.015-.247zm-.696-1.275c-.087-.145-.029-.232.145-.174 4.026.696 8.177 1.073 12.235 1.073 3.088 0 6.177-.29 9.135-.87.174-.043.232.029.174.145-.058.116-.145.145-.29.174-2.898.609-6.033.87-9.135.87-4.085 0-8.206-.348-12.235-1.073-.145-.029-.174-.087-.029-.145zm-.87-1.26c-.058-.145.029-.203.174-.145 3.695.522 7.564.783 11.454.783 2.784 0 5.568-.203 8.322-.609.145-.029.203.043.145.145-.058.116-.116.145-.261.174-2.726.435-5.539.652-8.322.652-3.92 0-7.84-.261-11.454-.783-.145-.029-.174-.087-.058-.217z"/>
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">Amazon</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">E-commerce Global</p>
+            </div>
+
+            <!-- Partner 2: FedEx -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">FedEx</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">Logística Internacional</p>
+            </div>
+
+            <!-- Partner 3: DHL -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-red-500 to-yellow-500 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">DHL</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">Envíos Express</p>
+            </div>
+
+            <!-- Partner 4: PayPal -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">PayPal</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">Pagos Seguros</p>
+            </div>
+
+            <!-- Partner 5: Walmart -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 01.75-.75h3a.75.75 0 01.75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349m-16.5 11.65V9.35m0 0a3.001 3.001 0 003.75-.615A2.993 2.993 0 009.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 002.25 1.016c.896 0 1.7-.393 2.25-1.016a3.001 3.001 0 003.75.614m-16.5 0a3.004 3.004 0 01-.621-4.72L4.318 3.44A1.5 1.5 0 015.378 3h13.243a1.5 1.5 0 011.06.44l1.19 1.189a3 3 0 01-.621 4.72m-13.5 8.65h3.75a.75.75 0 00.75-.75V13.5a.75.75 0 00-.75-.75H6.75a.75.75 0 00-.75.75v3.75c0 .415.336.75.75.75z" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">Walmart</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">Retail Global</p>
+            </div>
+
+            <!-- Partner 6: Best Buy -->
+            <div class="group flex flex-col items-center justify-center p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 mb-4 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center">
+                <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                </svg>
+              </div>
+              <h3 class="text-sm font-semibold text-gray-900 text-center">Best Buy</h3>
+              <p class="text-xs text-gray-500 text-center mt-1">Tecnología</p>
+            </div>
+          </div>
+          
+          <!-- Partnership Benefits -->
+          <div class="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="text-center">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <h3 class="mt-6 text-lg font-semibold text-gray-900">Calidad Garantizada</h3>
+              <p class="mt-2 text-sm text-gray-600">Productos auténticos directamente de nuestros socios comerciales verificados</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="mt-6 text-lg font-semibold text-gray-900">Tiempos Optimizados</h3>
+              <p class="mt-2 text-sm text-gray-600">Procesos ágiles gracias a nuestras alianzas estratégicas con líderes del mercado</p>
+            </div>
+            
+            <div class="text-center">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-blue-600">
+                <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="mt-6 text-lg font-semibold text-gray-900">Mejores Precios</h3>
+              <p class="mt-2 text-sm text-gray-600">Tarifas preferenciales que trasladamos directamente a nuestros clientes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Stats Section -->
     <div class="bg-white py-24 sm:py-32">
       <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -175,10 +340,16 @@ export async function renderHome(container) {
   // Cargar y mostrar destacados
   const { products, destacados } = await loadAllData();
   
+  console.log('Products loaded:', products.length);
+  console.log('Destacados:', destacados);
+  
   // Obtener los productos destacados basados en los IDs
   const featuredProducts = destacados?.featured 
     ? products.filter(product => destacados.featured.includes(product.id))
     : [];
+  
+  console.log('Featured products found:', featuredProducts.length);
+  console.log('Featured products:', featuredProducts);
   
   renderFeatured({
     products: featuredProducts,
