@@ -173,10 +173,16 @@ export async function renderHome(container) {
   `;
 
   // Cargar y mostrar destacados
-  const { destacados } = await loadAllData();
+  const { products, destacados } = await loadAllData();
+  
+  // Obtener los productos destacados basados en los IDs
+  const featuredProducts = destacados?.featured 
+    ? products.filter(product => destacados.featured.includes(product.id))
+    : [];
+  
   renderFeatured({
-    products: destacados,
+    products: featuredProducts,
     containerId: 'featured-products',
-    getImagePath: (img) => `assets/images/${img}`
+    getImagePath: (img) => `assets/images/products/${img}`
   });
 }

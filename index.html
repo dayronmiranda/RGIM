@@ -17,7 +17,7 @@
   <meta name="twitter:description" content="Compra internacional fácil con RGIM. Envíos marítimos y aéreos desde Panamá a Latinoamérica y el Caribe." />
   <meta name="theme-color" content="#2563eb" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛒</text></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.3.0"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -41,6 +41,12 @@
     }
   </script>
   <style>
+    /* Fix for webkit text size adjust error */
+    html {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    
     .route { display: none; opacity: 0; transition: opacity 200ms ease; }
     .route.active { display: block; opacity: 1; }
     .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(10px); }
@@ -57,8 +63,6 @@
       100% { transform: rotate(360deg); }
     }
   </style>
-</head>
-<body class="bg-slate-50 min-h-screen">
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
   <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-brand-600 text-white px-3 py-2 rounded">Saltar al contenido</a>

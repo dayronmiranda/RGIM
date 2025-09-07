@@ -8,17 +8,24 @@ import { renderAdmin } from '../pages/admin.js';
 const routes = {
   '': renderHome,
   '#home': renderHome,
+  '#/home': renderHome,
   '#store': renderStore,
+  '#/store': renderStore,
   '#about': renderAbout,
+  '#/about': renderAbout,
   '#faq': renderFAQ,
-  '#admin': renderAdmin
+  '#/faq': renderFAQ,
+  '#admin': renderAdmin,
+  '#/admin': renderAdmin
 };
 
 export function router() {
   const hash = window.location.hash;
   const render = routes[hash] || renderHome;
   const app = document.getElementById('app');
-  render(app);
+  if (app) {
+    render(app);
+  }
 }
 
 window.addEventListener('hashchange', router);

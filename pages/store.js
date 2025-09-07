@@ -3,7 +3,7 @@
 import { loadAllData } from '../utils/dataLoader.js';
 import { renderProducts } from '../utils/products.js';
 import { aiProductSearch } from '../utils/aiSearch.js';
-import { addToCart } from '../utils/cart.js';
+import { addToCart, getCartItemCount } from '../utils/cart.js';
 import { renderCartSidebar } from '../utils/cartUI.js';
 import { renderCheckout } from '../utils/checkoutUI.js';
 
@@ -58,10 +58,10 @@ export async function renderStore(container) {
         </div>
 
         <!-- Products and Cart Layout -->
-        <div class="lg:grid lg:grid-cols-4 lg:gap-x-8">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-x-8">
           
           <!-- Products Grid -->
-          <div class="lg:col-span-3">
+          <div class="lg:col-span-2">
             <div class="mb-6">
               <div class="flex items-center justify-between">
                 <div>
@@ -140,12 +140,13 @@ export async function renderStore(container) {
 
                 <!-- Cart Content -->
                 <div class="p-6">
-                  <div id="cart-sidebar-items" class="space-y-3 max-h-64 overflow-y-auto">
-                    <div class="text-gray-500 text-center py-8 text-sm">
-                      <svg class="mx-auto h-8 w-8 text-gray-300 mb-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <div id="cart-sidebar-items" class="space-y-4 max-h-96 overflow-y-auto">
+                    <div class="text-gray-500 text-center py-12 text-sm">
+                      <svg class="mx-auto h-12 w-12 text-gray-300 mb-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
                       </svg>
-                      Tu carrito está vacío
+                      <p class="font-medium text-gray-600">Tu carrito está vacío</p>
+                      <p class="text-xs text-gray-400 mt-1">Agrega productos para comenzar</p>
                     </div>
                   </div>
 
@@ -224,6 +225,7 @@ export async function renderStore(container) {
   // Cargar y mostrar productos
   const { products } = await loadAllData();
   let currentProducts = products;
+  let currentViewMode = 'grid';
   
   // Hide loading state and show products
   document.getElementById('loading-state').classList.add('hidden');
@@ -232,19 +234,49 @@ export async function renderStore(container) {
   // Update product count
   document.getElementById('product-count').textContent = `${products.length} productos disponibles`;
   
-  renderProducts({
-    products: currentProducts,
-    gridId: 'product-grid',
-    getImagePath: (img) => `assets/images/${img}`,
-    extraButton: (product) => `<button class="mt-3 w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" data-addcart="${product.id}">
-      <div class="flex items-center justify-center gap-2">
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-        </svg>
-        Agregar al carrito
-      </div>
-    </button>`
+  // Función para renderizar productos con el modo actual
+  function renderCurrentProducts() {
+    renderProducts({
+      products: currentProducts,
+      gridId: 'product-grid',
+      getImagePath: (img) => `assets/images/products/${img}`,
+      viewMode: currentViewMode,
+      extraButton: (product) => `<button class="mt-3 w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" data-addcart="${product.id}">
+        <div class="flex items-center justify-center gap-2">
+          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+          Agregar al carrito
+        </div>
+      </button>`
+    });
+  }
+  
+  // Renderizar productos inicialmente
+  renderCurrentProducts();
+  
+  // Event listeners para cambiar vista
+  document.getElementById('grid-view').addEventListener('click', () => {
+    currentViewMode = 'grid';
+    document.getElementById('grid-view').classList.add('text-indigo-600', 'bg-indigo-50');
+    document.getElementById('grid-view').classList.remove('text-gray-400');
+    document.getElementById('list-view').classList.remove('text-indigo-600', 'bg-indigo-50');
+    document.getElementById('list-view').classList.add('text-gray-400');
+    renderCurrentProducts();
   });
+  
+  document.getElementById('list-view').addEventListener('click', () => {
+    currentViewMode = 'list';
+    document.getElementById('list-view').classList.add('text-indigo-600', 'bg-indigo-50');
+    document.getElementById('list-view').classList.remove('text-gray-400');
+    document.getElementById('grid-view').classList.remove('text-indigo-600', 'bg-indigo-50');
+    document.getElementById('grid-view').classList.add('text-gray-400');
+    renderCurrentProducts();
+  });
+  
+  // Activar vista grid por defecto
+  document.getElementById('grid-view').classList.add('text-indigo-600', 'bg-indigo-50');
+  document.getElementById('grid-view').classList.remove('text-gray-400');
 
   // Búsqueda con IA
   document.getElementById('ai-search').addEventListener('input', async (e) => {
@@ -267,19 +299,7 @@ export async function renderStore(container) {
       document.getElementById('no-results').classList.add('hidden');
       document.getElementById('product-grid').classList.remove('hidden');
       
-      renderProducts({
-        products: currentProducts,
-        gridId: 'product-grid',
-        getImagePath: (img) => `assets/images/${img}`,
-        extraButton: (product) => `<button class="mt-3 w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" data-addcart="${product.id}">
-          <div class="flex items-center justify-center gap-2">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            Agregar al carrito
-          </div>
-        </button>`
-      });
+      renderCurrentProducts();
     }
   });
 
@@ -294,9 +314,7 @@ export async function renderStore(container) {
         renderCartSidebar();
         
         // Update cart count
-        const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-        document.getElementById('cart-count').textContent = totalItems;
+        document.getElementById('cart-count').textContent = getCartItemCount();
         
         // Visual feedback
         btn.innerHTML = `
@@ -334,8 +352,6 @@ export async function renderStore(container) {
   // Renderizar carrito al cargar
   renderCartSidebar();
   
-  // Initialize cart count
-  const cartItems = JSON.parse(localStorage.getItem('cart') || '[]');
-  const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  document.getElementById('cart-count').textContent = totalItems;
+  // Initialize cart count from session
+  document.getElementById('cart-count').textContent = getCartItemCount();
 }
