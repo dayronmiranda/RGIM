@@ -86,4 +86,6 @@ Thumbs.db
 logs
 *.log
 
-assets\images
+# Assets
+assets/images/
+assets\images\
