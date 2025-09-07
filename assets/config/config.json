@@ -1,0 +1,9 @@
+{
+    "gemini": {
+        "model": "gemini-2.0-flash-exp"
+    },
+    "mongo": {
+        "uri": "mongodb+srv://127.0.0.1:27017",
+        "dbName": "store"
+    }
+}

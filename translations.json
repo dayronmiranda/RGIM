@@ -1,0 +1,208 @@
+{
+  "es": {
+    "common": {
+      "loading": "Cargando...",
+      "error": "Error",
+      "success": "Éxito",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "close": "Cerrar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "add": "Añadir",
+      "search": "Buscar",
+      "filter": "Filtrar",
+      "sort": "Ordenar",
+      "clear": "Limpiar"
+    },
+    "navigation": {
+      "home": "Inicio",
+      "store": "Tienda",
+      "cart": "Carrito",
+      "faq": "FAQ",
+      "about": "Nosotros",
+      "admin": "Admin"
+    },
+    "product": {
+      "addToCart": "Añadir al carrito",
+      "viewDetails": "Ver detalles",
+      "price": "Precio",
+      "category": "Categoría",
+      "description": "Descripción",
+      "specifications": "Especificaciones",
+      "reviews": "Reseñas",
+      "relatedProducts": "Productos relacionados"
+    },
+    "cart": {
+      "title": "Carrito de Compras",
+      "empty": "Tu carrito está vacío",
+      "continueShopping": "Continuar comprando",
+      "subtotal": "Subtotal",
+      "shipping": "Envío",
+      "total": "Total",
+      "checkout": "Proceder al Checkout",
+      "clearCart": "Vaciar Carrito",
+      "quantity": "Cantidad",
+      "remove": "Eliminar"
+    },
+    "checkout": {
+      "title": "Finalizar Compra",
+      "personalInfo": "Información Personal",
+      "shippingInfo": "Información de Envío",
+      "orderSummary": "Resumen del Pedido",
+      "fullName": "Nombre Completo",
+      "phone": "Teléfono",
+      "email": "Email",
+      "country": "País",
+      "address": "Dirección Completa",
+      "shippingType": "Tipo de Envío",
+      "notes": "Notas Adicionales",
+      "seaShipping": "Marítimo (8% - 7-15 días)",
+      "airShipping": "Aéreo (15% - 3-7 días)",
+      "submitOrder": "Enviar Pedido por WhatsApp",
+      "processing": "Procesando..."
+    },
+    "admin": {
+      "title": "Panel de Administración",
+      "login": "Iniciar Sesión",
+      "logout": "Cerrar Sesión",
+      "dashboard": "Dashboard",
+      "orders": "Pedidos",
+      "products": "Productos",
+      "customers": "Clientes",
+      "totalOrders": "Total Pedidos",
+      "totalRevenue": "Ingresos Totales",
+      "recentOrders": "Pedidos Recientes",
+      "orderManagement": "Gestión de Pedidos",
+      "productManagement": "Gestión de Productos",
+      "status": {
+        "new": "Nuevo",
+        "contacted": "Contactado",
+        "processing": "Procesando",
+        "shipped": "Enviado",
+        "delivered": "Entregado"
+      }
+    },
+    "search": {
+      "placeholder": "Buscar productos...",
+      "aiPlaceholder": "Buscar productos con IA...",
+      "noResults": "No se encontraron productos",
+      "resultsFound": "productos encontrados",
+      "suggestions": "Sugerencias IA",
+      "searchHistory": "Historial de búsqueda"
+    },
+    "messages": {
+      "addedToCart": "añadido al carrito",
+      "orderSent": "¡Pedido enviado exitosamente!",
+      "orderError": "Error al enviar el pedido",
+      "loginSuccess": "Sesión iniciada correctamente",
+      "loginError": "Contraseña incorrecta",
+      "dataLoaded": "Datos cargados correctamente",
+      "dataError": "Error al cargar los datos"
+    }
+  },
+  "en": {
+    "common": {
+      "loading": "Loading...",
+      "error": "Error",
+      "success": "Success",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "close": "Close",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "add": "Add",
+      "search": "Search",
+      "filter": "Filter",
+      "sort": "Sort",
+      "clear": "Clear"
+    },
+    "navigation": {
+      "home": "Home",
+      "store": "Store",
+      "cart": "Cart",
+      "faq": "FAQ",
+      "about": "About",
+      "admin": "Admin"
+    },
+    "product": {
+      "addToCart": "Add to Cart",
+      "viewDetails": "View Details",
+      "price": "Price",
+      "category": "Category",
+      "description": "Description",
+      "specifications": "Specifications",
+      "reviews": "Reviews",
+      "relatedProducts": "Related Products"
+    },
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "continueShopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "total": "Total",
+      "checkout": "Proceed to Checkout",
+      "clearCart": "Clear Cart",
+      "quantity": "Quantity",
+      "remove": "Remove"
+    },
+    "checkout": {
+      "title": "Checkout",
+      "personalInfo": "Personal Information",
+      "shippingInfo": "Shipping Information",
+      "orderSummary": "Order Summary",
+      "fullName": "Full Name",
+      "phone": "Phone",
+      "email": "Email",
+      "country": "Country",
+      "address": "Full Address",
+      "shippingType": "Shipping Type",
+      "notes": "Additional Notes",
+      "seaShipping": "Sea (8% - 7-15 days)",
+      "airShipping": "Air (15% - 3-7 days)",
+      "submitOrder": "Send Order via WhatsApp",
+      "processing": "Processing..."
+    },
+    "admin": {
+      "title": "Admin Panel",
+      "login": "Login",
+      "logout": "Logout",
+      "dashboard": "Dashboard",
+      "orders": "Orders",
+      "products": "Products",
+      "customers": "Customers",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "recentOrders": "Recent Orders",
+      "orderManagement": "Order Management",
+      "productManagement": "Product Management",
+      "status": {
+        "new": "New",
+        "contacted": "Contacted",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered"
+      }
+    },
+    "search": {
+      "placeholder": "Search products...",
+      "aiPlaceholder": "Search products with AI...",
+      "noResults": "No products found",
+      "resultsFound": "products found",
+      "suggestions": "AI Suggestions",
+      "searchHistory": "Search History"
+    },
+    "messages": {
+      "addedToCart": "added to cart",
+      "orderSent": "Order sent successfully!",
+      "orderError": "Error sending order",
+      "loginSuccess": "Login successful",
+      "loginError": "Incorrect password",
+      "dataLoaded": "Data loaded successfully",
+      "dataError": "Error loading data"
+    }
+  }
+}

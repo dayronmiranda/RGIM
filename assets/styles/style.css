@@ -1,0 +1,25 @@
+/* Estilos básicos para la tienda */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f9f9f9;
+}
+#app {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Agrega aquí tus estilos personalizados para las páginas */
+.featured-grid { display: flex; gap: 1rem; margin-top: 2rem; }
+.featured-box { flex: 1; aspect-ratio: 1/1; background: #e0e0e0; border-radius: 8px; }
+.btn { display: inline-block; background: #007bff; color: #fff; padding: 0.5rem 1.5rem; border-radius: 4px; text-decoration: none; margin-top: 1rem; }
+.search-bar { margin: 1rem 0; }
+.product-list { margin-top: 2rem; }
+.faq-list { margin: 2rem 0; }
+.faq-item { background: #fff; border: 1px solid #eee; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; }
+.faq-contact { background: #f0f8ff; padding: 1rem; border-radius: 6px; text-align: center; }
