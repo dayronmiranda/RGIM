@@ -69,6 +69,8 @@
     admin: loadJSON(STORAGE_KEYS.adminSession, null),
     activeCategory: '',
     searchQuery: '',
+    priceRange: '',
+    sortBy: '',
     aiSearch: null,
     cacheManager: null,
   }
@@ -94,21 +96,10 @@
 
   function fmtCurrency(n){ return new Intl.NumberFormat(state.lang === 'es' ? 'es-PA' : 'en-US', { style:'currency', currency:'USD' }).format(n) }
 
-  // Get optimized image path
-  function getOptimizedImagePath(originalPath, size = 'thumbnail') {
-    if (!originalPath) return null
-    
-    // Extract filename from original path
-    const filename = originalPath.split('/').pop()
-    const nameWithoutExt = filename.replace(/\.[^/.]+$/, "")
-    
-    // Return optimized image path - try both naming conventions
-    const optimizedPath1 = `./assets/images/optimized/${nameWithoutExt}-${size}.jpg`
-    const optimizedPath2 = `./assets/images/optimized/${nameWithoutExt}_${size}.jpg`
-    
-    // For now, return the first format (with dash)
-    // In production, you might want to check which file exists
-    return optimizedPath1
+  // Simple image path resolver
+  function getImagePath(filename) {
+    if (!filename) return null
+    return `./assets/images/products/${filename}`
   }
 
   function showToast(msg){
@@ -122,9 +113,9 @@
   // Modern sound effect for adding to cart with vibration
   function playAddToCartSound(){
     try {
-      // Vibrate on mobile devices
+      // Enhanced vibration for iPhone and mobile devices
       if (navigator.vibrate) {
-        navigator.vibrate([50, 30, 50]); // Short vibration pattern
+        navigator.vibrate([100, 50, 100, 50, 200]); // Enhanced vibration pattern
       }
       
       const audioContext = new (window.AudioContext || window.webkitAudioContext)()
@@ -229,15 +220,9 @@
       const row = document.createElement('div')
       row.className = 'flex items-center gap-3 border rounded-lg p-3 bg-slate-50'
       
-      // Get optimized image for cart sidebar
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
-      
-      // Get optimized image for cart sidebar
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
-      
       row.innerHTML = `
         <div class="w-12 h-12 bg-slate-200 rounded overflow-hidden flex-shrink-0">
-          ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="w-full h-full object-cover">` : ''}
+          ${p.image ? `<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">` : ''}
         </div>
         <div class="flex-1 min-w-0">
           <div class="font-medium text-sm truncate">${p.name}</div>
@@ -437,76 +422,70 @@
 
   // Data loading with cache management
   async function loadData(){
+    console.log('Starting data loading...')
     try {
-      // Initialize cache manager
-      if (window.CacheManager) {
-        state.cacheManager = new window.CacheManager({
-          cacheVersion: '2.0',
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
-          compressionEnabled: true,
-          lazyLoadEnabled: true
-        })
-        await state.cacheManager.init()
+      // Simplified loading - skip cache for now
+      console.log('Loading products.json...')
+      const prodRes = await fetch('./products.json')
+      if (!prodRes.ok) {
+        throw new Error(`Failed to load products: ${prodRes.status} ${prodRes.statusText}`)
       }
+      const products = await prodRes.json()
+      console.log('Products loaded:', products.length, 'items')
 
-      // Load products with caching
-      let products = []
-      if (state.cacheManager) {
-        try {
-          products = await state.cacheManager.loadProducts()
-        } catch (error) {
-          console.warn('Cache failed, loading from network:', error)
-          const prodRes = await fetch('./products.json')
-          products = await prodRes.json()
-        }
-      } else {
-        const prodRes = await fetch('./products.json')
-        products = await prodRes.json()
+      console.log('Loading categories.json...')
+      const catRes = await fetch('./categories.json')
+      if (!catRes.ok) {
+        throw new Error(`Failed to load categories: ${catRes.status} ${catRes.statusText}`)
       }
+      const categories = await catRes.json()
+      console.log('Categories loaded:', categories.length, 'items')
 
-      // Load other data normally (smaller files)
-      const [catRes, featRes, configRes] = await Promise.all([
-        fetch('./categories.json'),
-        fetch('./destacados.json').catch(() => ({ featured: [] })),
-        fetch('./config.json').catch(() => ({}))
-      ])
-
-      state.products = products
-      state.categories = await catRes.json()
-      state.featured = (await featRes.json()).featured || []
-      state.config = await configRes.json()
+      // Load other optional files
+      let featured = []
+      let config = {}
       
-      // Initialize AI search if available
-      if (window.AISearch && state.config.ai) {
-        state.aiSearch = new window.AISearch(state.config.ai.gemini)
-        state.aiSearch.setProducts(state.products)
+      try {
+        const featRes = await fetch('./destacados.json')
+        if (featRes.ok) {
+          const featData = await featRes.json()
+          featured = featData.featured || []
+          console.log('Featured products loaded:', featured.length, 'items')
+        }
+      } catch (e) {
+        console.warn('Featured products not loaded:', e.message)
       }
 
-      // Log cache statistics
-      if (state.cacheManager) {
-        const stats = state.cacheManager.getCacheStats()
-        if (stats) {
-          console.log('Cache Stats:', {
-            entries: stats.entries,
-            sizeKB: stats.totalSizeKB,
-            version: stats.version
-          })
+      try {
+        const configRes = await fetch('./config.json')
+        if (configRes.ok) {
+          config = await configRes.json()
+          console.log('Config loaded successfully')
         }
+      } catch (e) {
+        console.warn('Config not loaded:', e.message)
       }
+
+      // Set state
+      state.products = products
+      state.categories = categories
+      state.featured = featured
+      state.config = config
+      
+      console.log('Data loading completed successfully')
+      console.log('Final state:', {
+        products: state.products.length,
+        categories: state.categories.length,
+        featured: state.featured.length
+      })
 
     } catch (error) {
-      console.error('Data loading failed:', error)
-      // Fallback to basic loading
-      const [prodRes, catRes, featRes, configRes] = await Promise.all([
-        fetch('./products.json'), 
-        fetch('./categories.json'),
-        fetch('./destacados.json').catch(() => ({ featured: [] })),
-        fetch('./config.json').catch(() => ({}))
-      ])
-      state.products = await prodRes.json()
-      state.categories = await catRes.json()
-      state.featured = (await featRes.json()).featured || []
-      state.config = await configRes.json()
+      console.error('Critical data loading error:', error)
+      // Set empty arrays to prevent crashes
+      state.products = []
+      state.categories = []
+      state.featured = []
+      state.config = {}
     }
   }
 
@@ -534,7 +513,7 @@
     }, 700)
   }
 
-  // Modern routing without hash
+  // Unified hash routing system
   function setActiveRoute(name, fromCartClick = false, updateHistory = true){
     // Close any open modals when changing routes
     closeAllModals()
@@ -548,12 +527,11 @@
     })
     window.scrollTo({top:0, behavior:'smooth'})
     
-    // Update browser history and URL
+    // Update browser history and URL with hash
     if(updateHistory) {
-      const url = name === 'home' ? '/' : `/${name}`
-      const currentUrl = location.pathname
-      if(currentUrl !== url) {
-        history.pushState({ route: name }, '', url)
+      const hash = name === 'home' ? '#/' : `#/${name}`
+      if(location.hash !== hash) {
+        location.hash = hash
       }
     }
     
@@ -583,36 +561,18 @@
     }
   }
 
-  function handleRouteChange(){
-    const path = location.pathname
+  function handleHashChange(){
+    const hash = location.hash || '#/'
     let route = 'home'
     
-    if(path === '/' || path === '/home') {
-      route = 'home'
-    } else if(path.startsWith('/')) {
-      const pathRoute = path.substring(1).split('/')[0]
-      if(routes.includes(pathRoute)) {
-        route = pathRoute
+    if(hash.startsWith('#/')) {
+      const hashRoute = hash.replace('#/','') || 'home'
+      if(routes.includes(hashRoute)) {
+        route = hashRoute
       }
     }
     
     setActiveRoute(route, false, false)
-  }
-
-  // Legacy hash support for backward compatibility
-  function handleHashChange(){
-    const hash = location.hash
-    if(hash && hash.startsWith('#/')) {
-      const route = hash.replace('#/','')
-      if(routes.includes(route)) {
-        // Redirect hash to clean URL
-        const url = route === 'home' ? '/' : `/${route}`
-        history.replaceState({ route }, '', url)
-        setActiveRoute(route, false, false)
-        return
-      }
-    }
-    handleRouteChange()
   }
 
   // Store rendering
@@ -620,60 +580,145 @@
     const wrap = els.categoryBar
     if(!wrap) return
     wrap.innerHTML = ''
-    const allBtn = makeCatButton('', state.lang==='es'?'Todo':'All')
+    
+    // All categories button
+    const allBtn = makeCatButton('', state.lang==='es'?'Todas':'All')
     wrap.appendChild(allBtn)
-    state.categories.forEach(cat => wrap.appendChild(makeCatButton(cat.id, cat.name)))
+    
+    // Individual category buttons
+    state.categories.forEach(cat => {
+      const btn = makeCatButton(cat.id, cat.name)
+      wrap.appendChild(btn)
+    })
   }
+  
   function makeCatButton(id, label){
-    const b = document.createElement('button')
-    b.className = `px-3 py-1 rounded-full border ${id===state.activeCategory? 'bg-brand-600 text-white border-brand-600':'bg-white hover:bg-slate-50'}`
-    b.textContent = label
-    b.onclick = ()=>{ state.activeCategory = id; renderProducts() }
-    return b
+    const div = document.createElement('div')
+    div.className = 'flex items-center'
+    
+    const input = document.createElement('input')
+    input.type = 'checkbox'
+    input.name = 'category'
+    input.id = `category-${id || 'all'}`
+    input.value = id
+    input.className = 'h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 rounded'
+    input.checked = id === state.activeCategory
+    
+    const labelEl = document.createElement('label')
+    labelEl.htmlFor = `category-${id || 'all'}`
+    labelEl.className = 'ml-3 text-sm text-gray-600 cursor-pointer'
+    labelEl.textContent = label
+    
+    input.onchange = () => {
+      // Clear search when selecting category
+      const searchInput = document.getElementById('product-search')
+      if (searchInput) searchInput.value = ''
+      state.searchQuery = ''
+      
+      if (input.checked) {
+        state.activeCategory = id
+      } else {
+        state.activeCategory = ''
+      }
+      
+      renderProducts()
+      renderCategories() // Re-render to update active states
+      
+      // Hide search results
+      const searchResults = document.getElementById('search-results-info')
+      searchResults?.classList.add('hidden')
+    }
+    
+    div.appendChild(input)
+    div.appendChild(labelEl)
+    return div
   }
   function renderProducts(){
     const grid = els.productGrid
-    if(!grid) return
+    if(!grid) {
+      console.error('Product grid element not found')
+      return
+    }
+    
+    console.log('Rendering products:', state.products.length, 'products found')
     grid.innerHTML = ''
+    
+    if(state.products.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-500">No hay productos disponibles</div>'
+      return
+    }
+    
     let list = state.products
-    if(state.activeCategory){ list = list.filter(p => p.categoryId === state.activeCategory) }
+    if(state.activeCategory){ 
+      list = list.filter(p => p.categoryId === state.activeCategory)
+      console.log('Filtered by category:', state.activeCategory, 'Found:', list.length)
+    }
+
+    if(list.length === 0) {
+      grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-500">No hay productos en esta categoría</div>'
+      return
+    }
 
     list.forEach(p => {
       const card = document.createElement('div')
-      card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col'
+      card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
       
-      // Get optimized image path
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
-      
-      // Get optimized image path
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
+      // Crear la imagen directamente con debugging
+      const imagePath = p.image ? `./assets/images/products/${p.image}` : null
+      console.log(`Product: ${p.name}, Image: ${p.image}, Path: ${imagePath}`)
       
       card.innerHTML = `
-        <div class="aspect-square bg-slate-100 relative">
-          ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover lazy-load" loading="lazy">` : ''}
+        <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
+          ${imagePath ? 
+            `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy" onload="console.log('✅ Image loaded: ${imagePath}')" onerror="console.log('❌ Error loading image: ${imagePath}'); this.style.display='none';">` : 
+            `<div class="absolute inset-0 flex items-center justify-center text-gray-400">
+              <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>`
+          }
         </div>
-        <div class="p-4 flex-1 flex flex-col">
-          <div class="font-medium">${p.name}</div>
-          <div class="text-sm text-slate-600 mt-1">${p.short || ''}</div>
-          <div class="mt-auto flex items-center justify-between gap-2 pt-3">
-            <div class="font-semibold">${fmtCurrency(p.price)}</div>
-            <div class="flex items-center gap-2">
-              <button class="px-3 py-1 border rounded hover:bg-slate-50" data-act="details">Detalles</button>
-              <button class="px-3 py-1 bg-brand-600 text-white rounded hover:bg-brand-700" data-act="add">Añadir</button>
-            </div>
+        <div class="p-4">
+          <h3 class="text-sm font-medium text-gray-900 truncate">
+            <a href="#" class="product-link hover:text-indigo-600">
+              ${p.name}
+            </a>
+          </h3>
+          <p class="mt-1 text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
+          <div class="mt-3 flex items-center justify-between">
+            <p class="text-sm font-semibold text-gray-900">${fmtCurrency(p.price)}</p>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button class="flex-1 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="details">
+              Detalles
+            </button>
+            <button class="flex-1 bg-indigo-600 py-2 px-3 border border-transparent rounded-md shadow-sm text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="add">
+              Añadir
+            </button>
           </div>
         </div>`
-      card.querySelector('[data-act="add"]').onclick = ()=> addToCart(p.id)
-      card.querySelector('[data-act="details"]').onclick = ()=> openProductModal(p)
+      
+      const addBtn = card.querySelector('[data-act="add"]')
+      const detailsBtn = card.querySelector('[data-act="details"]')
+      const productLink = card.querySelector('.product-link')
+      
+      if(addBtn) addBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); addToCart(p.id) }
+      if(detailsBtn) detailsBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openProductModal(p) }
+      if(productLink) productLink.onclick = (e) => { e.preventDefault(); openProductModal(p) }
+      
       grid.appendChild(card)
     })
+    
+    console.log('Products rendered successfully:', list.length, 'cards created')
   }
 
   function openProductModal(p){
     const html = `
       <div class="p-5">
         <div class="flex items-start gap-4">
-          <div class="w-28 h-28 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${optimizedImage || p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
+          <div class="w-28 h-28 bg-slate-100 rounded overflow-hidden">
+            ${p.image ? `<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">` : ''}
+          </div>
           <div class="flex-1">
             <h3 class="text-lg font-semibold">${p.name}</h3>
             <div class="text-slate-600 mt-1">${p.description || p.short || ''}</div>
@@ -767,7 +812,7 @@
       const row = document.createElement('div')
       row.className = 'flex items-center gap-3 border rounded p-3 bg-white'
       row.innerHTML = `
-        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${optimizedImage || p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
+        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">`:''}</div>
         <div class="flex-1">
           <div class="font-medium">${p.name}</div>
           <div class="text-sm text-slate-600">${fmtCurrency(p.price)} x ${it.qty} = <span class="font-semibold">${fmtCurrency(p.price*it.qty)}</span></div>
@@ -1214,6 +1259,72 @@
     }
   })
 
+  // AI Search with Gemini
+  async function aiSearch(query, products) {
+    const apiKey = state.config?.ai?.gemini?.apiKey
+    const model = state.config?.ai?.gemini?.model || 'gemini-2.0-flash-exp'
+    
+    if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+      throw new Error('API key not configured')
+    }
+
+    const productsData = products.map(p => ({
+      id: p.id,
+      name: p.name,
+      description: p.short || p.description || '',
+      category: p.categoryId || ''
+    }))
+
+    const prompt = `Un usuario está haciendo una búsqueda y está introduciendo la cadena de texto "${query}". ¿Cuál de los siguientes productos del siguiente JSON puede ser resultado de esta búsqueda?
+
+${JSON.stringify(productsData, null, 2)}
+
+Responde únicamente con un array JSON de los IDs de productos que coincidan con la búsqueda, ordenados por relevancia. Ejemplo: ["id1", "id2", "id3"]`
+
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 10000) // 10s timeout
+
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }]
+        }),
+        signal: controller.signal
+      })
+
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        throw new Error(`Gemini API error: ${response.status}`)
+      }
+
+      const data = await response.json()
+      const text = data.candidates?.[0]?.content?.parts?.[0]?.text
+
+      if (!text) {
+        throw new Error('No response from Gemini')
+      }
+
+      const productIds = JSON.parse(text.trim())
+      return products.filter(p => productIds.includes(p.id))
+    } catch (e) {
+      clearTimeout(timeoutId)
+      if (e.name === 'AbortError') {
+        throw new Error('Search timeout')
+      }
+      console.warn('Failed to parse AI response, falling back to basic search')
+      throw e
+    }
+  }
+
   // Search functionality
   function setupSearch() {
     const searchInput = document.getElementById('product-search')
@@ -1223,16 +1334,10 @@
     const searchResults = document.getElementById('search-results-info')
     const resultsCount = document.getElementById('results-count')
     const clearAllFilters = document.getElementById('clear-all-filters')
-    const aiIndicator = document.getElementById('ai-search-indicator')
 
     if (!searchInput) return
 
     let searchTimeout = null
-
-    // Show AI indicator if available
-    if (state.aiSearch && state.aiSearch.isAIEnabled()) {
-      aiIndicator?.classList.remove('hidden')
-    }
 
     // Search function
     async function performSearch(query) {
@@ -1252,10 +1357,14 @@
       try {
         let results = []
         
-        if (state.aiSearch) {
-          results = await state.aiSearch.search(query.trim())
-        } else {
-          // Basic search fallback
+        // Try AI search first
+        try {
+          results = await aiSearch(query.trim(), state.products)
+          console.log('AI search successful:', results.length, 'results')
+        } catch (aiError) {
+          console.warn('AI search failed, using basic search:', aiError.message)
+          
+          // Fallback to basic search
           const searchTerm = query.toLowerCase().trim()
           results = state.products.filter(product => {
             const searchableText = [
@@ -1322,10 +1431,10 @@
         
         if (isMobile) {
           // Mobile: simplified layout without details button
-          const optimizedImageMobile = getOptimizedImagePath(p.image, 'thumbnail')
+          const imagePath = p.image ? `./assets/images/products/${p.image}` : null
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
-              ${optimizedImageMobile ? `<img src="${optimizedImageMobile}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+              ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
             </div>
             <div class="p-3 flex-1 flex flex-col">
               <div class="font-medium text-sm">${p.name}</div>
@@ -1345,10 +1454,10 @@
           }
         } else {
           // Desktop: full layout with details button
-          const optimizedImageDesktop = getOptimizedImagePath(p.image, 'thumbnail')
+          const imagePath = p.image ? `./assets/images/products/${p.image}` : null
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
-              ${optimizedImageDesktop ? `<img src="${optimizedImageDesktop}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
+              ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
             </div>
             <div class="p-4 flex-1 flex flex-col">
               <div class="font-medium">${p.name}</div>
@@ -1491,7 +1600,7 @@
     card.innerHTML = `
       <div class="aspect-square bg-slate-100 rounded overflow-hidden mb-3">
         ${product.image ? 
-          `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">` : 
+          `<img src="${getImagePath(product.image)}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy">` : 
           `<div class="w-full h-full bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
             <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
@@ -1504,62 +1613,233 @@
       <div class="text-xs text-brand-600 mt-2 group-hover:underline" data-i18n="home.seeStore">Ver en tienda</div>
     `
     
-    // Click handler to go to store and show product
+    // Click handler to go to store and highlight product
     card.onclick = () => {
-      // Go to store page
       location.hash = '#/store'
-      
-      // After route change, find and highlight the product
       setTimeout(() => {
         setActiveRoute('store')
-        
-        // Scroll to product if it exists
         setTimeout(() => {
           const productCards = document.querySelectorAll('.product-card')
           productCards.forEach(productCard => {
-            const productName = productCard.querySelector('.font-medium')?.textContent
+            const productName = productCard.querySelector('h3')?.textContent || productCard.querySelector('.font-medium')?.textContent
             if (productName === product.name) {
               productCard.scrollIntoView({ behavior: 'smooth', block: 'center' })
               productCard.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.3)'
+              productCard.style.transform = 'scale(1.02)'
               setTimeout(() => {
                 productCard.style.boxShadow = ''
+                productCard.style.transform = ''
               }, 2000)
             }
           })
-        }, 300)
-      }, 50)
+        }, 500)
+      }, 100)
     }
     
     return card
   }
 
-  // Boot
-  window.addEventListener('hashchange', handleHashChange)
-  window.addEventListener('popstate', handleRouteChange)
-  
-  // Handle navigation clicks
-  document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href^="/"], a[href^="#/"]')
-    if (link && !link.hasAttribute('target') && !e.ctrlKey && !e.metaKey) {
-      e.preventDefault()
-      const href = link.getAttribute('href')
-      
-      if (href.startsWith('#/')) {
-        // Legacy hash link - convert to clean URL
-        const route = href.replace('#/', '')
-        const url = route === 'home' ? '/' : `/${route}`
-        history.pushState({ route }, '', url)
-        setActiveRoute(route, false, false)
-      } else if (href.startsWith('/')) {
-        // Clean URL
-        const route = href === '/' ? 'home' : href.substring(1).split('/')[0]
-        if (routes.includes(route)) {
-          history.pushState({ route }, '', href)
-          setActiveRoute(route, false, false)
+  // Price and sort filters
+  function setupFilters() {
+    // Price range filters
+    const priceRangeInputs = document.querySelectorAll('input[name="price-range"]')
+    const priceMinInput = document.getElementById('price-min')
+    const priceMaxInput = document.getElementById('price-max')
+    const applyPriceButton = document.getElementById('apply-price-filter')
+    const sortSelect = document.getElementById('sort-select')
+
+    // Price range radio buttons
+    priceRangeInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        if (input.checked) {
+          state.priceRange = input.value
+          if (priceMinInput) priceMinInput.value = ''
+          if (priceMaxInput) priceMaxInput.value = ''
+          applyFilters()
         }
+      })
+    })
+
+    // Custom price range
+    if (applyPriceButton) {
+      applyPriceButton.addEventListener('click', () => {
+        const min = parseFloat(priceMinInput?.value) || 0
+        const max = parseFloat(priceMaxInput?.value) || Infinity
+        state.priceRange = `${min}-${max}`
+        
+        // Uncheck radio buttons
+        priceRangeInputs.forEach(input => input.checked = false)
+        applyFilters()
+      })
+    }
+
+    // Sort dropdown
+    if (sortSelect) {
+      sortSelect.addEventListener('change', () => {
+        state.sortBy = sortSelect.value
+        applyFilters()
+      })
+    }
+  }
+
+  function applyFilters() {
+    let filteredProducts = [...state.products]
+
+    // Apply category filter
+    if (state.activeCategory) {
+      filteredProducts = filteredProducts.filter(p => p.categoryId === state.activeCategory)
+    }
+
+    // Apply price filter
+    if (state.priceRange) {
+      filteredProducts = filteredProducts.filter(p => {
+        if (state.priceRange === '500+') {
+          return p.price >= 500
+        }
+        
+        const [min, max] = state.priceRange.split('-').map(v => parseFloat(v))
+        if (isNaN(max)) {
+          return p.price >= min
+        }
+        return p.price >= min && p.price <= max
+      })
+    }
+
+    // Apply sorting
+    if (state.sortBy) {
+      switch (state.sortBy) {
+        case 'price-asc':
+          filteredProducts.sort((a, b) => a.price - b.price)
+          break
+        case 'price-desc':
+          filteredProducts.sort((a, b) => b.price - a.price)
+          break
+        case 'name-asc':
+          filteredProducts.sort((a, b) => a.name.localeCompare(b.name))
+          break
+        case 'name-desc':
+          filteredProducts.sort((a, b) => b.name.localeCompare(a.name))
+          break
       }
     }
-  })
+
+    renderFilteredProducts(filteredProducts)
+    
+    // Update results count
+    const resultsCount = document.getElementById('results-count')
+    const searchResults = document.getElementById('search-results-info')
+    if (resultsCount && searchResults) {
+      resultsCount.textContent = filteredProducts.length
+      if (state.activeCategory || state.priceRange || state.sortBy) {
+        searchResults.classList.remove('hidden')
+      } else {
+        searchResults.classList.add('hidden')
+      }
+    }
+  }
+
+  function renderFilteredProducts(products) {
+    const grid = document.getElementById('product-grid')
+    if (!grid) return
+    
+    grid.innerHTML = ''
+    
+    if (products.length === 0) {
+      const noResults = document.createElement('div')
+      noResults.className = 'col-span-full text-center py-12 text-slate-500'
+      noResults.innerHTML = `
+        <svg class="mx-auto h-12 w-12 text-slate-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <p class="text-lg font-medium">No se encontraron productos</p>
+        <p class="text-sm">Intenta ajustar los filtros</p>
+      `
+      grid.appendChild(noResults)
+      return
+    }
+
+    products.forEach(p => {
+      const card = document.createElement('div')
+      card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
+      
+      const imagePath = p.image ? `./assets/images/products/${p.image}` : null
+      
+      card.innerHTML = `
+        <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
+          ${imagePath ? 
+            `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy">` : 
+            `<div class="absolute inset-0 flex items-center justify-center text-gray-400">
+              <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>`
+          }
+        </div>
+        <div class="p-4">
+          <h3 class="text-sm font-medium text-gray-900 truncate">
+            <a href="#" class="product-link hover:text-indigo-600">
+              ${p.name}
+            </a>
+          </h3>
+          <p class="mt-1 text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
+          <div class="mt-3 flex items-center justify-between">
+            <p class="text-sm font-semibold text-gray-900">${fmtCurrency(p.price)}</p>
+          </div>
+          <div class="mt-3 flex gap-2">
+            <button class="flex-1 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="details">
+              Detalles
+            </button>
+            <button class="flex-1 bg-indigo-600 py-2 px-3 border border-transparent rounded-md shadow-sm text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="add">
+              Añadir
+            </button>
+          </div>
+        </div>`
+      
+      const addBtn = card.querySelector('[data-act="add"]')
+      const detailsBtn = card.querySelector('[data-act="details"]')
+      const productLink = card.querySelector('.product-link')
+      
+      if(addBtn) addBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); addToCart(p.id) }
+      if(detailsBtn) detailsBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openProductModal(p) }
+      if(productLink) productLink.onclick = (e) => { e.preventDefault(); openProductModal(p) }
+      
+      grid.appendChild(card)
+    })
+  }
+
+  // Clear all filters
+  function clearAllFilters() {
+    state.activeCategory = ''
+    state.priceRange = ''
+    state.sortBy = ''
+    state.searchQuery = ''
+    
+    // Reset UI
+    const searchInput = document.getElementById('product-search')
+    if (searchInput) searchInput.value = ''
+    
+    const priceRangeInputs = document.querySelectorAll('input[name="price-range"]')
+    priceRangeInputs.forEach(input => {
+      input.checked = input.value === ''
+    })
+    
+    const priceMinInput = document.getElementById('price-min')
+    const priceMaxInput = document.getElementById('price-max')
+    if (priceMinInput) priceMinInput.value = ''
+    if (priceMaxInput) priceMaxInput.value = ''
+    
+    const sortSelect = document.getElementById('sort-select')
+    if (sortSelect) sortSelect.value = ''
+    
+    renderProducts()
+    renderCategories()
+    
+    const searchResults = document.getElementById('search-results-info')
+    searchResults?.classList.add('hidden')
+  }
+
+  // Boot
+  window.addEventListener('hashchange', handleHashChange)
   
   ;(async function init(){
     await loadData()
@@ -1567,6 +1847,13 @@
     updateCartBadges() // Initialize cart badges
     setupMobileNavigation() // Setup mobile navigation
     setupSearch() // Setup search functionality
-    handleRouteChange() // Initialize routing
+    setupFilters() // Setup price and sort filters
+    handleHashChange() // Initialize routing
+    
+    // Setup clear all filters button
+    const clearAllFiltersBtn = document.getElementById('clear-all-filters')
+    if (clearAllFiltersBtn) {
+      clearAllFiltersBtn.addEventListener('click', clearAllFilters)
+    }
   })()
 })()

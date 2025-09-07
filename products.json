@@ -6,7 +6,7 @@
     "description": "Pasta de sêmola tipo pena, ideal para diversos molhos. Tempo de cozimento de 5 a 7 minutos.",
     "price": 1.5,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0002_Capa-1.png"
+    "image": "products_0002_Capa-1.png"
   },
   {
     "id": "p2",
@@ -15,7 +15,7 @@
     "description": "Crujientes hojuelas de maíz cubiertas con un delicioso sabor a chocolate. Un snack divertido y sabroso.",
     "price": 0.5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0003_20231206_132442.png"
+    "image": "products_0003_20231206_132442.png"
   },
   {
     "id": "p3",
@@ -24,7 +24,7 @@
     "description": "Pequeño malvavisco con un delicioso relleno de jalea sabor a fresa y una cobertura de chocolate.",
     "price": 0.4,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0004_20231206_132434.png"
+    "image": "products_0004_20231206_132434.png"
   },
   {
     "id": "p4",
@@ -33,7 +33,7 @@
     "description": "Divertida figura con sabor a chocolate, rellena con maní y cereal crocante.",
     "price": 0.3,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0005_20231206_132428.png"
+    "image": "products_0005_20231206_132428.png"
   },
   {
     "id": "p5",
@@ -42,7 +42,7 @@
     "description": "Crujiente barquillo relleno de crema de avellana con una deliciosa cubierta de chocolate y cacahuates.",
     "price": 0.6,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0006_20231206_132420.png"
+    "image": "products_0006_20231206_132420.png"
   },
   {
     "id": "p6",
@@ -51,7 +51,7 @@
     "description": "La clásica barra de chocolate blanco Hershey's con trocitos de galleta de chocolate.",
     "price": 1.2,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0007_20231206_132347.png"
+    "image": "products_0007_20231206_132347.png"
   },
   {
     "id": "p7",
@@ -60,7 +60,7 @@
     "description": "Una combinación perfecta de nougat, caramelo y chocolate con leche.",
     "price": 1.1,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0008_20231206_132341.png"
+    "image": "products_0008_20231206_132341.png"
   },
   {
     "id": "p8",
@@ -69,7 +69,7 @@
     "description": "Crujientes galletas tipo sándwich con un cremoso relleno de chocolate.",
     "price": 2,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0009_20231206_132315.png"
+    "image": "products_0009_20231206_132315.png"
   },
   {
     "id": "p9",
@@ -78,7 +78,7 @@
     "description": "Polvo para preparar una deliciosa gelatina sabor frambuesa, fortificada con vitamina C.",
     "price": 0.8,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0010_20231206_132305.png"
+    "image": "products_0010_20231206_132305.png"
   },
   {
     "id": "p10",
@@ -87,7 +87,7 @@
     "description": "Polvo para preparar una refrescante gelatina sabor naranja, fortificada con vitamina C.",
     "price": 0.8,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0011_20231206_132242.png"
+    "image": "products_0011_20231206_132242.png"
   },
   {
     "id": "p11",
@@ -96,7 +96,7 @@
     "description": "Polvo para preparar una ácida y deliciosa gelatina sabor limón, fortificada con vitamina C.",
     "price": 0.8,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0012_20231206_132237.png"
+    "image": "products_0012_20231206_132237.png"
   },
   {
     "id": "p12",
@@ -105,7 +105,7 @@
     "description": "Crujientes barquillos tipo wafer rellenos con una suave crema de coco.",
     "price": 1.8,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0013_20231206_132218.png"
+    "image": "products_0013_20231206_132218.png"
   },
   {
     "id": "p13",
@@ -114,7 +114,7 @@
     "description": "Crujientes barquillos tipo wafer rellenos con una cremosa y dulce nata.",
     "price": 1.8,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0014_20231206_132211.png"
+    "image": "products_0014_20231206_132211.png"
   },
   {
     "id": "p14",
@@ -123,7 +123,7 @@
     "description": "Divertida sopa de pasta con figuras de Mickey Mouse y sus amigos, ideal para niños.",
     "price": 1.2,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0015_20231206_132155.png"
+    "image": "products_0015_20231206_132155.png"
   },
   {
     "id": "p15",
@@ -132,7 +132,7 @@
     "description": "Clásica sopa de estrellas con sabor casero, lista en 10 minutos.",
     "price": 1.1,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0016_20231206_132147.png"
+    "image": "products_0016_20231206_132147.png"
   },
   {
     "id": "p16",
@@ -141,7 +141,7 @@
     "description": "Chicle sin azúcar con microcápsulas para un sabor fresco y duradero con extra fuerza.",
     "price": 1.5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0017_20231206_132138.png"
+    "image": "products_0017_20231206_132138.png"
   },
   {
     "id": "p17",
@@ -150,7 +150,7 @@
     "description": "Chicle sin azúcar con microcápsulas para un sabor a menta refrescante y duradero.",
     "price": 1.5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0018_20231206_132133.png"
+    "image": "products_0018_20231206_132133.png"
   },
   {
     "id": "p18",
@@ -159,7 +159,7 @@
     "description": "Capas cremosas de diversión crujiente. Wafers con sabor a chocolate.",
     "price": 1.3,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0019_20231206_132120.png"
+    "image": "products_0019_20231206_132120.png"
   },
   {
     "id": "p19",
@@ -168,7 +168,7 @@
     "description": "Bolsa de 50 chupetes de sabores surtidos: manzana verde, mandarina y fresa, rellenos de chicle.",
     "price": 5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0020_20231206_132112.png"
+    "image": "products_0020_20231206_132112.png"
   },
   {
     "id": "p20",
@@ -177,7 +177,7 @@
     "description": "Bolsa de 50 chupetes de fresa que pintan la lengua, rellenos de chicle.",
     "price": 5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0021_20231206_132100.png"
+    "image": "products_0021_20231206_132100.png"
   },
   {
     "id": "p21",
@@ -186,7 +186,7 @@
     "description": "Bolsa de 50 chupetes de sabores uva y fresa que pintan la lengua, rellenos de chicle.",
     "price": 5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0022_20231206_132047.png"
+    "image": "products_0022_20231206_132047.png"
   },
   {
     "id": "p22",
@@ -195,7 +195,7 @@
     "description": "Crujientes papas fritas con el clásico y delicioso sabor a adobo.",
     "price": 1,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0023_20231206_132021.png"
+    "image": "products_0023_20231206_132021.png"
   },
   {
     "id": "p23",
@@ -204,7 +204,7 @@
     "description": "Las papas fritas originales, con solo tres ingredientes: papa, aceite y sal.",
     "price": 1,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0024_20231206_132013.png"
+    "image": "products_0024_20231206_132013.png"
   },
   {
     "id": "p24",
@@ -213,7 +213,7 @@
     "description": "Tomate frito estilo casero, listo para usar en tus guisos y platos. Sin gluten.",
     "price": 2.5,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0025_20231206_131932.png"
+    "image": "products_0025_20231206_131932.png"
   },
   {
     "id": "p25",
@@ -222,7 +222,7 @@
     "description": "Clásicas hojuelas de maíz azucaradas, adicionadas con vitaminas y hierro. Para snackear.",
     "price": 1,
     "categoryId": "cereal",
-    "image": "./assets/images/products/products_0026_20231206_132500.png"
+    "image": "products_0026_20231206_132500.png"
   },
   {
     "id": "p26",
@@ -231,7 +231,7 @@
     "description": "Aros de cereal con sabores naturales a frutas, adicionado con vitaminas y minerales.",
     "price": 1,
     "categoryId": "cereal",
-    "image": "./assets/images/products/products_0027_20231206_132510.png"
+    "image": "products_0027_20231206_132510.png"
   },
   {
     "id": "p27",
@@ -240,7 +240,7 @@
     "description": "Hojuelas de maíz escarchadas con sabor a chocolate y con malvaviscos, adicionadas con vitaminas y hierro.",
     "price": 1.1,
     "categoryId": "cereal",
-    "image": "./assets/images/products/products_0028_20231206_132525.png"
+    "image": "products_0028_20231206_132525.png"
   },
   {
     "id": "p28",
@@ -249,7 +249,7 @@
     "description": "Cereal de maíz inflado y endulzado, perfecto para el snack. Adicionado con vitaminas y hierro.",
     "price": 1,
     "categoryId": "cereal",
-    "image": "./assets/images/products/products_0029_20231206_132532.png"
+    "image": "products_0029_20231206_132532.png"
   },
   {
     "id": "p29",
@@ -258,7 +258,7 @@
     "description": "Sustituto de crema en polvo no lácteo, para un café rico y cremoso. Venta individual.",
     "price": 0.2,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0030_20231206_132539.png"
+    "image": "products_0030_20231206_132539.png"
   },
   {
     "id": "p30",
@@ -267,7 +267,7 @@
     "description": "Clásicas gomitas en forma de oso con deliciosos sabores frutales.",
     "price": 0.5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0031_20231206_132551.png"
+    "image": "products_0031_20231206_132551.png"
   },
   {
     "id": "p31",
@@ -276,7 +276,7 @@
     "description": "Pequeñas galletas con malvavisco y cobertura sabor a chocolate. Un clásico para disfrutar.",
     "price": 0.4,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0032_20231206_132602.png"
+    "image": "products_0032_20231206_132602.png"
   },
   {
     "id": "p32",
@@ -285,7 +285,7 @@
     "description": "Caja de cigarrillos The King con cápsula de sabor para una experiencia refrescante.",
     "price": 6,
     "categoryId": "tobacco",
-    "image": "./assets/images/products/products_0033_20231206_132631.png"
+    "image": "products_0033_20231206_132631.png"
   },
   {
     "id": "p33",
@@ -294,7 +294,7 @@
     "description": "Delicioso maní tostado con un intenso sabor a barbacoa. El snack perfecto.",
     "price": 0.9,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0034_20231206_132642.png"
+    "image": "products_0034_20231206_132642.png"
   },
   {
     "id": "p34",
@@ -303,7 +303,7 @@
     "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a naranja.",
     "price": 0.7,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0035_20231206_132718.png"
+    "image": "products_0035_20231206_132718.png"
   },
   {
     "id": "p35",
@@ -312,7 +312,7 @@
     "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a fresa.",
     "price": 0.7,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0036_20231206_132722.png"
+    "image": "products_0036_20231206_132722.png"
   },
   {
     "id": "p36",
@@ -321,7 +321,7 @@
     "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a vainilla.",
     "price": 0.7,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0037_20231206_132728.png"
+    "image": "products_0037_20231206_132728.png"
   },
   {
     "id": "p37",
@@ -330,7 +330,7 @@
     "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a chocolate.",
     "price": 0.7,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0038_20231206_132733.png"
+    "image": "products_0038_20231206_132733.png"
   },
   {
     "id": "p38",
@@ -339,7 +339,7 @@
     "description": "Palomitas para microondas con saborizante natural a mantequilla. Hechas con grano entero de maíz y sin gluten.",
     "price": 1.2,
     "categoryId": "snacks",
-    "image": "./assets/images/products/products_0039_20231206_132759.png"
+    "image": "products_0039_20231206_132759.png"
   },
   {
     "id": "p39",
@@ -348,7 +348,7 @@
     "description": "Bolsa de 1kg de suaves malvaviscos con sabores de fresa y vainilla.",
     "price": 4.5,
     "categoryId": "candy",
-    "image": "./assets/images/products/products_0040_20231206_133000.png"
+    "image": "products_0040_20231206_133000.png"
   },
   {
     "id": "p40",
@@ -357,7 +357,7 @@
     "description": "Caldo de pollo en polvo para sazonar tus comidas. Bolsa resellable de 1kg, fácil disolución.",
     "price": 8,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0041_20231206_133230.png"
+    "image": "products_0041_20231206_133230.png"
   },
   {
     "id": "p41",
@@ -366,7 +366,7 @@
     "description": "Caldo de pollo en cubos para un irresistible sabor casero. Caja con 24 cubos.",
     "price": 3,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0042_20231206_133237.png"
+    "image": "products_0042_20231206_133237.png"
   },
   {
     "id": "p42",
@@ -375,7 +375,7 @@
     "description": "Cereal de granos de arroz inflados con el clásico sabor a chocolate, adicionados con vitaminas y minerales.",
     "price": 1.1,
     "categoryId": "cereal",
-    "image": "./assets/images/products/products_0043_20231206_133243.png"
+    "image": "products_0043_20231206_133243.png"
   },
   {
     "id": "p43",
@@ -384,7 +384,7 @@
     "description": "Polvo para preparar 2 litros de bebida sabor naranja. Adicionado con vitamina C, no requiere azúcar.",
     "price": 0.5,
     "categoryId": "beverages",
-    "image": "./assets/images/products/products_0044_20231206_133251.png"
+    "image": "products_0044_20231206_133251.png"
   },
   {
     "id": "p44",
@@ -393,7 +393,7 @@
     "description": "Polvo para preparar 2 litros de bebida sabor manzana. Adicionado con vitamina C, no requiere azúcar.",
     "price": 0.5,
     "categoryId": "beverages",
-    "image": "./assets/images/products/products_0045_20231206_133257.png"
+    "image": "products_0045_20231206_133257.png"
   },
   {
     "id": "p45",
@@ -402,7 +402,7 @@
     "description": "Polvo para preparar 2 litros de bebida sabor limón. Adicionado con vitamina C, no requiere azúcar.",
     "price": 0.5,
     "categoryId": "beverages",
-    "image": "./assets/images/products/products_0046_20231206_133302.png"
+    "image": "products_0046_20231206_133302.png"
   },
   {
     "id": "p46",
@@ -411,7 +411,7 @@
     "description": "Sazonador con delicioso sabor a caldito de pollo para realzar el sabor de tus comidas.",
     "price": 0.6,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0047_20231206_133319.png"
+    "image": "products_0047_20231206_133319.png"
   },
   {
     "id": "p47",
@@ -420,7 +420,7 @@
     "description": "La original fécula de maíz Maizena. Ideal para hacer tus platillos más crujientes, cremosos y esponjosos.",
     "price": 1,
     "categoryId": "pantry",
-    "image": "./assets/images/products/products_0048_Capa-1.png"
+    "image": "products_0048_Capa-1.png"
   },
   {
     "id": "p48",
@@ -429,7 +429,7 @@
     "description": "Compuesto lácteo en polvo de 1kg. Fuente de Calcio, Hierro y Vitaminas A, C y D.",
     "price": 7.5,
     "categoryId": "dairy",
-    "image": "./assets/images/products/products_0049_Capa-2.png"
+    "image": "products_0049_Capa-2.png"
   },
   {
     "id": "p49",
@@ -438,6 +438,6 @@
     "description": "Bebida espirituosa mezclada, 'Rare Luxury', una selección de calidad para disfrutar.",
     "price": 15,
     "categoryId": "beverages",
-    "image": "./assets/images/products/products_0050_IMG_20231206_123431.png"
+    "image": "products_0050_IMG_20231206_123431.png"
   }
 ]

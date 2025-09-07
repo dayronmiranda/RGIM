@@ -390,10 +390,6 @@ header.sticky { backdrop-filter: saturate(1.05) blur(10px); }
   }
 }
 
-/* Hide admin link on desktop too */
-nav a[data-nav="admin"] {
-  display: none !important;
-}
 
 /* Modal: mobile-friendly sizing */
 #modal-root .fixed.inset-0 > div { width: 600px; max-width: 92vw; max-height: 90vh; overflow: auto; border-radius: var(--radius); }
