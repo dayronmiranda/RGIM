@@ -345,8 +345,11 @@ export async function renderStore(container) {
         addToCart(prod);
         renderCartSidebar();
         
-        // Update cart count
+        // Update cart count for desktop and mobile
         document.getElementById('cart-count').textContent = getCartItemCount();
+        
+        // Update mobile cart immediately
+        renderMobileCart();
         
         // Visual feedback
         btn.innerHTML = `
@@ -514,10 +517,6 @@ export async function renderStore(container) {
     }
   };
   
-  // Update mobile cart when items are added
-  const originalAddToCart = addToCart;
-  window.addToCart = (product) => {
-    originalAddToCart(product);
-    renderMobileCart();
-  };
+  // Initialize mobile cart on load
+  renderMobileCart();
 }

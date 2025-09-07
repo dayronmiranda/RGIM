@@ -50,8 +50,8 @@ export async function renderHome(container) {
           </div>
           <div>
             <div class="mt-10">
-              <!-- Commercial imagery grid with product photos -->
-              <div aria-hidden="true" class="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl">
+              <!-- Commercial imagery grid - Desktop -->
+              <div aria-hidden="true" class="hidden lg:block pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl">
                 <div class="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
                   <div class="flex items-center space-x-6 lg:space-x-8">
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
@@ -81,6 +81,24 @@ export async function renderHome(container) {
                         <img src="assets/images/products/products_0040_20231206_133000.png" alt="Ofertas" class="h-full w-full object-cover">
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Commercial imagery grid - Mobile -->
+              <div class="lg:hidden mt-8">
+                <div class="grid grid-cols-2 gap-4 px-4">
+                  <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
+                    <img src="assets/images/products/products_0002_Capa-1.png" alt="Producto destacado" class="h-full w-full object-cover">
+                  </div>
+                  <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
+                    <img src="assets/images/products/products_0010_20231206_132305.png" alt="Electrónica" class="h-full w-full object-cover">
+                  </div>
+                  <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
+                    <img src="assets/images/products/products_0015_20231206_132155.png" alt="Tecnología" class="h-full w-full object-cover">
+                  </div>
+                  <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
+                    <img src="assets/images/products/products_0020_20231206_132112.png" alt="Hogar" class="h-full w-full object-cover">
                   </div>
                 </div>
               </div>

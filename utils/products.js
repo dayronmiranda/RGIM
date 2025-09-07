@@ -17,23 +17,40 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
   console.log('Rendering featured products:', products.map(p => ({ id: p.id, name: p.name, image: p.image })));
   
   container.innerHTML = `
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
       ${products.map(p => {
         const imagePath = getImagePath(p.image);
         console.log(`Product ${p.id}: image="${p.image}" -> path="${imagePath}"`);
         return `
-          <div class="bg-white rounded-lg shadow p-4 flex flex-col items-center cursor-pointer hover:shadow-lg transition-shadow duration-300 group" onclick="window.location.hash = '#/store'">
-            <img src="${imagePath}" alt="${p.name}" class="w-32 h-32 object-contain mb-2 group-hover:scale-105 transition-transform duration-300" onerror="console.error('Failed to load image: ${imagePath}')" />
-            <h3 class="font-semibold text-lg text-center mb-1 group-hover:text-indigo-600 transition-colors">${p.name}</h3>
-            <p class="text-gray-500 text-sm text-center mb-2">${p.description || ''}</p>
-            <span class="font-bold text-indigo-600 text-lg mb-2">${p.price.toFixed(2)}</span>
-            <div class="mt-2 text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">
-              Haz clic para ver en la tienda
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 group" onclick="window.location.hash = '#/store'">
+            <div class="aspect-square w-full overflow-hidden bg-gray-100">
+              <img src="${imagePath}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="console.error('Failed to load image: ${imagePath}')" />
+            </div>
+            <div class="p-4">
+              <h3 class="font-semibold text-lg mb-1 group-hover:text-indigo-600 transition-colors">${p.name}</h3>
+              <p class="text-gray-500 text-sm mb-2 line-clamp-2">${p.description || ''}</p>
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-indigo-600 text-xl">${p.price.toFixed(2)}</span>
+                <span class="text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">
+                  Ver más →
+                </span>
+              </div>
             </div>
           </div>
         `;
       }).join('')}
     </div>
+    
+    <style>
+      @media (max-width: 640px) {
+        #featured-products > div {
+          padding: 0 5%;
+        }
+        #featured-products .aspect-square {
+          width: 100%;
+        }
+      }
+    </style>
   `;
 }
 
