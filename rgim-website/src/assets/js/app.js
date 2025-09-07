@@ -1,5 +1,5 @@
 /*
-  RGIM Single Page Prototype
+  RGIM Single Page Prototype - FIXED VERSION
   - Hash routing: #/home, #/store, #/faq, #/about, #/admin
   - Local/session storage for cart and history
   - JSON data loading for products, categories, translations
@@ -7,8 +7,81 @@
   - Fake email submission with toast confirmation
 */
 
+// Import core modules
+import { 
+  initState, 
+  loadJSON, 
+  saveJSON, 
+  getState, 
+  setState, 
+  stateHelpers,
+  STORAGE_KEYS 
+} from './core/state.js'
+
+import { 
+  routes,
+  setActiveRoute, 
+  handleHashChange, 
+  initRouting,
+  navigationHelpers 
+} from './core/routing.js'
+
+// Import store modules
+import { 
+  addToCart as addToCartModule,
+  removeFromCart as removeFromCartModule,
+  changeQty as changeQtyModule,
+  cartTotal as cartTotalModule,
+  renderCart,
+  renderCartSidebar,
+  updateCartBadges,
+  updateCartSidebarTotal
+} from './store/cart.js'
+
+import { 
+  setupSearch,
+  aiSearch,
+  performSearch
+} from './store/search.js'
+
+import { 
+  openModal,
+  closeModal,
+  closeAllModals
+} from './ui/modal.js'
+
+import { 
+  renderProducts,
+  openProductModal
+} from './store/products.js'
+
+import { 
+  renderCategories,
+  makeCatButton
+} from './store/categories.js'
+
+// Import mobile modules
+import { 
+  setupMobileNavigation,
+  openMobileCartModal,
+  closeMobileCartModal,
+  renderMobileCartItems
+} from './mobile/navigation.js'
+
+// Import feature modules
+import { 
+  playAddToCartSound,
+  playOrderSentSound
+} from './features/audio.js'
+
+// Import SEO modules
+import { 
+  updateSEO,
+  updateFAQSchema,
+  updateHreflangLinks
+} from './seo/meta.js'
+
 ;(function(){
-  const routes = ['home','store','faq','about','admin']
   const els = {
     routes: routes.reduce((acc, r) => { acc[r] = document.getElementById(`route-${r}`); return acc }, {}),
     nav: Object.fromEntries(routes.map(r => [r, document.querySelector(`[data-nav="${r}"]`)])),
@@ -44,62 +117,59 @@
     langEN: document.getElementById('btn-lang-en'),
   }
 
-  const STORAGE_KEYS = {
-    cart: 'rgim.cart',
-    history: 'rgim.history',
-    adminSession: 'rgim.adminSession',
-    lang: 'rgim.lang',
-  }
-
   const ADMIN = {
     user: 'rgim',
     pass: 'demo123',
   }
 
-  // Global state
-  const state = {
-    products: [],
-    categories: [],
-    featured: [],
-    config: {},
-    lang: 'es',
-    t: {},
-    cart: loadJSON(STORAGE_KEYS.cart, []),
-    history: loadJSON(STORAGE_KEYS.history, []),
-    admin: loadJSON(STORAGE_KEYS.adminSession, null),
-    activeCategory: '',
-    searchQuery: '',
-    priceRange: '',
-    sortBy: '',
-    aiSearch: null,
-    cacheManager: null,
-  }
-  state.lang = loadJSON(STORAGE_KEYS.lang, 'es')
-  // Override language from URL param if provided (?lang=es|en)
-  try {
-    const urlLang = new URLSearchParams(location.search).get('lang')
-    if(urlLang === 'es' || urlLang === 'en'){
-      state.lang = urlLang
-      saveJSON(STORAGE_KEYS.lang, urlLang)
-    }
-  } catch(e) {}
-
-  // Utils
-  function loadJSON(key, fallback){
-    try {
-      const raw = localStorage.getItem(key)
-      if(!raw) return fallback
-      return JSON.parse(raw)
-    } catch(e) { return fallback }
-  }
-  function saveJSON(key, value){ localStorage.setItem(key, JSON.stringify(value)) }
+  // Initialize global state using the state module
+  const state = initState()
 
   function fmtCurrency(n){ return new Intl.NumberFormat(state.lang === 'es' ? 'es-PA' : 'en-US', { style:'currency', currency:'USD' }).format(n) }
 
-  // Simple image path resolver
+  // Smart image path resolver with fallback support
   function getImagePath(filename) {
     if (!filename) return null
-    return `./assets/images/products/${filename}`
+    
+    // Remove file extension to get base name
+    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
+    
+    // Return the most likely to exist format first
+    // Based on the file listing, most images have -medium.jpg format
+    return `./src/assets/images/optimized/${baseName}-medium.jpg`
+  }
+
+  // Enhanced image element creator with fallback support
+  function createImageElement(filename, alt, className = '', attributes = {}) {
+    if (!filename) return ''
+    
+    const baseName = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '')
+    
+    // Define fallback chain in order of preference
+    const fallbacks = [
+      `./src/assets/images/optimized/${baseName}-medium.jpg`,
+      `./src/assets/images/optimized/${baseName}_medium.jpg`,
+      `./src/assets/images/optimized/${baseName}-medium.png`,
+      `./src/assets/images/optimized/${baseName}_medium.webp`,
+      `./src/assets/images/optimized/${baseName}-thumbnail.jpg`,
+      `./src/assets/images/optimized/${baseName}_thumbnail.jpg`
+    ]
+    
+    const attrs = Object.entries(attributes).map(([key, value]) => `${key}="${value}"`).join(' ')
+    
+    return `<img src="${fallbacks[0]}" alt="${alt}" class="${className}" ${attrs} 
+      onerror="
+        const fallbacks = ${JSON.stringify(fallbacks)};
+        const currentIndex = fallbacks.indexOf(this.src.split('/').pop().includes('${baseName}') ? this.src : '');
+        if (currentIndex < fallbacks.length - 1) {
+          this.src = fallbacks[currentIndex + 1];
+        } else {
+          this.style.display = 'none';
+          console.log('❌ All image fallbacks failed for: ${filename}');
+        }
+      "
+      onload="console.log('✅ Image loaded: ' + this.src)"
+    >`
   }
 
   function showToast(msg){
@@ -110,190 +180,11 @@
     setTimeout(()=>{ node.remove() }, 3000)
   }
 
-  // Modern sound effect for adding to cart with vibration
-  function playAddToCartSound(){
-    try {
-      // Enhanced vibration for iPhone and mobile devices
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100, 50, 200]); // Enhanced vibration pattern
-      }
-      
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-      
-      // Modern notification sound - ascending notes
-      const frequencies = [440, 523.25, 659.25, 783.99] // A4, C5, E5, G5
-      
-      frequencies.forEach((freq, index) => {
-        const oscillator = audioContext.createOscillator()
-        const gainNode = audioContext.createGain()
-        
-        oscillator.connect(gainNode)
-        gainNode.connect(audioContext.destination)
-        
-        oscillator.frequency.setValueAtTime(freq, audioContext.currentTime)
-        oscillator.type = 'sine'
-        
-        const startTime = audioContext.currentTime + (index * 0.08)
-        gainNode.gain.setValueAtTime(0, startTime)
-        gainNode.gain.linearRampToValueAtTime(0.1, startTime + 0.05)
-        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.3)
-        
-        oscillator.start(startTime)
-        oscillator.stop(startTime + 0.3)
-      })
-    } catch(e) {
-      console.log('Sound/vibration not available')
-    }
-  }
-
-  // Modern success sound for order submission with vibration
-  function playOrderSentSound(){
-    try {
-      // Success vibration pattern
-      if (navigator.vibrate) {
-        navigator.vibrate([100, 50, 100, 50, 200]); // Success vibration pattern
-      }
-      
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-      
-      // Success chord progression - more modern and pleasant
-      const chords = [
-        [523.25, 659.25, 783.99], // C major
-        [587.33, 739.99, 880.00], // D major
-        [659.25, 830.61, 987.77]  // E major
-      ]
-      
-      chords.forEach((chord, chordIndex) => {
-        chord.forEach((freq, noteIndex) => {
-          const oscillator = audioContext.createOscillator()
-          const gainNode = audioContext.createGain()
-          
-          oscillator.connect(gainNode)
-          gainNode.connect(audioContext.destination)
-          
-          oscillator.frequency.setValueAtTime(freq, audioContext.currentTime)
-          oscillator.type = 'sine'
-          
-          const startTime = audioContext.currentTime + (chordIndex * 0.2) + (noteIndex * 0.02)
-          gainNode.gain.setValueAtTime(0, startTime)
-          gainNode.gain.linearRampToValueAtTime(0.08, startTime + 0.1)
-          gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.6)
-          
-          oscillator.start(startTime)
-          oscillator.stop(startTime + 0.6)
-        })
-      })
-    } catch(e) {
-      console.log('Sound/vibration not available')
-    }
-  }
-
-  // Cart badge update
-  function updateCartBadges(){
-    const count = state.cart.reduce((sum, item) => sum + item.qty, 0)
-    if(els.cartBadgeDesktop){
-      if(count > 0){
-        els.cartBadgeDesktop.textContent = count > 99 ? '99+' : count
-        els.cartBadgeDesktop.classList.remove('hidden')
-      } else {
-        els.cartBadgeDesktop.classList.add('hidden')
-      }
-    }
-  }
-
-  function renderCartSidebar(){
-    const wrap = els.cartSidebarItems
-    if(!wrap) return
-    wrap.innerHTML = ''
-    
-    if(state.cart.length === 0){
-      const empty = document.createElement('div')
-      empty.className = 'text-slate-500 text-center py-8'
-      empty.textContent = state.lang==='es'? 'Tu carrito está vacío' : 'Your cart is empty'
-      wrap.appendChild(empty)
-      return
-    }
-
-    state.cart.forEach(it => {
-      const p = state.products.find(x => x.id === it.id)
-      if(!p) return
-      const row = document.createElement('div')
-      row.className = 'flex items-center gap-3 border rounded-lg p-3 bg-slate-50'
-      
-      row.innerHTML = `
-        <div class="w-12 h-12 bg-slate-200 rounded overflow-hidden flex-shrink-0">
-          ${p.image ? `<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">` : ''}
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-medium text-sm truncate">${p.name}</div>
-          <div class="text-xs text-slate-600">${fmtCurrency(p.price)}</div>
-        </div>
-        <div class="flex items-center gap-1">
-          <button class="w-7 h-7 border rounded flex items-center justify-center hover:bg-white" data-dec>-</button>
-          <div class="w-8 text-center text-sm">${it.qty}</div>
-          <button class="w-7 h-7 border rounded flex items-center justify-center hover:bg-white" data-inc>+</button>
-        </div>
-        <button class="text-red-500 hover:text-red-700 p-1" data-del>
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-          </svg>
-        </button>`
-      
-      row.querySelector('[data-dec]').onclick = ()=> { changeQty(it.id, -1); renderCartSidebar(); updateCartSidebarTotal() }
-      row.querySelector('[data-inc]').onclick = ()=> { changeQty(it.id, +1); renderCartSidebar(); updateCartSidebarTotal() }
-      row.querySelector('[data-del]').onclick = ()=> { removeFromCart(it.id); renderCartSidebar(); updateCartSidebarTotal() }
-      wrap.appendChild(row)
-    })
-  }
-
-  function updateCartSidebarTotal(){
-    if(!els.cartSidebarTotal) return
-    const shipType = document.getElementById('shippingType')?.value || 'sea'
-    const base = cartTotal()
-    const total = shipType === 'air' ? base * 1.10 : base
-    els.cartSidebarTotal.textContent = fmtCurrency(total)
-  }
-
-  function openModal(html){
-    // Close any existing modals first
-    closeAllModals()
-    
-    const overlay = document.createElement('div')
-    overlay.className = 'fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50'
-    overlay.innerHTML = `<div class="max-w-lg w-full bg-white rounded-lg shadow-lg overflow-hidden">${html}</div>`
-    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(overlay) })
-    
-    // Store reference to cleanup function
-    const onEsc = (e) => { 
-      if(e.key === 'Escape'){ 
-        closeModal(overlay)
-      } 
-    }
-    overlay._escHandler = onEsc
-    document.addEventListener('keydown', onEsc)
-    
-    els.modalRoot.appendChild(overlay)
-  }
-
-  function closeModal(overlay) {
-    if(overlay && overlay.parentNode) {
-      // Remove event listener
-      if(overlay._escHandler) {
-        document.removeEventListener('keydown', overlay._escHandler)
-      }
-      overlay.remove()
-    }
-  }
-
-  function closeAllModals() {
-    const modals = els.modalRoot.querySelectorAll('.fixed.inset-0')
-    modals.forEach(modal => closeModal(modal))
-  }
-
+  
   // i18n
   async function loadTranslations(){
     try {
-      const res = await fetch('./translations.json')
+      const res = await fetch('./src/data/config/translations.json')
       const data = await res.json()
       state.t = data[state.lang] || data['es'] || {}
       applyTranslations()
@@ -426,7 +317,7 @@
     try {
       // Simplified loading - skip cache for now
       console.log('Loading products.json...')
-      const prodRes = await fetch('./products.json')
+      const prodRes = await fetch('./src/data/store/products.json')
       if (!prodRes.ok) {
         throw new Error(`Failed to load products: ${prodRes.status} ${prodRes.statusText}`)
       }
@@ -434,7 +325,7 @@
       console.log('Products loaded:', products.length, 'items')
 
       console.log('Loading categories.json...')
-      const catRes = await fetch('./categories.json')
+      const catRes = await fetch('./src/data/store/categories.json')
       if (!catRes.ok) {
         throw new Error(`Failed to load categories: ${catRes.status} ${catRes.statusText}`)
       }
@@ -446,7 +337,7 @@
       let config = {}
       
       try {
-        const featRes = await fetch('./destacados.json')
+        const featRes = await fetch('./src/data/store/destacados.json')
         if (featRes.ok) {
           const featData = await featRes.json()
           featured = featData.featured || []
@@ -457,7 +348,7 @@
       }
 
       try {
-        const configRes = await fetch('./config.json')
+        const configRes = await fetch('./src/data/config/config.json')
         if (configRes.ok) {
           config = await configRes.json()
           console.log('Config loaded successfully')
@@ -513,270 +404,71 @@
     }, 700)
   }
 
-  // Unified hash routing system
-  function setActiveRoute(name, fromCartClick = false, updateHistory = true){
-    // Close any open modals when changing routes
-    closeAllModals()
-    
-    routes.forEach(r => {
-      const sec = els.routes[r]
-      if(!sec) return
-      if(r === name){ sec.classList.add('active') } else { sec.classList.remove('active') }
-      const a = els.nav[r]
-      if(a) a.classList.toggle('text-brand-700', r===name)
-    })
-    window.scrollTo({top:0, behavior:'smooth'})
-    
-    // Update browser history and URL with hash
-    if(updateHistory) {
-      const hash = name === 'home' ? '#/' : `#/${name}`
-      if(location.hash !== hash) {
-        location.hash = hash
-      }
-    }
-    
-    // Update SEO for route change
-    try { updateSEO(name) } catch(e) {}
-
-    if(name === 'store'){
-      renderCategories()
-      renderProducts()
-      renderCart()
-      renderCartSidebar()
-      renderHistory()
-      updateTotal()
-      updateCartSidebarTotal()
-      
-      // Animate cart sidebar if coming from cart click
-      if(fromCartClick){
-        setTimeout(animateCartSidebar, 200)
-      }
-    }
-    if(name === 'home'){
-      renderFeaturedProducts()
-    }
-    if(name === 'admin'){
-      updateAdminUI()
-      renderAdminRows()
+  // Create callbacks object for routing module
+  const routingCallbacks = {
+    closeAllModals,
+    updateSEO,
+    store: {
+      renderCategories: renderCategoriesLocal,
+      renderProducts: renderProductsLocal,
+      renderCart: () => renderCart(state, els, fmtCurrency, getImagePath),
+      renderCartSidebar: () => renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal),
+      renderHistory,
+      updateTotal,
+      updateCartSidebarTotal: () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotal),
+      animateCartSidebar
+    },
+    home: {
+      renderFeaturedProducts
+    },
+    admin: {
+      updateAdminUI,
+      renderAdminRows
     }
   }
 
-  function handleHashChange(){
-    const hash = location.hash || '#/'
-    let route = 'home'
-    
-    if(hash.startsWith('#/')) {
-      const hashRoute = hash.replace('#/','') || 'home'
-      if(routes.includes(hashRoute)) {
-        route = hashRoute
-      }
-    }
-    
-    setActiveRoute(route, false, false)
-  }
-
-  // Store rendering
-  function renderCategories(){
-    const wrap = els.categoryBar
-    if(!wrap) return
-    wrap.innerHTML = ''
-    
-    // All categories button
-    const allBtn = makeCatButton('', state.lang==='es'?'Todas':'All')
-    wrap.appendChild(allBtn)
-    
-    // Individual category buttons
-    state.categories.forEach(cat => {
-      const btn = makeCatButton(cat.id, cat.name)
-      wrap.appendChild(btn)
-    })
+  // Store rendering - Using imported modules
+  function renderCategoriesLocal(){
+    renderCategories(state, els, renderProductsLocal)
   }
   
-  function makeCatButton(id, label){
-    const div = document.createElement('div')
-    div.className = 'flex items-center'
-    
-    const input = document.createElement('input')
-    input.type = 'checkbox'
-    input.name = 'category'
-    input.id = `category-${id || 'all'}`
-    input.value = id
-    input.className = 'h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500 rounded'
-    input.checked = id === state.activeCategory
-    
-    const labelEl = document.createElement('label')
-    labelEl.htmlFor = `category-${id || 'all'}`
-    labelEl.className = 'ml-3 text-sm text-gray-600 cursor-pointer'
-    labelEl.textContent = label
-    
-    input.onchange = () => {
-      // Clear search when selecting category
-      const searchInput = document.getElementById('product-search')
-      if (searchInput) searchInput.value = ''
-      state.searchQuery = ''
-      
-      if (input.checked) {
-        state.activeCategory = id
-      } else {
-        state.activeCategory = ''
-      }
-      
-      renderProducts()
-      renderCategories() // Re-render to update active states
-      
-      // Hide search results
-      const searchResults = document.getElementById('search-results-info')
-      searchResults?.classList.add('hidden')
-    }
-    
-    div.appendChild(input)
-    div.appendChild(labelEl)
-    return div
-  }
-  function renderProducts(){
-    const grid = els.productGrid
-    if(!grid) {
-      console.error('Product grid element not found')
-      return
-    }
-    
-    console.log('Rendering products:', state.products.length, 'products found')
-    grid.innerHTML = ''
-    
-    if(state.products.length === 0) {
-      grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-500">No hay productos disponibles</div>'
-      return
-    }
-    
-    let list = state.products
-    if(state.activeCategory){ 
-      list = list.filter(p => p.categoryId === state.activeCategory)
-      console.log('Filtered by category:', state.activeCategory, 'Found:', list.length)
-    }
-
-    if(list.length === 0) {
-      grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-500">No hay productos en esta categoría</div>'
-      return
-    }
-
-    list.forEach(p => {
-      const card = document.createElement('div')
-      card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
-      
-      // Crear la imagen directamente con debugging
-      const imagePath = p.image ? `./assets/images/products/${p.image}` : null
-      console.log(`Product: ${p.name}, Image: ${p.image}, Path: ${imagePath}`)
-      
-      card.innerHTML = `
-        <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
-          ${imagePath ? 
-            `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy" onload="console.log('✅ Image loaded: ${imagePath}')" onerror="console.log('❌ Error loading image: ${imagePath}'); this.style.display='none';">` : 
-            `<div class="absolute inset-0 flex items-center justify-center text-gray-400">
-              <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-              </svg>
-            </div>`
-          }
-        </div>
-        <div class="p-4">
-          <h3 class="text-sm font-medium text-gray-900 truncate">
-            <a href="#" class="product-link hover:text-indigo-600">
-              ${p.name}
-            </a>
-          </h3>
-          <p class="mt-1 text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
-          <div class="mt-3 flex items-center justify-between">
-            <p class="text-sm font-semibold text-gray-900">${fmtCurrency(p.price)}</p>
-          </div>
-          <div class="mt-3 flex gap-2">
-            <button class="flex-1 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="details">
-              Detalles
-            </button>
-            <button class="flex-1 bg-indigo-600 py-2 px-3 border border-transparent rounded-md shadow-sm text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors" data-act="add">
-              Añadir
-            </button>
-          </div>
-        </div>`
-      
-      const addBtn = card.querySelector('[data-act="add"]')
-      const detailsBtn = card.querySelector('[data-act="details"]')
-      const productLink = card.querySelector('.product-link')
-      
-      if(addBtn) addBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); addToCart(p.id) }
-      if(detailsBtn) detailsBtn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openProductModal(p) }
-      if(productLink) productLink.onclick = (e) => { e.preventDefault(); openProductModal(p) }
-      
-      grid.appendChild(card)
-    })
-    
-    console.log('Products rendered successfully:', list.length, 'cards created')
+  function renderProductsLocal(){
+    renderProducts(state, els, fmtCurrency, getImagePath, addToCart)
   }
 
-  function openProductModal(p){
-    const html = `
-      <div class="p-5">
-        <div class="flex items-start gap-4">
-          <div class="w-28 h-28 bg-slate-100 rounded overflow-hidden">
-            ${p.image ? `<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none'">` : ''}
-          </div>
-          <div class="flex-1">
-            <h3 class="text-lg font-semibold">${p.name}</h3>
-            <div class="text-slate-600 mt-1">${p.description || p.short || ''}</div>
-            <div class="mt-3 font-semibold">${fmtCurrency(p.price)}</div>
-            <div class="mt-4 flex gap-2">
-              <button data-close class="px-3 py-2 border rounded">Cerrar</button>
-              <button data-add class="px-3 py-2 bg-brand-600 text-white rounded">Añadir al carrito</button>
-            </div>
-          </div>
-        </div>
-      </div>`
-    openModal(html)
-    const overlay = els.modalRoot.lastElementChild
-    overlay.querySelector('[data-close]').onclick = ()=> closeModal(overlay)
-    overlay.querySelector('[data-add]').onclick = ()=> { addToCart(p.id); closeModal(overlay) }
+  function openProductModalLocal(p){
+    openProductModal(p, els, fmtCurrency, getImagePath, addToCart)
   }
 
-  // Cart
+  // Cart - Using imported modules
   function addToCart(id){
-    const item = state.cart.find(it => it.id === id)
-    if(item) item.qty += 1
-    else state.cart.push({ id, qty: 1 })
-    saveJSON(STORAGE_KEYS.cart, state.cart)
+    addToCartModule(state, id)
     
     // Play sound and update UI
     playAddToCartSound()
-    updateCartBadges()
-    renderCart()
-    renderCartSidebar()
+    updateCartBadges(state, els)
+    renderCart(state, els, fmtCurrency, getImagePath)
+    renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
     updateTotal()
-    updateCartSidebarTotal()
+    updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
     showToast(state.lang==='es'?'Añadido al carrito':'Added to cart')
   }
   function removeFromCart(id){
-    state.cart = state.cart.filter(it => it.id !== id)
-    saveJSON(STORAGE_KEYS.cart, state.cart)
-    updateCartBadges()
-    renderCart()
-    renderCartSidebar()
+    removeFromCartModule(state, id)
+    updateCartBadges(state, els)
+    renderCart(state, els, fmtCurrency, getImagePath)
+    renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
     updateTotal()
-    updateCartSidebarTotal()
+    updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
   }
   function changeQty(id, delta){
-    const item = state.cart.find(it => it.id === id)
-    if(!item) return
-    item.qty = Math.max(1, item.qty + delta)
-    saveJSON(STORAGE_KEYS.cart, state.cart)
-    updateCartBadges()
-    renderCart()
+    changeQtyModule(state, id, delta)
+    updateCartBadges(state, els)
+    renderCart(state, els, fmtCurrency, getImagePath)
     updateTotal()
   }
   function cartTotal(){
-    let total = 0
-    for(const it of state.cart){
-      const p = state.products.find(x => x.id === it.id)
-      if(p) total += p.price * it.qty
-    }
-    return total
+    return cartTotalModule(state)
   }
   function updateTotal(){
     if(!els.orderTotal) return
@@ -812,7 +504,7 @@
       const row = document.createElement('div')
       row.className = 'flex items-center gap-3 border rounded p-3 bg-white'
       row.innerHTML = `
-        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">`:''}</div>
+        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">`:''}</div>
         <div class="flex-1">
           <div class="font-medium">${p.name}</div>
           <div class="text-sm text-slate-600">${fmtCurrency(p.price)} x ${it.qty} = <span class="font-semibold">${fmtCurrency(p.price*it.qty)}</span></div>
@@ -850,9 +542,8 @@
       status: 'new'
     }
 
-    // Save to history (session)
-    state.history.unshift(order)
-    saveJSON(STORAGE_KEYS.history, state.history)
+    // Save to history using state helper
+    stateHelpers.addToHistory(state, order)
 
     // Play order sent sound and show success message
     playOrderSentSound()
@@ -864,8 +555,7 @@
     
     // Clear cart after a short delay
     setTimeout(()=>{
-      state.cart = []
-      saveJSON(STORAGE_KEYS.cart, state.cart)
+      stateHelpers.clearCart(state)
       updateCartBadges()
       renderCart()
       renderCartSidebar()
@@ -1015,221 +705,7 @@
   els.langEN?.addEventListener('click', ()=> setLang('en'))
 
   // Cart sidebar shipping change listener - now handled by shippingType
-  document.getElementById('shippingType')?.addEventListener('change', updateCartSidebarTotal)
-
-  // Mobile cart modal functionality
-  function openMobileCartModal() {
-    if (window.innerWidth > 430) return // Only on mobile
-    
-    const modal = document.createElement('div')
-    modal.className = 'mobile-cart-modal'
-    modal.innerHTML = `
-      <div class="mobile-cart-modal-header">
-        <h2 class="text-lg font-semibold" data-i18n="cart.title">Carrito de compras</h2>
-        <button class="mobile-cart-modal-close" aria-label="Cerrar carrito">&times;</button>
-      </div>
-      <div class="p-4">
-        <div id="mobile-cart-items" class="space-y-3 mb-6">
-          <!-- Cart items will be rendered here -->
-        </div>
-        <div class="border-t pt-4">
-          <div class="flex justify-between items-center mb-4">
-            <span class="font-medium" data-i18n="checkout.total">Total:</span>
-            <span id="mobile-cart-total" class="text-xl font-bold">$0.00</span>
-          </div>
-          <select id="mobile-cart-shipping" class="w-full border rounded px-3 py-2 mb-4">
-            <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
-            <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
-          </select>
-          <form id="mobile-checkout-form" class="space-y-3">
-            <input id="mobile-buyer-name" type="text" placeholder="Nombre" class="w-full border rounded px-3 py-2" required />
-            <input id="mobile-buyer-whatsapp" type="tel" placeholder="WhatsApp (+507...)" class="w-full border rounded px-3 py-2" required />
-            <select id="mobile-shipping-type" class="w-full border rounded px-3 py-2">
-              <option value="sea" data-i18n="shipping.sea">Marítimo (0%)</option>
-              <option value="air" data-i18n="shipping.air">Aéreo (+10%)</option>
-            </select>
-            <button type="submit" class="w-full bg-brand-600 text-white py-3 rounded-lg font-medium" data-i18n="checkout.submit">Enviar solicitud</button>
-            <p class="text-xs text-slate-500 text-center" data-i18n="checkout.note">No realizas pagos aquí. Te contactaremos por WhatsApp.</p>
-          </form>
-        </div>
-      </div>
-    `
-    
-    document.body.appendChild(modal)
-    
-    // Render cart items in mobile modal
-    renderMobileCartItems()
-    updateMobileCartTotal()
-    
-    // Show modal with animation
-    setTimeout(() => modal.classList.add('show'), 10)
-    
-    // Event listeners
-    modal.querySelector('.mobile-cart-modal-close').onclick = closeMobileCartModal
-    modal.querySelector('#mobile-cart-shipping').onchange = updateMobileCartTotal
-    modal.querySelector('#mobile-checkout-form').onsubmit = handleMobileCheckout
-    
-    // Apply translations to modal
-    applyTranslations()
-  }
-  
-  function closeMobileCartModal() {
-    const modal = document.querySelector('.mobile-cart-modal')
-    if (modal) {
-      modal.classList.remove('show')
-      setTimeout(() => modal.remove(), 300)
-    }
-  }
-  
-  function renderMobileCartItems() {
-    const container = document.getElementById('mobile-cart-items')
-    if (!container) return
-    
-    container.innerHTML = ''
-    
-    if (state.cart.length === 0) {
-      container.innerHTML = '<div class="text-slate-500 text-center py-8">Tu carrito está vacío</div>'
-      return
-    }
-    
-    state.cart.forEach(item => {
-      const product = state.products.find(p => p.id === item.id)
-      if (!product) return
-      
-      const itemEl = document.createElement('div')
-      itemEl.className = 'flex items-center gap-3 border rounded-lg p-3 bg-slate-50'
-      itemEl.innerHTML = `
-        <div class="w-16 h-16 bg-slate-200 rounded overflow-hidden flex-shrink-0">
-          ${product.image ? `<img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover">` : ''}
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="font-medium truncate">${product.name}</div>
-          <div class="text-sm text-slate-600">${fmtCurrency(product.price)}</div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="w-8 h-8 border rounded flex items-center justify-center" data-dec>-</button>
-          <div class="w-8 text-center">${item.qty}</div>
-          <button class="w-8 h-8 border rounded flex items-center justify-center" data-inc>+</button>
-        </div>
-        <button class="text-red-500 p-2" data-del>
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-          </svg>
-        </button>
-      `
-      
-      itemEl.querySelector('[data-dec]').onclick = () => {
-        changeQty(item.id, -1)
-        renderMobileCartItems()
-        updateMobileCartTotal()
-      }
-      itemEl.querySelector('[data-inc]').onclick = () => {
-        changeQty(item.id, 1)
-        renderMobileCartItems()
-        updateMobileCartTotal()
-      }
-      itemEl.querySelector('[data-del]').onclick = () => {
-        removeFromCart(item.id)
-        renderMobileCartItems()
-        updateMobileCartTotal()
-      }
-      
-      container.appendChild(itemEl)
-    })
-  }
-  
-  function updateMobileCartTotal() {
-    const totalEl = document.getElementById('mobile-cart-total')
-    const shippingEl = document.getElementById('mobile-cart-shipping')
-    if (!totalEl || !shippingEl) return
-    
-    const shipType = shippingEl.value || 'sea'
-    const base = cartTotal()
-    const total = shipType === 'air' ? base * 1.10 : base
-    totalEl.textContent = fmtCurrency(total)
-  }
-  
-  function handleMobileCheckout(e) {
-    e.preventDefault()
-    if (state.cart.length === 0) {
-      showToast(state.lang === 'es' ? 'Agrega productos al carrito' : 'Add items to cart')
-      return
-    }
-    
-    const name = document.getElementById('mobile-buyer-name').value.trim()
-    const phone = document.getElementById('mobile-buyer-whatsapp').value.trim()
-    const shipType = document.getElementById('mobile-shipping-type').value
-    const base = cartTotal()
-    const total = shipType === 'air' ? base * 1.10 : base
-    
-    const order = {
-      id: 'ORD-' + Date.now(),
-      date: new Date().toISOString(),
-      buyer: { name, phone },
-      shipping: shipType,
-      items: state.cart.map(it => ({ ...it })),
-      total,
-      status: 'new'
-    }
-    
-    // Save to history
-    state.history.unshift(order)
-    saveJSON(STORAGE_KEYS.history, state.history)
-    
-    // Play success sound and show message
-    playOrderSentSound()
-    showToast(state.lang === 'es' ? 'Solicitud enviada a la empresa' : 'Request sent to company')
-    
-    // Clear cart and close modal
-    setTimeout(() => {
-      state.cart = []
-      saveJSON(STORAGE_KEYS.cart, state.cart)
-      updateCartBadges()
-      renderCart()
-      renderCartSidebar()
-      updateTotal()
-      updateCartSidebarTotal()
-      renderHistory()
-      closeMobileCartModal()
-    }, 500)
-  }
-  
-  // Mobile navigation menu functionality - FIXED
-  function setupMobileNavigation() {
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle')
-    const mobileNavOverlay = document.getElementById('mobile-nav-overlay')
-    const mobileNavClose = document.getElementById('mobile-nav-close')
-    
-    if (!mobileMenuToggle || !mobileNavOverlay) return
-    
-    mobileMenuToggle.onclick = () => {
-      mobileNavOverlay.classList.add('show')
-      document.body.style.overflow = 'hidden' // Prevent scrolling when menu is open
-    }
-    
-    if (mobileNavClose) {
-      mobileNavClose.onclick = () => {
-        mobileNavOverlay.classList.remove('show')
-        document.body.style.overflow = '' // Restore scrolling
-      }
-    }
-    
-    // Close menu when clicking on navigation links
-    mobileNavOverlay.querySelectorAll('a').forEach(link => {
-      link.onclick = () => {
-        mobileNavOverlay.classList.remove('show')
-        document.body.style.overflow = '' // Restore scrolling
-      }
-    })
-    
-    // Close menu when clicking outside
-    mobileNavOverlay.onclick = (e) => {
-      if (e.target === mobileNavOverlay) {
-        mobileNavOverlay.classList.remove('show')
-        document.body.style.overflow = '' // Restore scrolling
-      }
-    }
-  }
+  document.getElementById('shippingType')?.addEventListener('change', () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotal))
   
   
   // Cart button click handler with mobile modal support
@@ -1431,7 +907,7 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
         
         if (isMobile) {
           // Mobile: simplified layout without details button
-          const imagePath = p.image ? `./assets/images/products/${p.image}` : null
+          const imagePath = p.image ? getImagePath(p.image) : null
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
               ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
@@ -1454,7 +930,7 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
           }
         } else {
           // Desktop: full layout with details button
-          const imagePath = p.image ? `./assets/images/products/${p.image}` : null
+          const imagePath = p.image ? getImagePath(p.image) : null
           card.innerHTML = `
             <div class="aspect-square bg-slate-100 relative">
               ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy">` : ''}
@@ -1537,32 +1013,6 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
     clearAllFilters?.addEventListener('click', clearSearch)
   }
 
-  // Fix category button active state
-  function makeCatButton(id, label){
-    const b = document.createElement('button')
-    b.className = `px-3 py-1 rounded-full border transition-colors ${
-      id === state.activeCategory && !state.searchQuery ? 
-      'bg-brand-600 text-white border-brand-600' : 
-      'bg-white hover:bg-slate-50 text-slate-700 border-slate-300'
-    }`
-    b.textContent = label
-    b.onclick = ()=> { 
-      // Clear search when selecting category
-      const searchInput = document.getElementById('product-search')
-      if (searchInput) searchInput.value = ''
-      state.searchQuery = ''
-      
-      state.activeCategory = id
-      renderProducts()
-      renderCategories() // Re-render to update active states
-      
-      // Hide search results
-      const searchResults = document.getElementById('search-results-info')
-      searchResults?.classList.add('hidden')
-    }
-    return b
-  }
-
   // Featured products rendering
   function renderFeaturedProducts() {
     const grid = document.getElementById('featured-products-grid')
@@ -1612,7 +1062,6 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
       <div class="text-xs text-slate-600 mt-1">${fmtCurrency(product.price)}</div>
       <div class="text-xs text-brand-600 mt-2 group-hover:underline" data-i18n="home.seeStore">Ver en tienda</div>
     `
-    
     // Click handler to go to store and highlight product
     card.onclick = () => {
       location.hash = '#/store'
@@ -1762,7 +1211,7 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
       const card = document.createElement('div')
       card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow'
       
-      const imagePath = p.image ? `./assets/images/products/${p.image}` : null
+      const imagePath = p.image ? getImagePath(p.image) : null
       
       card.innerHTML = `
         <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
@@ -1839,8 +1288,6 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
   }
 
   // Boot
-  window.addEventListener('hashchange', handleHashChange)
-  
   ;(async function init(){
     await loadData()
     await loadTranslations()
@@ -1848,12 +1295,14 @@ Responde únicamente con un array JSON de los IDs de productos que coincidan con
     setupMobileNavigation() // Setup mobile navigation
     setupSearch() // Setup search functionality
     setupFilters() // Setup price and sort filters
-    handleHashChange() // Initialize routing
+    
+    // Initialize routing system with callbacks
+    const routing = initRouting(els, state, routingCallbacks)
     
     // Setup clear all filters button
     const clearAllFiltersBtn = document.getElementById('clear-all-filters')
     if (clearAllFiltersBtn) {
       clearAllFiltersBtn.addEventListener('click', clearAllFilters)
     }
-  })()
-})()
+  })();
+});

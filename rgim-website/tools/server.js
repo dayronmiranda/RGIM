@@ -144,10 +144,14 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  // Try to serve static file first
-  const filePath = path.join(__dirname, requestPath === '/' ? 'index.html' : requestPath);
+  // Get project root and public directory
+  const projectRoot = path.dirname(__dirname);
+  const publicDir = path.join(projectRoot, 'public');
   
-  // Check if it's a static file request
+  // Try to serve static file from public directory first
+  const filePath = path.join(publicDir, requestPath === '/' ? 'index.html' : requestPath);
+  
+  // Check if it's a static file request in public directory
   if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
     if (serveFile(res, filePath)) {
       return;
@@ -156,7 +160,7 @@ const server = http.createServer((req, res) => {
   
   // Handle SPA routes - serve index.html for known routes
   if (spaRoutes.includes(requestPath)) {
-    const indexPath = path.join(__dirname, 'index.html');
+    const indexPath = path.join(publicDir, 'index.html');
     if (serveFile(res, indexPath)) {
       return;
     }
@@ -170,11 +174,21 @@ const server = http.createServer((req, res) => {
     return;
   }
   
-  // Try to serve from assets directory
-  if (requestPath.startsWith('/assets/')) {
-    const assetPath = path.join(__dirname, requestPath);
-    if (fs.existsSync(assetPath) && fs.statSync(assetPath).isFile()) {
-      if (serveFile(res, assetPath)) {
+  // Try to serve from src directory (for assets, data, etc.)
+  if (requestPath.startsWith('/src/')) {
+    const srcPath = path.join(projectRoot, requestPath);
+    if (fs.existsSync(srcPath) && fs.statSync(srcPath).isFile()) {
+      if (serveFile(res, srcPath)) {
+        return;
+      }
+    }
+  }
+  
+  // Try to serve from config directory
+  if (requestPath.startsWith('/config/')) {
+    const configPath = path.join(projectRoot, requestPath);
+    if (fs.existsSync(configPath) && fs.statSync(configPath).isFile()) {
+      if (serveFile(res, configPath)) {
         return;
       }
     }
@@ -183,7 +197,7 @@ const server = http.createServer((req, res) => {
   // Try common file extensions for extensionless requests
   const extensions = ['.html', '.js', '.css', '.json'];
   for (const ext of extensions) {
-    const fileWithExt = path.join(__dirname, requestPath + ext);
+    const fileWithExt = path.join(publicDir, requestPath + ext);
     if (fs.existsSync(fileWithExt) && fs.statSync(fileWithExt).isFile()) {
       if (serveFile(res, fileWithExt)) {
         return;

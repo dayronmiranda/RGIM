@@ -13,8 +13,8 @@ console.log('🖼️  RGIM Image Optimization Starting...\n');
 
 // Configuration
 const config = {
-  inputDir: path.join(__dirname, '..', 'assets', 'images', 'products'),
-  outputDir: path.join(__dirname, '..', 'assets', 'images', 'optimized'),
+  inputDir: path.join(__dirname, '..', 'src', 'assets', 'images', 'products'),
+  outputDir: path.join(__dirname, '..', 'src', 'assets', 'images', 'optimized'),
   sizes: {
     thumbnail: { width: 300, height: 300, quality: 80 },
     medium: { width: 800, height: 600, quality: 85 }

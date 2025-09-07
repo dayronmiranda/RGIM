@@ -4,14 +4,15 @@
   "description": "RGIM - Compras internacionales y envíos desde Panamá",
   "main": "index.html",
   "scripts": {
-    "build-css": "tailwindcss -i ./assets/css/input.css -o ./assets/css/styles.css --watch",
-    "build-css-prod": "tailwindcss -i ./assets/css/input.css -o ./assets/css/styles.css --minify",
+    "build-css": "tailwindcss -i ./rgim-website/src/assets/css/input.css -o ./rgim-website/src/assets/css/styles.css --watch",
+    "build-css-prod": "tailwindcss -i ./rgim-website/src/assets/css/input.css -o ./rgim-website/src/assets/css/styles.css --minify",
     "dev": "npm run build-css",
-    "build": "npm run build-css-prod",
-    "optimize-images": "node scripts/optimize-images.js",
-    "start": "node server.js",
-    "serve": "node server.js",
-    "serve-http": "npx http-server -p 8000 -c-1"
+    "build": "node rgim-website/tools/build.js",
+    "optimize-images": "node rgim-website/tools/optimize-images.js",
+    "start": "node rgim-website/tools/server.js",
+    "serve": "node rgim-website/tools/server.js",
+    "serve-http": "npx http-server rgim-website/dist -p 8000 -c-1",
+    "serve-dev": "npx http-server rgim-website/public -p 8000 -c-1"
   },
   "keywords": [
     "ecommerce",

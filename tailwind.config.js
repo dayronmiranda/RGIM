@@ -1,9 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./index.html",
-    "./assets/**/*.{js,ts,jsx,tsx}",
-    "./assets/**/*.html"
+    "./rgim-website/public/**/*.html",
+    "./rgim-website/src/**/*.{js,ts,jsx,tsx}",
+    "./rgim-website/src/**/*.html"
   ],
   theme: {
     extend: {
@@ -69,8 +69,8 @@ module.exports = {
   purge: {
     enabled: process.env.NODE_ENV === 'production',
     content: [
-      './index.html',
-      './assets/**/*.{js,ts,jsx,tsx,html}'
+      './rgim-website/public/**/*.html',
+      './rgim-website/src/**/*.{js,ts,jsx,tsx,html}'
     ],
     options: {
       safelist: [
