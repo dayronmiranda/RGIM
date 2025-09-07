@@ -232,9 +232,6 @@
       // Get optimized image for cart sidebar
       const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
       
-      // Get optimized image for cart sidebar
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
-      
       row.innerHTML = `
         <div class="w-12 h-12 bg-slate-200 rounded overflow-hidden flex-shrink-0">
           ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="w-full h-full object-cover">` : ''}
@@ -645,9 +642,6 @@
       // Get optimized image path
       const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
       
-      // Get optimized image path
-      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
-      
       card.innerHTML = `
         <div class="aspect-square bg-slate-100 relative">
           ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover lazy-load" loading="lazy">` : ''}
@@ -673,7 +667,7 @@
     const html = `
       <div class="p-5">
         <div class="flex items-start gap-4">
-          <div class="w-28 h-28 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${optimizedImage || p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
+          <div class="w-28 h-28 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
           <div class="flex-1">
             <h3 class="text-lg font-semibold">${p.name}</h3>
             <div class="text-slate-600 mt-1">${p.description || p.short || ''}</div>
@@ -767,7 +761,7 @@
       const row = document.createElement('div')
       row.className = 'flex items-center gap-3 border rounded p-3 bg-white'
       row.innerHTML = `
-        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${optimizedImage || p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
+        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">`:''}</div>
         <div class="flex-1">
           <div class="font-medium">${p.name}</div>
           <div class="text-sm text-slate-600">${fmtCurrency(p.price)} x ${it.qty} = <span class="font-semibold">${fmtCurrency(p.price*it.qty)}</span></div>
@@ -1570,3 +1564,5 @@
     handleRouteChange() // Initialize routing
   })()
 })()
+
+
