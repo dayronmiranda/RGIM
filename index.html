@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>RGIM | Compras internacionales y envíos desde Panamá</title>
   <meta name="description" content="Compra internacional fácil con RGIM. Envíos marítimos y aéreos desde Panamá a Latinoamérica y el Caribe. Cotiza por WhatsApp y paga por Zelle o transferencia." />
   <meta name="robots" content="index,follow" />
@@ -42,10 +42,34 @@
   </script>
   <link rel="stylesheet" href="assets/styles/mobile-improvements.css">
   <style>
-    /* Fix for webkit text size adjust error */
+    /* Prevenir zoom en iOS y otros dispositivos */
     html {
       -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+      touch-action: pan-x pan-y; /* Permite scroll pero no zoom */
+    }
+    
+    /* Prevenir zoom en todos los elementos interactivos */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+    }
+    
+    /* Prevenir doble tap zoom en iOS */
+    body {
+      touch-action: manipulation;
+    }
+    
+    /* Asegurar que inputs no causen zoom en iOS */
+    input, select, textarea {
+      font-size: 16px !important; /* iOS hace zoom si el font es menor a 16px */
+      -webkit-appearance: none;
+      border-radius: 0;
+    }
+    
+    /* Prevenir zoom en botones y enlaces */
+    button, a {
+      touch-action: manipulation;
     }
     
     .route { display: none; opacity: 0; transition: opacity 200ms ease; }

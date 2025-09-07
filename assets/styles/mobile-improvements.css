@@ -1,5 +1,56 @@
 /* Mobile Improvements and Animations */
 
+/* Prevenir zoom en iOS Safari y otros navegadores móviles */
+html, body {
+  touch-action: manipulation !important;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Permitir selección de texto solo donde sea necesario */
+p, span, h1, h2, h3, h4, h5, h6 {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* Prevenir zoom en elementos interactivos */
+button, a, input, select, textarea {
+  touch-action: manipulation !important;
+  -ms-touch-action: manipulation !important;
+}
+
+/* Fix para inputs en iOS para prevenir zoom automático */
+@media screen and (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  input[type="password"],
+  textarea,
+  select {
+    font-size: 16px !important;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  /* Prevenir zoom al hacer focus en inputs */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    font-size: 16px !important;
+  }
+}
+
+/* Desactivar callout menu en iOS */
+* {
+  -webkit-touch-callout: none;
+}
+
+/* Permitir callout solo en elementos de texto */
+p, span, div[contenteditable="true"] {
+  -webkit-touch-callout: default;
+}
+
 /* Page Load Animation */
 @keyframes fadeInUp {
   from {
