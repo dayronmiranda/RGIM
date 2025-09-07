@@ -9,8 +9,10 @@
     "dev": "npm run build-css",
     "build": "npm run build-css-prod",
     "optimize-images": "node scripts/optimize-images.js",
-    "serve": "python -m http.server 8000",
-    "serve-node": "npx http-server -p 8000 -c-1"
+    "start": "node server.js",
+    "serve": "node server.js",
+    "serve-python": "python -m http.server 8000",
+    "serve-http": "npx http-server -p 8000 -c-1"
   },
   "keywords": [
     "ecommerce",

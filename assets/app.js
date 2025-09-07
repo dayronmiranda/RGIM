@@ -94,6 +94,18 @@
 
   function fmtCurrency(n){ return new Intl.NumberFormat(state.lang === 'es' ? 'es-PA' : 'en-US', { style:'currency', currency:'USD' }).format(n) }
 
+  // Get optimized image path
+  function getOptimizedImagePath(originalPath, size = 'thumbnail') {
+    if (!originalPath) return null
+    
+    // Extract filename from original path
+    const filename = originalPath.split('/').pop()
+    const nameWithoutExt = filename.replace(/\.[^/.]+$/, "")
+    
+    // Return optimized image path
+    return `./assets/images/optimized/${nameWithoutExt}-${size}.jpg`
+  }
+
   function showToast(msg){
     const node = document.createElement('div')
     node.className = 'pointer-events-auto bg-slate-900 text-white px-4 py-2 rounded shadow text-sm'
@@ -211,9 +223,13 @@
       if(!p) return
       const row = document.createElement('div')
       row.className = 'flex items-center gap-3 border rounded-lg p-3 bg-slate-50'
+      
+      // Get optimized image for cart sidebar
+      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
+      
       row.innerHTML = `
         <div class="w-12 h-12 bg-slate-200 rounded overflow-hidden flex-shrink-0">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">` : ''}
+          ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="w-full h-full object-cover">` : ''}
         </div>
         <div class="flex-1 min-w-0">
           <div class="font-medium text-sm truncate">${p.name}</div>
@@ -617,9 +633,13 @@
     list.forEach(p => {
       const card = document.createElement('div')
       card.className = 'border rounded-lg overflow-hidden bg-white hover:shadow flex flex-col'
+      
+      // Get optimized image path
+      const optimizedImage = getOptimizedImagePath(p.image, 'thumbnail')
+      
       card.innerHTML = `
         <div class="aspect-square bg-slate-100 relative">
-          ${p.image ? `<img src="${p.image}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover">` : ''}
+          ${optimizedImage ? `<img src="${optimizedImage}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover lazy-load" loading="lazy">` : ''}
         </div>
         <div class="p-4 flex-1 flex flex-col">
           <div class="font-medium">${p.name}</div>
