@@ -2,7 +2,7 @@
 
 /**
  * RGIM Development Server
- * Supports SPA routing for clean URLs
+ * Supports hash-based SPA routing
  */
 
 const http = require('http');
@@ -31,8 +31,8 @@ const mimeTypes = {
   '.eot': 'application/vnd.ms-fontobject'
 };
 
-// SPA routes that should serve index.html
-const spaRoutes = ['/', '/home', '/store', '/faq', '/about', '/admin'];
+// Only serve index.html for root route - all navigation uses hash routing
+const spaRoutes = ['/'];
 
 function getContentType(filePath) {
   const ext = path.extname(filePath).toLowerCase();
@@ -98,14 +98,15 @@ function serve404(res, requestPath) {
         <p>La ruta <code>${requestPath}</code> no existe en el servidor de desarrollo.</p>
         
         <div class="routes">
-            <h3>Rutas disponibles:</h3>
+            <h3>Rutas disponibles (Hash Routing):</h3>
             <ul>
-                <li><a href="/">/ (Inicio)</a></li>
-                <li><a href="/store">/store (Tienda)</a></li>
-                <li><a href="/faq">/faq (Preguntas)</a></li>
-                <li><a href="/about">/about (Nosotros)</a></li>
-                <li><a href="/admin">/admin (Admin)</a></li>
+                <li><a href="/#/">/#/ (Inicio)</a></li>
+                <li><a href="/#/store">/#/store (Tienda)</a></li>
+                <li><a href="/#/faq">/#/faq (Preguntas)</a></li>
+                <li><a href="/#/about">/#/about (Nosotros)</a></li>
+                <li><a href="/#/admin">/#/admin (Admin)</a></li>
             </ul>
+            <p><small>Esta aplicación usa hash routing. Todas las rutas deben incluir el símbolo #.</small></p>
         </div>
         
         <div class="code">
@@ -214,13 +215,16 @@ server.listen(PORT, HOST, () => {
   console.log(`📍 Server running at: http://${HOST}:${PORT}`);
   console.log(`📁 Serving files from: ${__dirname}`);
   console.log(`🌐 Environment: development`);
-  console.log(`🛣️  SPA Routing: Enabled`);
+  console.log(`🛣️  Hash Routing: Enabled`);
   console.log('');
-  console.log('📋 Available routes:');
-  spaRoutes.forEach(route => {
-    console.log(`   http://${HOST}:${PORT}${route}`);
-  });
+  console.log('📋 Available hash routes:');
+  console.log(`   http://${HOST}:${PORT}/#/ (Inicio)`);
+  console.log(`   http://${HOST}:${PORT}/#/store (Tienda)`);
+  console.log(`   http://${HOST}:${PORT}/#/faq (Preguntas)`);
+  console.log(`   http://${HOST}:${PORT}/#/about (Nosotros)`);
+  console.log(`   http://${HOST}:${PORT}/#/admin (Admin)`);
   console.log('');
+  console.log('📝 Note: All navigation uses hash routing (#/route)');
   console.log('Press Ctrl+C to stop the server');
 });
 
