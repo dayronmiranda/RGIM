@@ -18,9 +18,13 @@ import {
 
 import { 
   routes,
-  setActiveRoute, 
   initRouting
 } from './core/routing.js'
+
+import { 
+  loadAllData,
+  loadTranslations as loadTranslationsData
+} from './core/dataLoader.js'
 
 // Import store modules
 import { 
@@ -35,13 +39,10 @@ import {
 } from './store/cart.js'
 
 import { 
-  setupSearch,
-  aiSearch as aiSearchModule
+  setupSearch
 } from './store/search.js'
 
 import { 
-  openModal,
-  closeModal,
   closeAllModals
 } from './ui/modal.js'
 
@@ -51,16 +52,13 @@ import {
 } from './store/products.js'
 
 import { 
-  renderCategories,
-  makeCatButton
+  renderCategories
 } from './store/categories.js'
 
 // Import mobile modules
 import { 
   setupMobileNavigation,
-  openMobileCartModal,
-  closeMobileCartModal,
-  renderMobileCartItems
+  openMobileCartModal
 } from './mobile/navigation.js'
 
 // Import feature modules
@@ -125,15 +123,7 @@ import './modules/imageUtils.js'
 
   function fmtCurrency(n){ return new Intl.NumberFormat(state.lang === 'es' ? 'es-PA' : 'en-US', { style:'currency', currency:'USD' }).format(n) }
 
-  // Image utility functions - delegated to imageUtils module
-  function getImagePath(filename) {
-    return window.imageUtils ? window.imageUtils.getImagePath(filename) : null
-  }
-
-  function createImageElement(filename, alt, className = '', attributes = {}) {
-    return window.imageUtils ? window.imageUtils.createImageElement(filename, alt, className, attributes) : ''
-  }
-
+  
   function showToast(msg){
     const node = document.createElement('div')
     node.className = 'pointer-events-auto bg-slate-900 text-white px-4 py-2 rounded shadow text-sm'
@@ -143,17 +133,16 @@ import './modules/imageUtils.js'
   }
 
   
-  // i18n
+  // i18n - Using consolidated data loader
   async function loadTranslations(){
     try {
-      const res = await fetch('./src/data/config/translations.json')
-      const data = await res.json()
-      state.t = data[state.lang] || data['es'] || {}
+      state.t = await loadTranslationsData(state.lang)
       applyTranslations()
     } catch(e) {
       console.warn('Translations load failed', e)
     }
   }
+  
   function applyTranslations(){
     document.documentElement.lang = state.lang
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -166,57 +155,25 @@ import './modules/imageUtils.js'
     const currentRoute = (location.hash || '#/home').replace('#/','')
     try { updateSEO(currentRoute, state) } catch(e) {}
   }
+  
   function getNested(obj, path){
     return path.split('.').reduce((o,k)=> (o && o[k] != null ? o[k] : undefined), obj)
   }
 
-  // Data loading with cache management
+  // Consolidated data loading using dataLoader module
   async function loadData(){
     try {
-      const prodRes = await fetch('./src/data/store/products.json')
-      if (!prodRes.ok) {
-        throw new Error(`Failed to load products: ${prodRes.status} ${prodRes.statusText}`)
-      }
-      const products = await prodRes.json()
-
-      const catRes = await fetch('./src/data/store/categories.json')
-      if (!catRes.ok) {
-        throw new Error(`Failed to load categories: ${catRes.status} ${catRes.statusText}`)
-      }
-      const categories = await catRes.json()
-
-      // Load other optional files
-      let featured = []
-      let config = {}
+      const data = await loadAllData()
       
-      try {
-        const featRes = await fetch('./src/data/store/destacados.json')
-        if (featRes.ok) {
-          const featData = await featRes.json()
-          featured = featData.featured || []
-        }
-      } catch (e) {
-        console.warn('Featured products not loaded:', e.message)
-      }
-
-      try {
-        const configRes = await fetch('./src/data/config/config.json')
-        if (configRes.ok) {
-          config = await configRes.json()
-        }
-      } catch (e) {
-        console.warn('Config not loaded:', e.message)
-      }
-
-      // Set state
-      state.products = products
-      state.categories = categories
-      state.featured = featured
-      state.config = config
-
+      // Set state with loaded data
+      state.products = data.products
+      state.categories = data.categories
+      state.featured = data.featured
+      state.config = data.config
+      
     } catch (error) {
       console.error('Critical data loading error:', error)
-      // Set empty arrays to prevent crashes
+      // Fallbacks are already handled by the dataLoader module
       state.products = []
       state.categories = []
       state.featured = []
@@ -248,18 +205,23 @@ import './modules/imageUtils.js'
     }, 700)
   }
 
+  // Helper function to get image path using imageUtils
+  function getImagePath(filename) {
+    return window.imageUtils ? window.imageUtils.getImagePath(filename) : null
+  }
+
   // Create callbacks object for routing module
   const routingCallbacks = {
     closeAllModals,
     updateSEO: (route) => updateSEO(route, state),
     store: {
-      renderCategories: renderCategoriesLocal,
-      renderProducts: renderProductsLocal,
+      renderCategories: () => renderCategories(state, els, () => renderProducts(state, els, fmtCurrency, getImagePath, addToCart)),
+      renderProducts: () => renderProducts(state, els, fmtCurrency, getImagePath, addToCart),
       renderCart: () => renderCart(state, els, fmtCurrency, getImagePath),
-      renderCartSidebar: () => renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal),
+      renderCartSidebar: () => renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQtyModule, removeFromCartModule, updateCartSidebarTotal),
       renderHistory,
       updateTotal,
-      updateCartSidebarTotal: () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotal),
+      updateCartSidebarTotal: () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotalModule),
       animateCartSidebar
     },
     home: {
@@ -271,20 +233,8 @@ import './modules/imageUtils.js'
     }
   }
 
-  // Store rendering - Using imported modules
-  function renderCategoriesLocal(){
-    renderCategories(state, els, renderProductsLocal)
-  }
   
-  function renderProductsLocal(){
-    renderProducts(state, els, fmtCurrency, getImagePath, addToCart)
-  }
-
-  function openProductModalLocal(p){
-    openProductModal(p, els, fmtCurrency, getImagePath, addToCart)
-  }
-
-  // Cart - Using imported modules
+  // Cart operations - Using imported modules directly
   function addToCart(id){
     addToCartModule(state, id)
     
@@ -292,32 +242,15 @@ import './modules/imageUtils.js'
     playAddToCartSound()
     updateCartBadges(state, els)
     renderCart(state, els, fmtCurrency, getImagePath)
-    renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
+    renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQtyModule, removeFromCartModule, updateCartSidebarTotal)
     updateTotal()
-    updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
+    updateCartSidebarTotal(state, els, fmtCurrency, cartTotalModule)
     showToast(state.lang==='es'?'Añadido al carrito':'Added to cart')
-  }
-  function removeFromCart(id){
-    removeFromCartModule(state, id)
-    updateCartBadges(state, els)
-    renderCart(state, els, fmtCurrency, getImagePath)
-    renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
-    updateTotal()
-    updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
-  }
-  function changeQty(id, delta){
-    changeQtyModule(state, id, delta)
-    updateCartBadges(state, els)
-    renderCart(state, els, fmtCurrency, getImagePath)
-    updateTotal()
-  }
-  function cartTotal(){
-    return cartTotalModule(state)
   }
   function updateTotal(){
     if(!els.orderTotal) return
     const shipType = document.getElementById('shippingType')?.value || 'sea'
-    const base = cartTotal()
+    const base = cartTotalModule(state)
     const total = shipType === 'air' ? base * 1.10 : base
     els.orderTotal.textContent = fmtCurrency(total)
     updateCheckoutSummary()
@@ -331,40 +264,6 @@ import './modules/imageUtils.js'
       (count === 0 ? 'No products' : count === 1 ? '1 product' : `${count} products`)
     els.checkoutItemCount.textContent = text
   }
-  function renderCart(){
-    const wrap = els.cartItems
-    if(!wrap) return
-    wrap.innerHTML = ''
-    if(state.cart.length === 0){
-      const empty = document.createElement('div')
-      empty.className = 'text-slate-500 text-sm'
-      empty.textContent = state.lang==='es'? 'Tu carrito está vacío.' : 'Your cart is empty.'
-      wrap.appendChild(empty)
-      return
-    }
-    state.cart.forEach(it => {
-      const p = state.products.find(x => x.id === it.id)
-      if(!p) return
-      const row = document.createElement('div')
-      row.className = 'flex items-center gap-3 border rounded p-3 bg-white'
-      row.innerHTML = `
-        <div class="w-14 h-14 bg-slate-100 rounded overflow-hidden">${p.image?`<img src="${getImagePath(p.image)}" alt="${p.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">`:''}</div>
-        <div class="flex-1">
-          <div class="font-medium">${p.name}</div>
-          <div class="text-sm text-slate-600">${fmtCurrency(p.price)} x ${it.qty} = <span class="font-semibold">${fmtCurrency(p.price*it.qty)}</span></div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button class="px-2 py-1 border rounded" data-dec>-</button>
-          <div class="w-8 text-center">${it.qty}</div>
-          <button class="px-2 py-1 border rounded" data-inc>+</button>
-        </div>
-        <button class="px-3 py-1 border rounded text-red-600" data-del>Eliminar</button>`
-      row.querySelector('[data-dec]').onclick = ()=> changeQty(it.id, -1)
-      row.querySelector('[data-inc]').onclick = ()=> changeQty(it.id, +1)
-      row.querySelector('[data-del]').onclick = ()=> removeFromCart(it.id)
-      wrap.appendChild(row)
-    })
-  }
 
   // Checkout
   els.checkoutForm?.addEventListener('submit', (e)=>{
@@ -373,7 +272,7 @@ import './modules/imageUtils.js'
     const name = document.getElementById('buyerName').value.trim()
     const phone = document.getElementById('buyerWhatsapp').value.trim()
     const shipType = document.getElementById('shippingType').value
-    const base = cartTotal()
+    const base = cartTotalModule(state)
     const total = shipType === 'air' ? base*1.10 : base
 
     const order = {
@@ -402,9 +301,9 @@ import './modules/imageUtils.js'
       stateHelpers.clearCart(state)
       updateCartBadges(state, els)
       renderCart(state, els, fmtCurrency, getImagePath)
-      renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQty, removeFromCart, updateCartSidebarTotal)
+      renderCartSidebar(state, els, fmtCurrency, getImagePath, changeQtyModule, removeFromCartModule, updateCartSidebarTotal)
       updateTotal()
-      updateCartSidebarTotal(state, els, fmtCurrency, cartTotal)
+      updateCartSidebarTotal(state, els, fmtCurrency, cartTotalModule)
       renderHistory()
     }, 500)
   })
@@ -549,7 +448,7 @@ import './modules/imageUtils.js'
   els.langEN?.addEventListener('click', ()=> setLang('en'))
 
   // Cart sidebar shipping change listener - now handled by shippingType
-  document.getElementById('shippingType')?.addEventListener('change', () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotal))
+  document.getElementById('shippingType')?.addEventListener('change', () => updateCartSidebarTotal(state, els, fmtCurrency, cartTotalModule))
   
   
   // Cart button click handler with mobile modal support
@@ -563,19 +462,15 @@ import './modules/imageUtils.js'
         openMobileCartModal()
       } else {
         location.hash = '#/store'
-        setTimeout(() => {
-          setActiveRoute('store', true)
-          setTimeout(openMobileCartModal, 300)
-        }, 50)
+        setTimeout(openMobileCartModal, 300)
       }
       return
     }
     
-    // Desktop behavior
+    // Desktop behavior - just navigate to store, routing module handles the rest
     const currentRoute = location.hash.replace('#/', '') || 'home'
     if(currentRoute !== 'store') {
       location.hash = '#/store'
-      setTimeout(() => setActiveRoute('store', true), 50)
     }
   })
 
@@ -632,23 +527,20 @@ import './modules/imageUtils.js'
     card.onclick = () => {
       location.hash = '#/store'
       setTimeout(() => {
-        setActiveRoute('store')
-        setTimeout(() => {
-          const productCards = document.querySelectorAll('.product-card')
-          productCards.forEach(productCard => {
-            const productName = productCard.querySelector('h3')?.textContent || productCard.querySelector('.font-medium')?.textContent
-            if (productName === product.name) {
-              productCard.scrollIntoView({ behavior: 'smooth', block: 'center' })
-              productCard.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.3)'
-              productCard.style.transform = 'scale(1.02)'
-              setTimeout(() => {
-                productCard.style.boxShadow = ''
-                productCard.style.transform = ''
-              }, 2000)
-            }
-          })
-        }, 500)
-      }, 100)
+        const productCards = document.querySelectorAll('.product-card')
+        productCards.forEach(productCard => {
+          const productName = productCard.querySelector('h3')?.textContent || productCard.querySelector('.font-medium')?.textContent
+          if (productName === product.name) {
+            productCard.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            productCard.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.3)'
+            productCard.style.transform = 'scale(1.02)'
+            setTimeout(() => {
+              productCard.style.boxShadow = ''
+              productCard.style.transform = ''
+            }, 2000)
+          }
+        })
+      }, 500)
     }
     
     return card
@@ -846,8 +738,8 @@ import './modules/imageUtils.js'
     const sortSelect = document.getElementById('sort-select')
     if (sortSelect) sortSelect.value = ''
     
-    renderProducts()
-    renderCategories()
+    renderProducts(state, els, fmtCurrency, getImagePath, addToCart)
+    renderCategories(state, els, () => renderProducts(state, els, fmtCurrency, getImagePath, addToCart))
     
     const searchResults = document.getElementById('search-results-info')
     searchResults?.classList.add('hidden')
@@ -871,10 +763,10 @@ import './modules/imageUtils.js'
   ;(async function init(){
     await loadData()
     await loadTranslations()
-    updateCartBadges() // Initialize cart badges
+    updateCartBadges(state, els) // Initialize cart badges
     setupMobileNavigation() // Setup mobile navigation
     setupNavigation() // Setup navigation event listeners
-    setupSearch(state, showToast, renderFilteredProducts, renderProductsLocal, renderCategoriesLocal) // Setup search functionality
+    setupSearch(state, showToast, renderFilteredProducts, () => renderProducts(state, els, fmtCurrency, getImagePath, addToCart), () => renderCategories(state, els, () => renderProducts(state, els, fmtCurrency, getImagePath, addToCart))) // Setup search functionality
     setupFilters() // Setup price and sort filters
     
     // Initialize routing system with callbacks
