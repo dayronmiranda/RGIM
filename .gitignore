@@ -87,5 +87,5 @@ logs
 *.log
 
 # Assets
-assets/images/
-assets\images\
+
+rgim-website\src\assets\images
