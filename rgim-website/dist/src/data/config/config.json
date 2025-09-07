@@ -1,0 +1,24 @@
+{
+  "images": {
+    "optimized": true,
+    "sizes": {
+      "thumbnail": {
+        "width": 300,
+        "height": 300,
+        "quality": 85
+      },
+      "medium": {
+        "width": 800,
+        "height": 600,
+        "quality": 90
+      }
+    },
+    "lazyLoading": true,
+    "format": "jpg"
+  },
+  "ai": {
+    "gemini": {
+      "model": "gemini-2.0-flash-exp"
+    }
+  }
+}

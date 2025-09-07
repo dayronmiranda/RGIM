@@ -1,56 +1,147 @@
-✅ **COMPLETED** - Remove duplicate SEO functions from `app.js` (lines 209-280) and update all references to use the existing `seo/meta.js` module. Update imports and function calls to use the modular versions.
+# RGIM Website Code Cleanup Checklist
 
-- Removed duplicate SEO helper functions from app.js
-- Updated updateSEO calls to pass state parameter
-- All SEO functionality now uses seo/meta.js module
+## Introduction
 
-✅ **COMPLETED** - Remove duplicate cart operations from `core/state.js` stateHelpers object. Ensure all cart functionality uses only the `store/cart.js` module. Update any remaining references in `app.js`.
+This checklist contains all the necessary changes to clean up the RGIM website codebase by removing redundant code, duplications, and unused elements. **All items in this checklist must be completed and then committed as a single cleanup commit** before proceeding with any new feature development.
 
-- Removed duplicate cart operations from stateHelpers
-- Kept only clearCart function in stateHelpers (used by checkout process)
-- All other cart operations now use store/cart.js module exclusively
-
-✅ **COMPLETED** - Merge `getImagePath()` and `createImageElement()` functions in `app.js` into a single comprehensive image utility. Move to `modules/imageUtils.js` and update all references.
-
-- Merged image functions into modules/imageUtils.js
-- Updated app.js to use imageUtils module via window.imageUtils
-- Enhanced imageUtils with additional responsive image capabilities
-- All image functionality now centralized in imageUtils module
-
-🔄 **IN PROGRESS** - Remove any remaining legacy wrapper functions and duplicate implementations from `app.js`. Ensure all functionality properly uses the modular architecture established in previous phases.
-
-- Need to review app.js for any remaining legacy functions
-- Ensure all modules are properly utilized
-- Clean up any remaining duplicate code
+The cleanup focuses on:
+- Removing duplicate functions and modules
+- Eliminating unused code and dependencies
+- Standardizing code patterns
+- Optimizing file structure
+- Ensuring code integrity
 
 ---
 
-## Summary of Completed Refactoring
+## Core Module Duplications (Critical)
 
-The codebase has been successfully refactored to use a proper modular architecture:
+- [ ] Remove duplicate SEO functions (lines 209-280) from app.js and use only seo/meta.js module
+- [ ] Remove duplicate cart operations from core/state.js stateHelpers object and use only store/cart.js
+- [ ] Eliminate getImagePath() and createImageElement() functions from app.js and migrate logic to modules/imageUtils.js
+- [ ] Remove duplicate aiSearch function from app.js (exists in modules/aiSearch.js and store/search.js)
+- [ ] Remove duplicate updateSEO function from app.js (exists in seo/meta.js)
+- [ ] Remove duplicate updateHreflangLinks function from app.js (exists in seo/meta.js)
+- [ ] Remove duplicate updateFAQSchema function from app.js (exists in seo/meta.js)
+- [ ] Remove duplicate aiSearch function from store/search.js (exists in modules/aiSearch.js)
 
-### 1. SEO Module Integration ✅
-- Removed duplicate SEO functions from app.js (upsertMetaByName, upsertMetaByProp, setCanonical, etc.)
-- All SEO operations now use the centralized seo/meta.js module
-- Updated function calls to pass required state parameter
+## Legacy Code Removal
 
-### 2. Cart Operations Cleanup ✅
-- Removed duplicate cart operations from core/state.js stateHelpers
-- All cart functionality now uses store/cart.js module exclusively
-- Maintained only essential clearCart function in stateHelpers for checkout process
-- Updated all cart-related function calls to use proper module functions
+- [ ] Remove legacy wrapper functions from app.js as specified in TODO.md
+- [ ] Remove duplicate cart operations (addToCart, removeFromCart, etc.) from core/state.js stateHelpers
+- [ ] Eliminate unused callback parameters in openMobileCartModal function
+- [ ] Remove unused callback functions in mobile/navigation.js
+- [ ] Clean up unused imports in mobile/navigation.js
 
-### 3. Image Utilities Consolidation ✅
-- Merged getImagePath() and createImageElement() functions into modules/imageUtils.js
-- Enhanced imageUtils with comprehensive image handling capabilities
-- Updated app.js to delegate image operations to the imageUtils module
-- All image functionality now centralized and reusable
+## Module Integration and Cleanup
 
-### 4. Architecture Benefits
-- **Separation of Concerns**: Each module handles specific functionality
-- **Code Reusability**: Modules can be easily imported and used across the application
-- **Maintainability**: Changes to specific functionality are isolated to their respective modules
-- **Testability**: Individual modules can be tested independently
-- **Performance**: Reduced code duplication and improved organization
+- [ ] Verify if modules/cacheManager.js is actually being used, remove if not
+- [ ] Verify if modules/lazyLoader.js is fully integrated, integrate or remove
+- [ ] Remove global window.imageUtils instance if not being used
+- [ ] Remove unused AISearch class export in modules/aiSearch.js if only instance is used
+- [ ] Unify search functions to avoid duplication between modules
 
-The modular architecture is now properly established with clear boundaries between different functional areas of the application.
+## Function and Variable Cleanup
+
+- [ ] Remove duplicate fmtCurrency function between modules
+- [ ] Remove duplicate toast functions
+- [ ] Remove duplicate modal functions between mobile and desktop
+- [ ] Remove duplicate validation functions
+- [ ] Remove unused function parameters in rendering functions
+- [ ] Remove unused callback functions
+- [ ] Remove orphaned event listeners with no associated elements
+- [ ] Remove unused configuration objects
+
+## CSS and Styling Cleanup
+
+- [ ] Remove duplicate styles between input.css and styles.css
+- [ ] Remove unused CSS rules in styles.css
+- [ ] Remove duplicate keyframes (spin, fadeIn, etc.)
+- [ ] Remove unused CSS classes not referenced in HTML
+- [ ] Consolidate duplicate media query rules for mobile
+- [ ] Remove redundant Tailwind CSS configurations
+
+## HTML Structure Cleanup
+
+- [ ] Remove duplicate Tailwind CSS scripts (CDN and local)
+- [ ] Remove duplicate or redundant meta tags
+- [ ] Clean up unnecessary HTML comments
+- [ ] Remove unused hidden div elements
+- [ ] Remove placeholder elements not being used
+
+## JavaScript Code Standards
+
+- [ ] Remove unused event listeners in app.js
+- [ ] Remove declared but unused variables
+- [ ] Remove uncalled callback functions
+- [ ] Remove unused imports/exports in modules
+- [ ] Standardize function declaration style (arrow functions vs function declarations)
+- [ ] Standardize error handling across all modules
+- [ ] Consolidate async/await vs Promises usage
+- [ ] Unify variable and function naming conventions
+
+## File System and Dependencies
+
+- [ ] Remove unused dependencies from package.json
+- [ ] Remove unnecessary .gitkeep files
+- [ ] Remove unused example or placeholder files
+- [ ] Remove completed TODO comments
+- [ ] Clean up unused imports in all modules
+
+## Debug and Development Cleanup
+
+- [ ] Remove unnecessary console.log debugging statements
+- [ ] Remove obsolete or redundant comments
+- [ ] Remove commented-out code that's no longer needed
+- [ ] Remove completed TODOs from codebase
+
+---
+
+## Code Integrity Test
+
+After completing all cleanup tasks, run the following tests to ensure code integrity:
+
+### Automated Tests
+
+- [ ] Run `npm install` to verify all dependencies resolve correctly
+- [ ] Run `npm run build-css-prod` to ensure CSS builds without errors
+- [ ] Run `npm run build` to verify the complete build process works
+- [ ] Run `npm run serve` and verify the development server starts correctly
+
+### Manual Functionality Tests
+
+- [ ] Navigate to all routes (/, /store, /faq, /about, /admin) and verify they load
+- [ ] Test cart functionality: add items, modify quantities, remove items
+- [ ] Test mobile navigation menu opens and closes correctly
+- [ ] Test product search functionality works
+- [ ] Test category filtering works
+- [ ] Test checkout form submission creates history entries
+- [ ] Test admin login and dashboard functionality
+- [ ] Test language switching between ES/EN
+- [ ] Verify all images load correctly with fallbacks
+- [ ] Test responsive design on mobile devices
+
+### Browser Console Tests
+
+- [ ] Verify no JavaScript errors in browser console
+- [ ] Verify no 404 errors for missing resources
+- [ ] Verify no duplicate function warnings
+- [ ] Check that all modules load correctly
+- [ ] Verify SEO meta tags update correctly on route changes
+
+### Performance Verification
+
+- [ ] Verify page load times are acceptable
+- [ ] Check that CSS file size is optimized
+- [ ] Verify no duplicate network requests
+- [ ] Confirm lazy loading works for images
+
+### Final Verification
+
+- [ ] Commit all changes with message: "feat: comprehensive code cleanup and deduplication"
+- [ ] Create a backup branch before cleanup: `git checkout -b backup-before-cleanup`
+- [ ] Verify git diff shows only intentional removals and no accidental deletions
+- [ ] Test build and deployment process works correctly
+
+---
+
+**Note**: This cleanup should result in a significantly smaller, more maintainable codebase with no loss of functionality. All tests must pass before considering the cleanup complete.

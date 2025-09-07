@@ -1,0 +1,30 @@
+[
+  {
+    "id": "pantry",
+    "name": "Despensa y Abarrotes"
+  },
+  {
+    "id": "snacks",
+    "name": "Botanas y Galletas"
+  },
+  {
+    "id": "candy",
+    "name": "Dulces y Chocolates"
+  },
+  {
+    "id": "cereal",
+    "name": "Cereales"
+  },
+  {
+    "id": "beverages",
+    "name": "Bebidas"
+  },
+  {
+    "id": "dairy",
+    "name": "Lácteos"
+  },
+  {
+    "id": "tobacco",
+    "name": "Tabaco"
+  }
+]
