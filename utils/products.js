@@ -1,6 +1,6 @@
 // utils/products.js
+import { createLazyImage, lazyLoader } from './lazyload.js';
 
-// Renderizado simple de productos en el grid
 // Renderizado de productos destacados para la home
 export function renderFeatured({ products, containerId = 'featured-products', getImagePath = (img) => img }) {
   const container = document.getElementById(containerId);
@@ -24,7 +24,11 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
         return `
           <div class="bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-shadow duration-300 group" onclick="window.location.hash = '#/store'">
             <div class="aspect-square w-full overflow-hidden bg-gray-100">
-              <img src="${imagePath}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="console.error('Failed to load image: ${imagePath}')" />
+              ${createLazyImage({
+                src: imagePath,
+                alt: p.name,
+                className: 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+              })}
             </div>
             <div class="p-4">
               <h3 class="font-semibold text-lg mb-1 group-hover:text-indigo-600 transition-colors">${p.name}</h3>
@@ -52,6 +56,9 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
       }
     </style>
   `;
+  
+  // Inicializar lazy loading para las nuevas imágenes
+  setTimeout(() => lazyLoader.observeAll(), 100);
 }
 
 export function renderProducts({ products = [], category = '', gridId = 'product-grid', getImagePath = (img) => img, extraButton = null, viewMode = 'grid' }) {
@@ -84,7 +91,12 @@ export function renderProducts({ products = [], category = '', gridId = 'product
       if (isMobile) {
         card.className = 'product-list-item-mobile';
         card.innerHTML = `
-          <img src="${imagePath}" alt="${p.name}" class="product-image" loading="lazy">
+          ${createLazyImage({
+            src: imagePath,
+            alt: p.name,
+            className: 'product-image',
+            placeholder: true
+          })}
           <div class="product-info">
             <div>
               <h3 class="product-name">${p.name}</h3>
@@ -107,7 +119,11 @@ export function renderProducts({ products = [], category = '', gridId = 'product
         card.innerHTML = `
           <div class="flex items-center p-4 gap-4">
             <div class="w-24 h-24 flex-shrink-0 overflow-hidden bg-gray-100 rounded-lg">
-              ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy">` : ''}
+              ${imagePath ? createLazyImage({
+                src: imagePath,
+                alt: p.name,
+                className: 'w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300'
+              }) : ''}
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="text-lg font-medium text-gray-900">${p.name}</h3>
@@ -128,7 +144,11 @@ export function renderProducts({ products = [], category = '', gridId = 'product
       card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow';
       card.innerHTML = `
         <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
-          ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy">` : ''}
+          ${imagePath ? createLazyImage({
+            src: imagePath,
+            alt: p.name,
+            className: 'absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300'
+          }) : ''}
         </div>
         <div class="p-4">
           <h3 class="text-sm font-medium text-gray-900 truncate">${p.name}</h3>
@@ -143,4 +163,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
     
     grid.appendChild(card);
   });
+  
+  // Inicializar lazy loading para las nuevas imágenes
+  setTimeout(() => lazyLoader.observeAll(), 100);
 }

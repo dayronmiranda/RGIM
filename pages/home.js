@@ -1,5 +1,6 @@
 import { loadAllData } from '../utils/dataLoader.js';
 import { renderFeatured } from '../utils/products.js';
+import { createLazyImage, lazyLoader } from '../utils/lazyload.js';
 
 export async function renderHome(container) {
   container.innerHTML = `
@@ -56,29 +57,57 @@ export async function renderHome(container) {
                   <div class="flex items-center space-x-6 lg:space-x-8">
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white sm:opacity-0 lg:opacity-100">
-                        <img src="assets/images/products/products_0002_Capa-1.png" alt="Producto destacado" class="h-full w-full object-cover">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0002_Capa-1.png',
+                          alt: 'Producto destacado',
+                          className: 'h-full w-full object-cover'
+                        })}
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0010_20231206_132305.png" alt="Electrónica" class="h-full w-full object-cover">
-                      </div>
-                    </div>
-                    <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0015_20231206_132155.png" alt="Tecnología" class="h-full w-full object-cover">
-                      </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0020_20231206_132112.png" alt="Hogar" class="h-full w-full object-cover">
-                      </div>
-                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0025_20231206_131932.png" alt="Accesorios" class="h-full w-full object-cover">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0010_20231206_132305.png',
+                          alt: 'Electrónica',
+                          className: 'h-full w-full object-cover'
+                        })}
                       </div>
                     </div>
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0030_20231206_132539.png" alt="Premium" class="h-full w-full object-cover">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0015_20231206_132155.png',
+                          alt: 'Tecnología',
+                          className: 'h-full w-full object-cover'
+                        })}
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <img src="assets/images/products/products_0040_20231206_133000.png" alt="Ofertas" class="h-full w-full object-cover">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0020_20231206_132112.png',
+                          alt: 'Hogar',
+                          className: 'h-full w-full object-cover'
+                        })}
+                      </div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0025_20231206_131932.png',
+                          alt: 'Accesorios',
+                          className: 'h-full w-full object-cover'
+                        })}
+                      </div>
+                    </div>
+                    <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0030_20231206_132539.png',
+                          alt: 'Premium',
+                          className: 'h-full w-full object-cover'
+                        })}
+                      </div>
+                      <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
+                        ${createLazyImage({
+                          src: 'assets/images/products/products_0040_20231206_133000.png',
+                          alt: 'Ofertas',
+                          className: 'h-full w-full object-cover'
+                        })}
                       </div>
                     </div>
                   </div>
@@ -89,16 +118,32 @@ export async function renderHome(container) {
               <div class="lg:hidden mt-8">
                 <div class="grid grid-cols-2 gap-4 px-4">
                   <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
-                    <img src="assets/images/products/products_0002_Capa-1.png" alt="Producto destacado" class="h-full w-full object-cover">
+                    ${createLazyImage({
+                      src: 'assets/images/products/products_0002_Capa-1.png',
+                      alt: 'Producto destacado',
+                      className: 'h-full w-full object-cover'
+                    })}
                   </div>
                   <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
-                    <img src="assets/images/products/products_0010_20231206_132305.png" alt="Electrónica" class="h-full w-full object-cover">
+                    ${createLazyImage({
+                      src: 'assets/images/products/products_0010_20231206_132305.png',
+                      alt: 'Electrónica',
+                      className: 'h-full w-full object-cover'
+                    })}
                   </div>
                   <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
-                    <img src="assets/images/products/products_0015_20231206_132155.png" alt="Tecnología" class="h-full w-full object-cover">
+                    ${createLazyImage({
+                      src: 'assets/images/products/products_0015_20231206_132155.png',
+                      alt: 'Tecnología',
+                      className: 'h-full w-full object-cover'
+                    })}
                   </div>
                   <div class="aspect-square overflow-hidden rounded-lg shadow-lg bg-white">
-                    <img src="assets/images/products/products_0020_20231206_132112.png" alt="Hogar" class="h-full w-full object-cover">
+                    ${createLazyImage({
+                      src: 'assets/images/products/products_0020_20231206_132112.png',
+                      alt: 'Hogar',
+                      className: 'h-full w-full object-cover'
+                    })}
                   </div>
                 </div>
               </div>
@@ -349,4 +394,9 @@ export async function renderHome(container) {
     containerId: 'featured-products',
     getImagePath: (img) => `assets/images/products/${img}`
   });
+  
+  // Inicializar lazy loading para todas las imágenes de la página
+  setTimeout(() => {
+    lazyLoader.observeAll();
+  }, 100);
 }
