@@ -61,25 +61,51 @@ export function renderProducts({ products = [], category = '', gridId = 'product
     const buttonHtml = extraButton ? extraButton(p) : '';
     
     if (viewMode === 'list') {
-      // Vista de lista
-      card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow';
-      card.innerHTML = `
-        <div class="flex items-center p-4 gap-4">
-          <div class="w-20 h-20 flex-shrink-0 overflow-hidden bg-gray-100 rounded-lg">
-            ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy">` : ''}
-          </div>
-          <div class="flex-1 min-w-0">
-            <h3 class="text-lg font-medium text-gray-900 truncate">${p.name}</h3>
-            <p class="mt-1 text-sm text-gray-500 line-clamp-2">${p.short || ''}</p>
-            <div class="mt-2 flex items-center justify-between">
-              <p class="text-lg font-semibold text-gray-900">$${p.price.toFixed(2)}</p>
+      // Vista de lista mejorada para móvil
+      const isMobile = window.innerWidth < 768;
+      
+      if (isMobile) {
+        card.className = 'product-list-item-mobile';
+        card.innerHTML = `
+          <img src="${imagePath}" alt="${p.name}" class="product-image" loading="lazy">
+          <div class="product-info">
+            <div>
+              <h3 class="product-name">${p.name}</h3>
+              <p class="text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
+              <p class="product-price">${p.price.toFixed(2)}</p>
+            </div>
+            <div class="product-actions">
+              <button class="add-to-cart-btn" data-addcart="${p.id}">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                <span>Agregar</span>
+              </button>
             </div>
           </div>
-          <div class="flex-shrink-0">
-            ${buttonHtml}
+        `;
+      } else {
+        // Vista de lista para desktop
+        card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow';
+        card.innerHTML = `
+          <div class="flex items-center p-4 gap-4">
+            <div class="w-24 h-24 flex-shrink-0 overflow-hidden bg-gray-100 rounded-lg">
+              ${imagePath ? `<img src="${imagePath}" alt="${p.name}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" loading="lazy">` : ''}
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-lg font-medium text-gray-900">${p.name}</h3>
+              <p class="mt-1 text-sm text-gray-500 line-clamp-2">${p.short || ''}</p>
+              <div class="mt-2 flex items-center gap-4">
+                <p class="text-xl font-bold text-indigo-600">${p.price.toFixed(2)}</p>
+                <span class="text-xs text-gray-400">Envío gratis marítimo</span>
+              </div>
+            </div>
+            <div class="flex-shrink-0">
+              ${buttonHtml}
+            </div>
           </div>
-        </div>
-      `;
+        `;
+      }
     } else {
       // Vista de grid (original)
       card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow';

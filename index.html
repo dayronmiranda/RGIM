@@ -40,6 +40,7 @@
       }
     }
   </script>
+  <link rel="stylesheet" href="assets/styles/mobile-improvements.css">
   <style>
     /* Fix for webkit text size adjust error */
     html {
@@ -48,7 +49,7 @@
     }
     
     .route { display: none; opacity: 0; transition: opacity 200ms ease; }
-    .route.active { display: block; opacity: 1; }
+    .route.active { display: block; opacity: 1; animation: fadeInUp 0.4s ease-out; }
     .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(10px); }
     .loading-spinner {
       width: 40px;
@@ -90,17 +91,25 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
       </button>
-      <div id="mobile-nav-overlay" class="fixed inset-0 bg-black/80 z-50 flex-col p-8 hidden">
-        <button id="mobile-nav-close" aria-label="Cerrar menú" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
-        <div class="flex flex-col items-center gap-8 mt-12">
-          <a href="#/home" class="text-white text-lg py-2">Inicio</a>
-          <a href="#/store" class="text-white text-lg py-2">Tienda</a>
-          <a href="#/faq" class="text-white text-lg py-2">Preguntas</a>
-          <a href="#/about" class="text-white text-lg py-2">Nosotros</a>
+      <div id="mobile-nav-overlay" class="hidden">
+        <button id="mobile-nav-close" aria-label="Cerrar menú" class="absolute top-6 right-6 text-white text-4xl z-50">&times;</button>
+        <div class="flex flex-col items-center gap-4">
+          <div class="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center mb-8">
+            <div class="w-12 h-12 rounded bg-white text-brand-600 grid place-items-center font-bold text-xl">RG</div>
+          </div>
+          <a href="#/home" class="text-white text-2xl font-medium py-3 px-8 rounded-lg hover:bg-white/10 transition-colors">Inicio</a>
+          <a href="#/store" class="text-white text-2xl font-medium py-3 px-8 rounded-lg hover:bg-white/10 transition-colors">Tienda</a>
+          <a href="#/faq" class="text-white text-2xl font-medium py-3 px-8 rounded-lg hover:bg-white/10 transition-colors">Preguntas</a>
+          <a href="#/about" class="text-white text-2xl font-medium py-3 px-8 rounded-lg hover:bg-white/10 transition-colors">Nosotros</a>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Page Loader -->
+  <div id="page-loader" class="page-loader">
+    <div class="loader-spinner"></div>
+  </div>
 
   <main id="app" class="flex-1"></main>
   <script type="module" src="index.js"></script>

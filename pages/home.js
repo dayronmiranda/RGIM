@@ -50,63 +50,35 @@ export async function renderHome(container) {
           </div>
           <div>
             <div class="mt-10">
-              <!-- Corporate imagery grid -->
+              <!-- Commercial imagery grid with product photos -->
               <div aria-hidden="true" class="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl">
                 <div class="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
                   <div class="flex items-center space-x-6 lg:space-x-8">
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white sm:opacity-0 lg:opacity-100">
-                        <div class="h-full w-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0002_Capa-1.png" alt="Producto destacado" class="h-full w-full object-cover">
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0010_20231206_132305.png" alt="Electrónica" class="h-full w-full object-cover">
                       </div>
                     </div>
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H4.5m2.25 0v3m0 0v.75A.75.75 0 016 9h-.75m0 0h-.375c-.621 0-1.125-.504-1.125-1.125v-.75m0 0V7.5m0 0H3.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H4.5m0 0V4.5" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0015_20231206_132155.png" alt="Tecnología" class="h-full w-full object-cover">
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0020_20231206_132112.png" alt="Hogar" class="h-full w-full object-cover">
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-teal-500 to-teal-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0025_20231206_131932.png" alt="Accesorios" class="h-full w-full object-cover">
                       </div>
                     </div>
                     <div class="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0030_20231206_132539.png" alt="Premium" class="h-full w-full object-cover">
                       </div>
                       <div class="h-64 w-44 overflow-hidden rounded-lg shadow-xl bg-white">
-                        <div class="h-full w-full bg-gradient-to-br from-rose-500 to-rose-600 flex items-center justify-center">
-                          <svg class="h-16 w-16 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
-                          </svg>
-                        </div>
+                        <img src="assets/images/products/products_0040_20231206_133000.png" alt="Ofertas" class="h-full w-full object-cover">
                       </div>
                     </div>
                   </div>
@@ -118,71 +90,7 @@ export async function renderHome(container) {
       </div>
     </div>
 
-    <!-- Featured Products Section -->
-    <div class="bg-white">
-      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <div class="text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Productos Destacados</h2>
-          <p class="mt-4 text-lg text-gray-600">Descubre nuestra selección especial de productos más populares</p>
-        </div>
-        <div id="featured-products" class="mt-16"></div>
-      </div>
-    </div>
 
-    <!-- Features Section with improved design -->
-    <div class="bg-gray-50 py-24 sm:py-32">
-      <div class="mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
-          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">¿Por qué elegir RGIM?</h2>
-          <p class="mt-6 text-lg leading-8 text-gray-600">
-            Operación confiable, cobertura regional y atención cercana para tu compra internacional.
-          </p>
-        </div>
-        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-          <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-            <div class="flex flex-col">
-              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
-                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                  </svg>
-                </div>
-                Confianza y respaldo
-              </dt>
-              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p class="flex-auto">Garantías y seguro de mercancía con comunicación transparente en cada paso del proceso.</p>
-              </dd>
-            </div>
-            <div class="flex flex-col">
-              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
-                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-                  </svg>
-                </div>
-                Catálogo flexible
-              </dt>
-              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p class="flex-auto">Productos bajo pedido y opciones de compra a medida según tus necesidades específicas.</p>
-              </dd>
-            </div>
-            <div class="flex flex-col">
-              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
-                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z" />
-                  </svg>
-                </div>
-                Cobertura regional
-              </dt>
-              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                <p class="flex-auto">Envíos a toda Latinoamérica y el Caribe desde nuestras instalaciones en Panamá.</p>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      </div>
-    </div>
 
     <!-- Commercial Partnerships Section -->
     <div class="bg-gradient-to-br from-slate-50 to-blue-50 py-24 sm:py-32">
@@ -298,6 +206,73 @@ export async function renderHome(container) {
               <p class="mt-2 text-sm text-gray-600">Tarifas preferenciales que trasladamos directamente a nuestros clientes</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+
+        <!-- Featured Products Section -->
+    <div class="bg-white">
+      <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <div class="text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Productos Destacados</h2>
+          <p class="mt-4 text-lg text-gray-600">Descubre nuestra selección especial de productos más populares</p>
+        </div>
+        <div id="featured-products" class="mt-16"></div>
+      </div>
+    </div>
+
+    <!-- Features Section with improved design -->
+    <div class="bg-gray-50 py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">¿Por qué elegir RGIM?</h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Operación confiable, cobertura regional y atención cercana para tu compra internacional.
+          </p>
+        </div>
+        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+          <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                  </svg>
+                </div>
+                Confianza y respaldo
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Garantías y seguro de mercancía con comunicación transparente en cada paso del proceso.</p>
+              </dd>
+            </div>
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+                  </svg>
+                </div>
+                Catálogo flexible
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Productos bajo pedido y opciones de compra a medida según tus necesidades específicas.</p>
+              </dd>
+            </div>
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z" />
+                  </svg>
+                </div>
+                Cobertura regional
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Envíos a toda Latinoamérica y el Caribe desde nuestras instalaciones en Panamá.</p>
+              </dd>
+            </div>
+          </dl>
         </div>
       </div>
     </div>

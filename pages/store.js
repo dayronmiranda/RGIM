@@ -3,7 +3,7 @@
 import { loadAllData } from '../utils/dataLoader.js';
 import { renderProducts } from '../utils/products.js';
 import { aiProductSearch } from '../utils/aiSearch.js';
-import { addToCart, getCartItemCount } from '../utils/cart.js';
+import { addToCart, getCartItemCount, getCart, getCartTotal, removeFromCart, updateProductQuantity } from '../utils/cart.js';
 import { renderCartSidebar } from '../utils/cartUI.js';
 import { renderCheckout } from '../utils/checkoutUI.js';
 
@@ -54,6 +54,43 @@ export async function renderStore(container) {
             <p class="mt-2 text-sm text-gray-500 text-center">
               Utiliza nuestra búsqueda inteligente para encontrar productos específicos
             </p>
+          </div>
+        </div>
+
+        <!-- Mobile Cart (Collapsible) - Only visible on mobile -->
+        <div id="mobile-cart-container" class="lg:hidden mobile-cart-collapsed mb-6">
+          <button id="mobile-cart-toggle" class="cart-toggle-btn">
+            <div class="flex items-center gap-2">
+              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+              </svg>
+              <span>Carrito (<span id="mobile-cart-count">0</span>)</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="mobile-cart-total" class="font-bold">$0.00</span>
+              <svg id="mobile-cart-arrow" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+              </svg>
+            </div>
+          </button>
+          
+          <div id="mobile-cart-content" class="cart-content-mobile">
+            <div class="p-4">
+              <div id="mobile-cart-items" class="space-y-3 max-h-64 overflow-y-auto mb-4">
+                <!-- Cart items will be rendered here -->
+              </div>
+              
+              <div class="border-t pt-4">
+                <button id="mobile-checkout-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:from-green-600 hover:to-green-700 transition-all duration-200">
+                  <div class="flex items-center justify-center gap-2">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    </svg>
+                    Finalizar compra
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -121,8 +158,8 @@ export async function renderStore(container) {
             </div>
           </div>
 
-          <!-- Shopping Cart Sidebar -->
-          <aside class="mt-8 lg:mt-0 lg:col-span-1">
+          <!-- Shopping Cart Sidebar - Hidden on mobile, visible on desktop -->
+          <aside class="hidden lg:block lg:col-span-1">
             <div class="sticky top-24">
               <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                 <!-- Cart Header -->
@@ -349,4 +386,138 @@ export async function renderStore(container) {
   
   // Initialize cart count from session
   document.getElementById('cart-count').textContent = getCartItemCount();
+  
+  // Mobile cart functionality
+  const mobileCartToggle = document.getElementById('mobile-cart-toggle');
+  const mobileCartContainer = document.getElementById('mobile-cart-container');
+  const mobileCartContent = document.getElementById('mobile-cart-content');
+  const mobileCartArrow = document.getElementById('mobile-cart-arrow');
+  const mobileCheckoutBtn = document.getElementById('mobile-checkout-btn');
+  
+  if (mobileCartToggle) {
+    // Toggle mobile cart
+    mobileCartToggle.addEventListener('click', () => {
+      const isExpanded = mobileCartContent.classList.contains('expanded');
+      
+      if (isExpanded) {
+        // Collapse
+        mobileCartContent.classList.remove('expanded');
+        mobileCartContainer.classList.remove('mobile-cart-expanded');
+        mobileCartContainer.classList.add('mobile-cart-collapsed');
+        mobileCartArrow.style.transform = 'rotate(0deg)';
+      } else {
+        // Expand
+        mobileCartContent.classList.add('expanded');
+        mobileCartContainer.classList.remove('mobile-cart-collapsed');
+        mobileCartContainer.classList.add('mobile-cart-expanded');
+        mobileCartArrow.style.transform = 'rotate(180deg)';
+        
+        // Render mobile cart items
+        renderMobileCart();
+      }
+    });
+    
+    // Mobile checkout button
+    if (mobileCheckoutBtn) {
+      mobileCheckoutBtn.onclick = () => {
+        renderCheckout('checkout-modal');
+      };
+    }
+  }
+  
+  // Function to render mobile cart
+  function renderMobileCart() {
+    const cart = getCart();
+    const mobileCartItems = document.getElementById('mobile-cart-items');
+    const mobileCartTotal = document.getElementById('mobile-cart-total');
+    const mobileCartCount = document.getElementById('mobile-cart-count');
+    
+    if (mobileCartCount) {
+      mobileCartCount.textContent = getCartItemCount();
+    }
+    
+    if (mobileCartTotal) {
+      mobileCartTotal.textContent = `${getCartTotal().toFixed(2)}`;
+    }
+    
+    if (mobileCartItems) {
+      if (cart.length === 0) {
+        mobileCartItems.innerHTML = `
+          <div class="text-gray-500 text-center py-8 text-sm">
+            <svg class="mx-auto h-10 w-10 text-gray-300 mb-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+            </svg>
+            <p class="font-medium text-gray-600">Tu carrito está vacío</p>
+          </div>
+        `;
+      } else {
+        mobileCartItems.innerHTML = cart.map(item => `
+          <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+            <div class="flex items-start justify-between mb-2">
+              <div class="flex-1 min-w-0 pr-2">
+                <h4 class="font-medium text-gray-900 text-sm truncate">${item.name}</h4>
+                <p class="text-xs text-gray-500">${(item.price || 0).toFixed(2)} c/u</p>
+              </div>
+              <button class="text-gray-400 hover:text-red-500 p-1" onclick="removeFromMobileCart('${item.id}')">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="decreaseMobileQty('${item.id}')">
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                  </svg>
+                </button>
+                <span class="text-sm font-medium px-2">${item.qty || 0}</span>
+                <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="increaseMobileQty('${item.id}')">
+                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                </button>
+              </div>
+              <span class="font-bold text-indigo-600">${((item.price || 0) * (item.qty || 0)).toFixed(2)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+  }
+  
+  // Global functions for mobile cart actions
+  window.removeFromMobileCart = (id) => {
+    removeFromCart(id);
+    renderMobileCart();
+    renderCartSidebar();
+    document.getElementById('cart-count').textContent = getCartItemCount();
+  };
+  
+  window.increaseMobileQty = (id) => {
+    const cart = getCart();
+    const item = cart.find(item => String(item.id) === String(id));
+    if (item) {
+      updateProductQuantity(id, item.qty + 1);
+      renderMobileCart();
+      renderCartSidebar();
+    }
+  };
+  
+  window.decreaseMobileQty = (id) => {
+    const cart = getCart();
+    const item = cart.find(item => String(item.id) === String(id));
+    if (item && item.qty > 1) {
+      updateProductQuantity(id, item.qty - 1);
+      renderMobileCart();
+      renderCartSidebar();
+    }
+  };
+  
+  // Update mobile cart when items are added
+  const originalAddToCart = addToCart;
+  window.addToCart = (product) => {
+    originalAddToCart(product);
+    renderMobileCart();
+  };
 }
