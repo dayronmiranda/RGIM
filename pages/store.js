@@ -33,33 +33,9 @@ export async function renderStore(container) {
     <div class="bg-gray-50 min-h-screen">
       <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         
-        <!-- Search Section -->
-        <div class="mb-12">
-          <div class="mx-auto max-w-2xl">
-            <div class="relative">
-              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <input id="ai-search" type="text" placeholder="Buscar productos con IA..." class="block w-full rounded-md border-0 bg-white py-4 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 shadow-lg" />
-              <div class="absolute inset-y-0 right-0 flex items-center pr-3">
-                <div class="flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700">
-                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                  </svg>
-                  IA
-                </div>
-              </div>
-            </div>
-            <p class="mt-2 text-sm text-gray-500 text-center">
-              Utiliza nuestra búsqueda inteligente para encontrar productos específicos
-            </p>
-          </div>
-        </div>
-
+         
         <!-- Mobile Cart (Collapsible) - Only visible on mobile -->
-        <div id="mobile-cart-container" class="lg:hidden mobile-cart-collapsed mb-6">
+        <div id="mobile-cart-container" class="lg:hidden mobile-cart-collapsed">
           <button id="mobile-cart-toggle" class="cart-toggle-btn">
             <div class="flex items-center gap-2">
               <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -94,9 +70,46 @@ export async function renderStore(container) {
             </div>
           </div>
         </div>
+        
+        <!-- Search Section - Fixed on mobile -->
+        <div class="lg:hidden mobile-search-fixed mb-4">
+          <div class="relative">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <input id="ai-search-mobile" type="text" placeholder="Buscar productos..." class="block w-full rounded-md border-0 bg-gray-50 py-3 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm" />
+          </div>
+        </div>
+        
+        <!-- Desktop Search Section -->
+        <div class="hidden lg:block mb-12">
+          <div class="mx-auto max-w-2xl">
+            <div class="relative">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <input id="ai-search" type="text" placeholder="Buscar productos con IA..." class="block w-full rounded-md border-0 bg-white py-4 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 shadow-lg" />
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+              <div class="flex items-center gap-1 rounded-full bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700">
+                <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                </svg>
+                IA
+              </div>
+            </div>
+          </div>
+          <p class="mt-2 text-sm text-gray-500 text-center">
+            Utiliza nuestra búsqueda inteligente para encontrar productos específicos
+          </p>
+        </div>
+        </div>
 
         <!-- Products and Cart Layout -->
-        <div class="lg:grid lg:grid-cols-3 lg:gap-x-8">
+        <div class="lg:grid lg:grid-cols-3 lg:gap-x-8 mt-6">
           
           <!-- Products Grid -->
           <div class="lg:col-span-2">
@@ -311,30 +324,61 @@ export async function renderStore(container) {
   document.getElementById('grid-view').classList.add('text-indigo-600', 'bg-indigo-50');
   document.getElementById('grid-view').classList.remove('text-gray-400');
 
-  // Búsqueda con IA
-  document.getElementById('ai-search').addEventListener('input', async (e) => {
-    const query = e.target.value.trim();
-    
-    if (query === '') {
-      currentProducts = products;
-    } else {
-      currentProducts = await aiProductSearch(products, query);
-    }
-    
-    // Update product count
-    document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
-    
-    // Show/hide no results state
-    if (currentProducts.length === 0) {
-      document.getElementById('product-grid').classList.add('hidden');
-      document.getElementById('no-results').classList.remove('hidden');
-    } else {
-      document.getElementById('no-results').classList.add('hidden');
-      document.getElementById('product-grid').classList.remove('hidden');
+  // Búsqueda con IA - Desktop
+  const desktopSearch = document.getElementById('ai-search');
+  if (desktopSearch) {
+    desktopSearch.addEventListener('input', async (e) => {
+      const query = e.target.value.trim();
       
-      renderCurrentProducts();
-    }
-  });
+      if (query === '') {
+        currentProducts = products;
+      } else {
+        currentProducts = await aiProductSearch(products, query);
+      }
+      
+      // Update product count
+      document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
+      
+      // Show/hide no results state
+      if (currentProducts.length === 0) {
+        document.getElementById('product-grid').classList.add('hidden');
+        document.getElementById('no-results').classList.remove('hidden');
+      } else {
+        document.getElementById('no-results').classList.add('hidden');
+        document.getElementById('product-grid').classList.remove('hidden');
+        
+        renderCurrentProducts();
+      }
+    });
+  }
+  
+  // Búsqueda con IA - Mobile
+  const mobileSearch = document.getElementById('ai-search-mobile');
+  if (mobileSearch) {
+    mobileSearch.addEventListener('input', async (e) => {
+      const query = e.target.value.trim();
+      
+      if (query === '') {
+        currentProducts = products;
+      } else {
+        currentProducts = await aiProductSearch(products, query);
+      }
+      
+      // Update product count
+      document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
+      
+      // Show/hide no results state
+      if (currentProducts.length === 0) {
+        document.getElementById('product-grid').classList.add('hidden');
+        document.getElementById('no-results').classList.remove('hidden');
+      } else {
+        document.getElementById('no-results').classList.add('hidden');
+        document.getElementById('product-grid').classList.remove('hidden');
+        
+        renderCurrentProducts();
+      }
+    });
+  }
 
   // Delegar eventos para agregar al carrito
   document.getElementById('product-grid').addEventListener('click', (e) => {
@@ -467,37 +511,52 @@ export async function renderStore(container) {
           </div>
         `;
       } else {
-        mobileCartItems.innerHTML = cart.map(item => `
-          <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
-            <div class="flex items-start justify-between mb-2">
-              <div class="flex-1 min-w-0 pr-2">
-                <h4 class="font-medium text-gray-900 text-sm truncate">${item.name}</h4>
-                <p class="text-xs text-gray-500">${(item.price || 0).toFixed(2)} c/u</p>
+        mobileCartItems.innerHTML = cart.map(item => {
+          // Obtener la imagen correcta del producto
+          const product = products.find(p => String(p.id) === String(item.id));
+          const imagePath = product && product.image ? `assets/images/products/${product.image}` : '';
+          
+          return `
+            <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm">
+              <div class="flex gap-3">
+                ${imagePath ? `
+                  <div class="flex-shrink-0">
+                    <img src="${imagePath}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md">
+                  </div>
+                ` : ''}
+                <div class="flex-1">
+                  <div class="flex items-start justify-between mb-2">
+                    <div class="flex-1 min-w-0 pr-2">
+                      <h4 class="font-medium text-gray-900 text-sm truncate">${item.name}</h4>
+                      <p class="text-xs text-gray-500">${(item.price || 0).toFixed(2)} c/u</p>
+                    </div>
+                    <button class="text-gray-400 hover:text-red-500 p-1" onclick="removeFromMobileCart('${item.id}')">
+                      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                      <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="decreaseMobileQty('${item.id}')">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                        </svg>
+                      </button>
+                      <span class="text-sm font-medium px-2">${item.qty || 0}</span>
+                      <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="increaseMobileQty('${item.id}')">
+                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                        </svg>
+                      </button>
+                    </div>
+                    <span class="font-bold text-indigo-600">${((item.price || 0) * (item.qty || 0)).toFixed(2)}</span>
+                  </div>
+                </div>
               </div>
-              <button class="text-gray-400 hover:text-red-500 p-1" onclick="removeFromMobileCart('${item.id}')">
-                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
             </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="decreaseMobileQty('${item.id}')">
-                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                  </svg>
-                </button>
-                <span class="text-sm font-medium px-2">${item.qty || 0}</span>
-                <button class="p-1 bg-gray-100 rounded hover:bg-gray-200" onclick="increaseMobileQty('${item.id}')">
-                  <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                  </svg>
-                </button>
-              </div>
-              <span class="font-bold text-indigo-600">${((item.price || 0) * (item.qty || 0)).toFixed(2)}</span>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       }
     }
   }

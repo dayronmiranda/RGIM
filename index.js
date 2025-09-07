@@ -21,7 +21,7 @@ window.addEventListener('hashchange', () => {
 	}
 });
 
-// Menú móvil mejorado
+// Menú móvil mejorado con animaciones estilo Apple
 const mobileNavToggle = document.getElementById('mobile-nav-toggle');
 const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
 const mobileNavClose = document.getElementById('mobile-nav-close');
@@ -29,26 +29,41 @@ const mobileNavClose = document.getElementById('mobile-nav-close');
 if (mobileNavToggle && mobileNavOverlay && mobileNavClose) {
 	mobileNavToggle.addEventListener('click', () => {
 		mobileNavOverlay.classList.remove('hidden');
-		mobileNavOverlay.classList.add('active');
-		document.body.classList.add('menu-open');
+		// Pequeño delay para que la animación funcione correctamente
+		setTimeout(() => {
+			mobileNavOverlay.classList.add('active');
+			document.body.classList.add('menu-open');
+			// Prevenir scroll del body
+			document.body.style.overflow = 'hidden';
+			document.body.style.position = 'fixed';
+			document.body.style.width = '100%';
+		}, 10);
 	});
 	
 	mobileNavClose.addEventListener('click', () => {
 		mobileNavOverlay.classList.remove('active');
+		document.body.classList.remove('menu-open');
+		// Restaurar scroll del body
+		document.body.style.overflow = '';
+		document.body.style.position = '';
+		document.body.style.width = '';
 		setTimeout(() => {
 			mobileNavOverlay.classList.add('hidden');
 		}, 300);
-		document.body.classList.remove('menu-open');
 	});
 	
 	// Cerrar al hacer click en un enlace
 	mobileNavOverlay.querySelectorAll('a').forEach(link => {
 		link.addEventListener('click', () => {
 			mobileNavOverlay.classList.remove('active');
+			document.body.classList.remove('menu-open');
+			// Restaurar scroll del body
+			document.body.style.overflow = '';
+			document.body.style.position = '';
+			document.body.style.width = '';
 			setTimeout(() => {
 				mobileNavOverlay.classList.add('hidden');
 			}, 300);
-			document.body.classList.remove('menu-open');
 		});
 	});
 }

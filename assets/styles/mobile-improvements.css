@@ -55,11 +55,22 @@
   animation: fadeInUp 0.4s ease-out;
 }
 
+/* Adjust for fixed header */
+body {
+  padding-top: 56px;
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 64px;
+  }
+}
+
 /* Mobile Cart Sidebar */
 @media (max-width: 768px) {
   .mobile-cart-collapsed {
     position: fixed;
-    top: 60px;
+    top: 70px;
     right: 10px;
     left: 10px;
     z-index: 45;
@@ -71,7 +82,7 @@
 
   .mobile-cart-expanded {
     position: fixed;
-    top: 60px;
+    top: 70px;
     right: 10px;
     left: 10px;
     bottom: 10px;
@@ -81,6 +92,17 @@
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     overflow-y: auto;
     transition: all 0.3s ease-out;
+  }
+  
+  /* Fixed search bar position */
+  .mobile-search-fixed {
+    position: sticky;
+    top: 140px;
+    z-index: 40;
+    background: white;
+    padding: 10px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
   .cart-toggle-btn {

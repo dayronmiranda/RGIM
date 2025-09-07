@@ -116,24 +116,32 @@ class CartFeedback {
 
   /**
    * Activa la vibración del dispositivo
-   * Compatible con Android y iOS (mediante Haptic Feedback API cuando esté disponible)
+   * Compatible con Android y iOS
    */
   vibrate(pattern = [50]) {
     try {
-      // Verificar si la API de vibración está disponible
+      // Para iOS, usar un truco con el audio para simular vibración
+      if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        // Crear un pulso de audio muy corto que genera vibración física
+        if (this.audioContext) {
+          const oscillator = this.audioContext.createOscillator();
+          const gainNode = this.audioContext.createGain();
+          
+          oscillator.connect(gainNode);
+          gainNode.connect(this.audioContext.destination);
+          
+          // Frecuencia muy baja para generar vibración física
+          oscillator.frequency.value = 30;
+          gainNode.gain.value = 0;
+          
+          oscillator.start();
+          oscillator.stop(this.audioContext.currentTime + 0.001);
+        }
+      }
+      
+      // Vibración estándar para Android
       if ('vibrate' in navigator) {
-        // Vibración estándar (funciona en Android y algunos iOS con permisos)
         navigator.vibrate(pattern);
-      }
-      
-      // Intentar usar Haptic Feedback API para iOS 13+
-      if (window.Haptics) {
-        window.Haptics.impact({ style: 'light' });
-      }
-      
-      // Para dispositivos Apple con Taptic Engine (iOS Safari)
-      if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptic) {
-        window.webkit.messageHandlers.haptic.postMessage('impact');
       }
       
     } catch (e) {
