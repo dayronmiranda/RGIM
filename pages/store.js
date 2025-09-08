@@ -91,7 +91,7 @@ export async function renderStore(container) {
         </div>
 
         <!-- Products and Cart Layout -->
-        <div class="lg:grid lg:grid-cols-10 lg:gap-x-6 mt-6">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-x-4 mt-6">
 
            <!-- Filters Sidebar - Desktop -->
            <aside class="hidden lg:block lg:col-span-2">
@@ -109,23 +109,23 @@ export async function renderStore(container) {
                      <h4 class="text-sm font-medium text-gray-900 mb-3">Categorías</h4>
                      <div class="space-y-2">
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="all">
+                         <input type="checkbox" id="filter-all" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="all">
                          <span class="ml-2 text-sm text-gray-700">Todos los productos</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="electronics">
+                         <input type="checkbox" id="filter-electronics" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="electronics">
                          <span class="ml-2 text-sm text-gray-700">Electrónicos</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="home">
+                         <input type="checkbox" id="filter-home" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="home">
                          <span class="ml-2 text-sm text-gray-700">Hogar</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="sports">
+                         <input type="checkbox" id="filter-sports" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="sports">
                          <span class="ml-2 text-sm text-gray-700">Deportes</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="beauty">
+                         <input type="checkbox" id="filter-beauty" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="beauty">
                          <span class="ml-2 text-sm text-gray-700">Belleza</span>
                        </label>
                      </div>
@@ -136,19 +136,19 @@ export async function renderStore(container) {
                      <h4 class="text-sm font-medium text-gray-900 mb-3">Rango de Precio</h4>
                      <div class="space-y-2">
                        <label class="flex items-center">
-                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="all" checked>
+                         <input type="radio" name="price" id="price-all" class="text-gray-600 focus:ring-gray-500" value="all" checked>
                          <span class="ml-2 text-sm text-gray-700">Todos los precios</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="0-50">
+                         <input type="radio" name="price" id="price-0-50" class="text-gray-600 focus:ring-gray-500" value="0-50">
                          <span class="ml-2 text-sm text-gray-700">$0 - $50</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="50-100">
+                         <input type="radio" name="price" id="price-50-100" class="text-gray-600 focus:ring-gray-500" value="50-100">
                          <span class="ml-2 text-sm text-gray-700">$50 - $100</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="100+">
+                         <input type="radio" name="price" id="price-100+" class="text-gray-600 focus:ring-gray-500" value="100+">
                          <span class="ml-2 text-sm text-gray-700">$100+</span>
                        </label>
                      </div>
@@ -159,18 +159,18 @@ export async function renderStore(container) {
                      <h4 class="text-sm font-medium text-gray-900 mb-3">Tipo de Envío</h4>
                      <div class="space-y-2">
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="free">
+                         <input type="checkbox" id="shipping-free" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="free">
                          <span class="ml-2 text-sm text-gray-700">Envío gratuito</span>
                        </label>
                        <label class="flex items-center">
-                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="express">
+                         <input type="checkbox" id="shipping-express" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="express">
                          <span class="ml-2 text-sm text-gray-700">Envío express</span>
                        </label>
                      </div>
                    </div>
 
                    <!-- Clear Filters Button -->
-                   <button class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                   <button id="clear-filters" class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                      Limpiar Filtros
                    </button>
                  </div>
@@ -179,7 +179,7 @@ export async function renderStore(container) {
            </aside>
 
            <!-- Products Grid -->
-           <div class="lg:col-span-5">
+           <div class="lg:col-span-7">
             <div class="mb-6">
               <div class="flex items-center justify-between">
                 <div>
@@ -240,9 +240,9 @@ export async function renderStore(container) {
           </div>
 
           <!-- Shopping Cart Sidebar - Hidden on mobile, visible on desktop -->
-          <aside class="hidden lg:block lg:col-span-3">
+          <aside class="hidden lg:block lg:col-span-3" style="max-width: 280px;">
             <div class="sticky top-24">
-              <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+              <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden" style="width: 100%;">
                 <!-- Cart Header -->
                 <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                   <div class="flex items-center justify-between">
@@ -354,7 +354,7 @@ export async function renderStore(container) {
       gridId: 'product-grid',
       getImagePath: (img) => `assets/images/products/${img}`,
       viewMode: currentViewMode,
-      extraButton: (product) => `<button class="mt-3 w-full bg-gray-900 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm" data-addcart="${product.id}">
+      extraButton: (product) => `<button class="mt-3 w-full bg-gray-900 text-white font-medium py-2 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm" data-addcart="${product.id}">
         <div class="flex items-center justify-center gap-2">
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -396,16 +396,18 @@ export async function renderStore(container) {
   if (desktopSearch) {
     desktopSearch.addEventListener('input', async (e) => {
       const query = e.target.value.trim();
-      
-      if (query === '') {
-        currentProducts = products;
-      } else {
-        currentProducts = await aiProductSearch(products, query);
+
+      let searchResults = products;
+      if (query !== '') {
+        searchResults = await aiProductSearch(products, query);
       }
-      
+
+      // Apply current filters to search results
+      currentProducts = applyFiltersToProducts(searchResults);
+
       // Update product count
       document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
-      
+
       // Show/hide no results state
       if (currentProducts.length === 0) {
         document.getElementById('product-grid').classList.add('hidden');
@@ -413,7 +415,7 @@ export async function renderStore(container) {
       } else {
         document.getElementById('no-results').classList.add('hidden');
         document.getElementById('product-grid').classList.remove('hidden');
-        
+
         renderCurrentProducts();
       }
     });
@@ -424,16 +426,18 @@ export async function renderStore(container) {
   if (mobileSearch) {
     mobileSearch.addEventListener('input', async (e) => {
       const query = e.target.value.trim();
-      
-      if (query === '') {
-        currentProducts = products;
-      } else {
-        currentProducts = await aiProductSearch(products, query);
+
+      let searchResults = products;
+      if (query !== '') {
+        searchResults = await aiProductSearch(products, query);
       }
-      
+
+      // Apply current filters to search results
+      currentProducts = applyFiltersToProducts(searchResults);
+
       // Update product count
       document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
-      
+
       // Show/hide no results state
       if (currentProducts.length === 0) {
         document.getElementById('product-grid').classList.add('hidden');
@@ -441,31 +445,31 @@ export async function renderStore(container) {
       } else {
         document.getElementById('no-results').classList.add('hidden');
         document.getElementById('product-grid').classList.remove('hidden');
-        
+
         renderCurrentProducts();
       }
     });
   }
 
   // Delegar eventos para agregar al carrito
-  document.getElementById('product-grid').addEventListener('click', (e) => {
+  document.getElementById('product-grid').addEventListener('click', async (e) => {
     const btn = e.target.closest('button[data-addcart]');
     if (btn) {
       const id = btn.getAttribute('data-addcart');
       const prod = products.find(p => String(p.id) === String(id));
       if (prod) {
         addToCart(prod);
-        renderCartSidebar();
-        
+        await renderCartSidebar();
+
         // Update cart count for desktop and mobile
         document.getElementById('cart-count').textContent = getCartItemCount();
-        
+
         // Update mobile cart immediately
         renderMobileCart();
-        
+
         // Sonido y vibración al agregar al carrito
         cartFeedback.addToCartFeedback();
-        
+
         // Visual feedback
         btn.innerHTML = `
           <div class="flex items-center justify-center gap-2">
@@ -477,7 +481,7 @@ export async function renderStore(container) {
         `;
         btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
         btn.classList.add('bg-green-600');
-        
+
         // Animación del contador del carrito
         const cartCount = document.getElementById('cart-count');
         if (cartCount) {
@@ -486,18 +490,18 @@ export async function renderStore(container) {
             cartCount.classList.remove('cart-badge-pulse');
           }, 300);
         }
-        
+
         setTimeout(() => {
           btn.innerHTML = `
             <div class="flex items-center justify-center gap-2">
               <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-              Agregar al carrito
+              Agregar
             </div>
           `;
           btn.classList.remove('bg-green-600');
-          btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+          btn.classList.add('bg-gray-900', 'hover:bg-gray-800');
         }, 2000);
       }
     }
@@ -509,8 +513,8 @@ export async function renderStore(container) {
   };
 
   // Renderizar carrito al cargar
-  renderCartSidebar();
-  
+  await renderCartSidebar();
+
   // Initialize cart count from session
   document.getElementById('cart-count').textContent = getCartItemCount();
   
@@ -629,35 +633,189 @@ export async function renderStore(container) {
   }
   
   // Global functions for mobile cart actions
-  window.removeFromMobileCart = (id) => {
+  window.removeFromMobileCart = async (id) => {
     removeFromCart(id);
     renderMobileCart();
-    renderCartSidebar();
+    await renderCartSidebar();
     document.getElementById('cart-count').textContent = getCartItemCount();
     // Feedback al eliminar
     cartFeedback.removeFromCartFeedback();
   };
-  
-  window.increaseMobileQty = (id) => {
+
+  window.increaseMobileQty = async (id) => {
     const cart = getCart();
     const item = cart.find(item => String(item.id) === String(id));
     if (item) {
       updateProductQuantity(id, item.qty + 1);
       renderMobileCart();
-      renderCartSidebar();
+      await renderCartSidebar();
     }
   };
-  
-  window.decreaseMobileQty = (id) => {
+
+  window.decreaseMobileQty = async (id) => {
     const cart = getCart();
     const item = cart.find(item => String(item.id) === String(id));
     if (item && item.qty > 1) {
       updateProductQuantity(id, item.qty - 1);
       renderMobileCart();
-      renderCartSidebar();
+      await renderCartSidebar();
     }
   };
   
   // Initialize mobile cart on load
   renderMobileCart();
+
+  // Filter functionality
+  let currentFilters = {
+    categories: [],
+    priceRange: 'all',
+    shipping: []
+  };
+
+  function applyFiltersToProducts(productList) {
+    let filteredProducts = [...productList];
+
+    // Category filter
+    if (currentFilters.categories.length > 0 && !currentFilters.categories.includes('all')) {
+      filteredProducts = filteredProducts.filter(product => {
+        const productCategory = product.categoryId || product.category || '';
+        return currentFilters.categories.includes(productCategory.toLowerCase());
+      });
+    }
+
+    // Price filter
+    if (currentFilters.priceRange !== 'all') {
+      filteredProducts = filteredProducts.filter(product => {
+        const price = product.price || 0;
+        switch (currentFilters.priceRange) {
+          case '0-50': return price >= 0 && price <= 50;
+          case '50-100': return price > 50 && price <= 100;
+          case '100+': return price > 100;
+          default: return true;
+        }
+      });
+    }
+
+    // Shipping filter (simplified - assuming all products have free shipping for now)
+    if (currentFilters.shipping.length > 0) {
+      // This would need actual shipping data from products
+      // For now, just filter if 'free' is selected
+      if (currentFilters.shipping.includes('free')) {
+        // Assume all products have free shipping
+      }
+    }
+
+    return filteredProducts;
+  }
+
+  function applyFilters() {
+    currentProducts = applyFiltersToProducts(products);
+    document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
+
+    // Show/hide no results
+    if (currentProducts.length === 0) {
+      document.getElementById('product-grid').classList.add('hidden');
+      document.getElementById('no-results').classList.remove('hidden');
+    } else {
+      document.getElementById('no-results').classList.add('hidden');
+      document.getElementById('product-grid').classList.remove('hidden');
+      renderCurrentProducts();
+    }
+  }
+
+  // Category filter listeners
+  ['filter-all', 'filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('change', (e) => {
+        const value = e.target.value;
+        if (value === 'all') {
+          if (e.target.checked) {
+            currentFilters.categories = ['all'];
+            // Uncheck others
+            ['filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(otherId => {
+              document.getElementById(otherId).checked = false;
+            });
+          } else {
+            currentFilters.categories = [];
+          }
+        } else {
+          if (e.target.checked) {
+            currentFilters.categories = currentFilters.categories.filter(cat => cat !== 'all');
+            if (!currentFilters.categories.includes(value)) {
+              currentFilters.categories.push(value);
+            }
+          } else {
+            currentFilters.categories = currentFilters.categories.filter(cat => cat !== value);
+          }
+          // Check 'all' if no categories selected
+          if (currentFilters.categories.length === 0) {
+            document.getElementById('filter-all').checked = true;
+            currentFilters.categories = ['all'];
+          }
+        }
+        applyFilters();
+      });
+    }
+  });
+
+  // Price filter listeners
+  ['price-all', 'price-0-50', 'price-50-100', 'price-100+'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('change', (e) => {
+        currentFilters.priceRange = e.target.value;
+        applyFilters();
+      });
+    }
+  });
+
+  // Shipping filter listeners
+  ['shipping-free', 'shipping-express'].forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('change', (e) => {
+        const value = e.target.value;
+        if (e.target.checked) {
+          if (!currentFilters.shipping.includes(value)) {
+            currentFilters.shipping.push(value);
+          }
+        } else {
+          currentFilters.shipping = currentFilters.shipping.filter(s => s !== value);
+        }
+        applyFilters();
+      });
+    }
+  });
+
+  // Clear filters button
+  const clearFiltersBtn = document.getElementById('clear-filters');
+  if (clearFiltersBtn) {
+    clearFiltersBtn.addEventListener('click', () => {
+      // Reset all filters
+      currentFilters = {
+        categories: [],
+        priceRange: 'all',
+        shipping: []
+      };
+
+      // Reset UI
+      document.getElementById('filter-all').checked = true;
+      ['filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+
+      document.getElementById('price-all').checked = true;
+      ['price-0-50', 'price-50-100', 'price-100+'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+
+      ['shipping-free', 'shipping-express'].forEach(id => {
+        document.getElementById(id).checked = false;
+      });
+
+      // Apply filters (which will show all products)
+      applyFilters();
+    });
+  }
 }
