@@ -30,9 +30,8 @@ button, a, input, select, textarea {
   textarea,
   select {
     font-size: 16px !important;
-    -webkit-text-size-adjust: 100%;
   }
-  
+
   /* Prevenir zoom al hacer focus en inputs */
   input:focus,
   select:focus,
@@ -434,7 +433,6 @@ body.menu-open {
   /* Better text rendering on OLED screens */
   * {
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
@@ -472,7 +470,6 @@ body.menu-open {
     /* Fix for iOS Safari momentum scrolling */
     .scroll-container {
       -webkit-overflow-scrolling: touch;
-      overflow-scrolling: touch;
     }
 
     /* Better image rendering on iPhone */
@@ -549,8 +546,6 @@ body.menu-open {
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    -webkit-perspective: 1000;
-    perspective: 1000;
   }
 }
 
@@ -564,7 +559,6 @@ body.menu-open {
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Improved text legibility */

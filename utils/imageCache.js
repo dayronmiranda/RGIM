@@ -95,17 +95,27 @@ class ImageCache {
    */
   get(url) {
     if (!this.config.enabled) return null;
-    
+
     const item = this.cache.get(url);
     if (!item) return null;
-    
+
     // Verificar si no ha expirado
     if (Date.now() > item.expires) {
       this.cache.delete(url);
       return null;
     }
-    
-    return item.blob;
+
+    // Si es un blob URL, devolverlo directamente
+    if (item.blobUrl) {
+      return item.blobUrl;
+    }
+
+    // Si es un blob, crear URL
+    if (item.blob instanceof Blob) {
+      return URL.createObjectURL(item.blob);
+    }
+
+    return null;
   }
 
   /**
@@ -113,9 +123,17 @@ class ImageCache {
    */
   set(url, blob) {
     if (!this.config.enabled) return;
-    
+
+    // Limpiar URL anterior si existe
+    const existing = this.cache.get(url);
+    if (existing && existing.blobUrl) {
+      URL.revokeObjectURL(existing.blobUrl);
+    }
+
     const expires = Date.now() + this.config.maxAge;
-    this.cache.set(url, { blob, expires });
+    const blobUrl = blob instanceof Blob ? URL.createObjectURL(blob) : null;
+
+    this.cache.set(url, { blob, blobUrl, expires });
     this.saveToStorage();
   }
 
@@ -155,21 +173,30 @@ class ImageCache {
         img.src = url;
       });
     }
-    
+
     // Intentar obtener del cache
-    const cached = this.get(url);
-    if (cached) {
-      return new Promise((resolve) => {
+    const cachedUrl = this.get(url);
+    if (cachedUrl) {
+      return new Promise((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
-        img.src = URL.createObjectURL(cached);
+        img.onerror = () => {
+          // Si falla el cache, intentar cargar normalmente
+          this.cache.delete(url);
+          const freshImg = new Image();
+          freshImg.onload = () => resolve(freshImg);
+          freshImg.onerror = reject;
+          freshImg.src = url;
+        };
+        img.src = cachedUrl;
       });
     }
-    
+
     // Cargar y cachear
     try {
       const blob = await this.preload(url);
-      if (blob) {
+      if (blob && blob instanceof Blob) {
+        this.set(url, blob);
         return new Promise((resolve) => {
           const img = new Image();
           img.onload = () => resolve(img);
@@ -179,7 +206,7 @@ class ImageCache {
     } catch (error) {
       console.warn(`Error loading cached image ${url}:`, error);
     }
-    
+
     // Fallback: cargar sin cache
     return new Promise((resolve, reject) => {
       const img = new Image();
