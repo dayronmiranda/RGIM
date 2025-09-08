@@ -103,76 +103,121 @@ export async function renderStore(container) {
                  </div>
 
                  <!-- Filters Content -->
-                 <div class="p-6 space-y-6">
+                 <div class="p-4 space-y-8">
                    <!-- Categories Filter -->
-                   <div>
-                     <h4 class="text-sm font-medium text-gray-900 mb-3">Categorías</h4>
-                     <div class="space-y-2">
-                       <label class="flex items-center">
-                         <input type="checkbox" id="filter-all" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="all">
-                         <span class="ml-2 text-sm text-gray-700">Todos los productos</span>
+                   <div class="border-b border-gray-100 pb-6">
+                     <div class="flex items-center gap-2 mb-4">
+                       <svg class="h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 002.25 5.25v6.75A2.25 2.25 0 004.5 14.25h.75l.75 2.25 2.25-2.25h.75A2.25 2.25 0 0012 12V5.25A2.25 2.25 0 009.75 3H9.568z" />
+                       </svg>
+                       <h4 class="text-base font-semibold text-gray-900">Categorías</h4>
+                     </div>
+                     <div class="space-y-3">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="filter-all" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="all">
+                         <span class="ml-3 text-sm font-medium text-gray-700">Todos los productos</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="checkbox" id="filter-electronics" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="electronics">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="filter-electronics" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="electronics">
+                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 16.5V12" />
+                         </svg>
                          <span class="ml-2 text-sm text-gray-700">Electrónicos</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="checkbox" id="filter-home" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="home">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="filter-home" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="home">
+                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                         </svg>
                          <span class="ml-2 text-sm text-gray-700">Hogar</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="checkbox" id="filter-sports" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="sports">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="filter-sports" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="sports">
+                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                         </svg>
                          <span class="ml-2 text-sm text-gray-700">Deportes</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="checkbox" id="filter-beauty" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="beauty">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="filter-beauty" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="beauty">
+                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                         </svg>
                          <span class="ml-2 text-sm text-gray-700">Belleza</span>
                        </label>
                      </div>
                    </div>
 
                    <!-- Price Range Filter -->
-                   <div>
-                     <h4 class="text-sm font-medium text-gray-900 mb-3">Rango de Precio</h4>
-                     <div class="space-y-2">
-                       <label class="flex items-center">
-                         <input type="radio" name="price" id="price-all" class="text-gray-600 focus:ring-gray-500" value="all" checked>
-                         <span class="ml-2 text-sm text-gray-700">Todos los precios</span>
+                   <div class="border-b border-gray-100 pb-6">
+                     <div class="flex items-center gap-2 mb-4">
+                       <svg class="h-5 w-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-3h6m-6 3h6" />
+                       </svg>
+                       <h4 class="text-base font-semibold text-gray-900">Rango de Precio</h4>
+                     </div>
+                     <div class="space-y-3">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="radio" name="price" id="price-all" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="all" checked>
+                         <span class="ml-3 text-sm font-medium text-gray-700">Todos los precios</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="radio" name="price" id="price-0-50" class="text-gray-600 focus:ring-gray-500" value="0-50">
-                         <span class="ml-2 text-sm text-gray-700">$0 - $50</span>
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="radio" name="price" id="price-0-50" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="0-50">
+                         <span class="ml-3 text-sm text-gray-700">$0 - $50</span>
+                         <span class="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Económico</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="radio" name="price" id="price-50-100" class="text-gray-600 focus:ring-gray-500" value="50-100">
-                         <span class="ml-2 text-sm text-gray-700">$50 - $100</span>
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="radio" name="price" id="price-50-100" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="50-100">
+                         <span class="ml-3 text-sm text-gray-700">$50 - $100</span>
+                         <span class="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">Medio</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="radio" name="price" id="price-100+" class="text-gray-600 focus:ring-gray-500" value="100+">
-                         <span class="ml-2 text-sm text-gray-700">$100+</span>
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="radio" name="price" id="price-100+" class="text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="100+">
+                         <span class="ml-3 text-sm text-gray-700">$100+</span>
+                         <span class="ml-auto text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">Premium</span>
                        </label>
                      </div>
                    </div>
 
                    <!-- Shipping Options -->
-                   <div>
-                     <h4 class="text-sm font-medium text-gray-900 mb-3">Tipo de Envío</h4>
-                     <div class="space-y-2">
-                       <label class="flex items-center">
-                         <input type="checkbox" id="shipping-free" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="free">
-                         <span class="ml-2 text-sm text-gray-700">Envío gratuito</span>
+                   <div class="border-b border-gray-100 pb-6">
+                     <div class="flex items-center gap-2 mb-4">
+                       <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
+                       </svg>
+                       <h4 class="text-base font-semibold text-gray-900">Tipo de Envío</h4>
+                     </div>
+                     <div class="space-y-3">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="shipping-free" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="free">
+                         <svg class="ml-3 h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                         </svg>
+                         <span class="ml-2 text-sm font-medium text-gray-700">Envío gratuito</span>
+                         <span class="ml-auto text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">Gratis</span>
                        </label>
-                       <label class="flex items-center">
-                         <input type="checkbox" id="shipping-express" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="express">
+                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                         <input type="checkbox" id="shipping-express" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="express">
+                         <svg class="ml-3 h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                         </svg>
                          <span class="ml-2 text-sm text-gray-700">Envío express</span>
+                         <span class="ml-auto text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded-full">+10%</span>
                        </label>
                      </div>
                    </div>
 
                    <!-- Clear Filters Button -->
-                   <button id="clear-filters" class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                     Limpiar Filtros
-                   </button>
+                   <div class="pt-2">
+                     <button id="clear-filters" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl hover:from-indigo-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                       <div class="flex items-center justify-center gap-2">
+                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                         </svg>
+                         Limpiar Filtros
+                       </div>
+                     </button>
+                   </div>
                  </div>
                </div>
              </div>
@@ -354,12 +399,12 @@ export async function renderStore(container) {
       gridId: 'product-grid',
       getImagePath: (img) => `assets/images/products/${img}`,
       viewMode: currentViewMode,
-      extraButton: (product) => `<button class="mt-3 w-full bg-gray-900 text-white font-medium py-2 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm" data-addcart="${product.id}">
-        <div class="flex items-center justify-center gap-2">
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      extraButton: (product) => `<button class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-1.5 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105 text-sm" data-addcart="${product.id}">
+        <div class="flex items-center justify-center gap-1.5">
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          Agregar
+          <span class="text-xs font-semibold">Agregar</span>
         </div>
       </button>`
     });
@@ -472,15 +517,15 @@ export async function renderStore(container) {
 
         // Visual feedback
         btn.innerHTML = `
-          <div class="flex items-center justify-center gap-2">
-            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <div class="flex items-center justify-center gap-1.5">
+            <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
-            ¡Agregado!
+            <span class="text-xs font-semibold">¡Agregado!</span>
           </div>
         `;
         btn.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-        btn.classList.add('bg-green-600');
+        btn.classList.add('bg-green-600', 'hover:bg-green-700');
 
         // Animación del contador del carrito
         const cartCount = document.getElementById('cart-count');
@@ -493,15 +538,15 @@ export async function renderStore(container) {
 
         setTimeout(() => {
           btn.innerHTML = `
-            <div class="flex items-center justify-center gap-2">
-              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <div class="flex items-center justify-center gap-1.5">
+              <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
               </svg>
-              Agregar
+              <span class="text-xs font-semibold">Agregar</span>
             </div>
           `;
-          btn.classList.remove('bg-green-600');
-          btn.classList.add('bg-gray-900', 'hover:bg-gray-800');
+          btn.classList.remove('bg-green-600', 'hover:bg-green-700');
+          btn.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
         }, 2000);
       }
     }

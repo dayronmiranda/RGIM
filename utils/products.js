@@ -143,30 +143,38 @@ export function renderProducts({ products = [], category = '', gridId = 'product
                 <span class="text-xs text-gray-400">Envío gratis marítimo</span>
               </div>
             </div>
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 ml-3">
               ${buttonHtml}
             </div>
           </div>
         `;
       }
     } else {
-      // Vista de grid (original)
-      card.className = 'group relative product-card bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow';
+      // Vista de grid mejorada con mejor proporción
+      card.className = 'group relative product-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300';
       card.innerHTML = `
-        <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
+        <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
           ${imagePath ? createLazyImage({
             src: imagePath,
             alt: p.name,
             className: 'absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300'
           }) : ''}
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
-        <div class="p-4">
-          <h3 class="text-sm font-medium text-gray-900 truncate">${p.name}</h3>
-          <p class="mt-1 text-xs text-gray-500 truncate">${p.short || ''}</p>
-          <div class="mt-3 flex items-center justify-between">
-            <p class="text-sm font-semibold text-gray-900">$${p.price.toFixed(2)}</p>
+        <div class="p-5">
+          <div class="space-y-2">
+            <h3 class="text-base font-semibold text-gray-900 line-clamp-2 leading-tight group-hover:text-indigo-600 transition-colors">${p.name}</h3>
+            <p class="text-sm text-gray-600 line-clamp-2">${p.short || ''}</p>
           </div>
-          ${buttonHtml}
+          <div class="mt-4 flex items-center justify-between">
+            <div class="flex flex-col">
+              <span class="text-lg font-bold text-indigo-600">$${p.price.toFixed(2)}</span>
+              <span class="text-xs text-green-600 font-medium">Envío gratis</span>
+            </div>
+            <div class="flex-shrink-0">
+              ${buttonHtml}
+            </div>
+          </div>
         </div>
       `;
     }
