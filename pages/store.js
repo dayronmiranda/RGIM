@@ -10,24 +10,6 @@ import { cartFeedback } from '../utils/feedback.js';
 
 export async function renderStore(container) {
   container.innerHTML = `
-    <!-- Hero Section -->
-    <div class="bg-white">
-      <div class="relative isolate px-6 pt-14 lg:px-8">
-        <div class="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80" aria-hidden="true">
-          <div class="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"></div>
-        </div>
-        <div class="mx-auto max-w-4xl py-16 sm:py-24 lg:py-32">
-          <div class="text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Nuestra Tienda
-            </h1>
-            <p class="mt-6 text-lg leading-8 text-gray-600">
-              Explora nuestro catálogo completo de productos internacionales. Encuentra exactamente lo que buscas con nuestra búsqueda inteligente.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Main Store Section -->
     <div class="bg-gray-50 min-h-screen">
@@ -58,12 +40,12 @@ export async function renderStore(container) {
               </div>
               
               <div class="border-t pt-4">
-                <button id="mobile-checkout-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:from-green-600 hover:to-green-700 transition-all duration-200">
+                <button id="mobile-checkout-btn" class="w-full bg-gray-900 text-white font-medium py-3 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm">
                   <div class="flex items-center justify-center gap-2">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                     </svg>
-                    Finalizar compra
+                    Continuar
                   </div>
                 </button>
               </div>
@@ -109,10 +91,95 @@ export async function renderStore(container) {
         </div>
 
         <!-- Products and Cart Layout -->
-        <div class="lg:grid lg:grid-cols-3 lg:gap-x-8 mt-6">
-          
-          <!-- Products Grid -->
-          <div class="lg:col-span-2">
+        <div class="lg:grid lg:grid-cols-10 lg:gap-x-6 mt-6">
+
+           <!-- Filters Sidebar - Desktop -->
+           <aside class="hidden lg:block lg:col-span-2">
+             <div class="sticky top-24">
+               <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+                 <!-- Filters Header -->
+                 <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                   <h3 class="text-lg font-semibold text-gray-900">Filtros</h3>
+                 </div>
+
+                 <!-- Filters Content -->
+                 <div class="p-6 space-y-6">
+                   <!-- Categories Filter -->
+                   <div>
+                     <h4 class="text-sm font-medium text-gray-900 mb-3">Categorías</h4>
+                     <div class="space-y-2">
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="all">
+                         <span class="ml-2 text-sm text-gray-700">Todos los productos</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="electronics">
+                         <span class="ml-2 text-sm text-gray-700">Electrónicos</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="home">
+                         <span class="ml-2 text-sm text-gray-700">Hogar</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="sports">
+                         <span class="ml-2 text-sm text-gray-700">Deportes</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="beauty">
+                         <span class="ml-2 text-sm text-gray-700">Belleza</span>
+                       </label>
+                     </div>
+                   </div>
+
+                   <!-- Price Range Filter -->
+                   <div>
+                     <h4 class="text-sm font-medium text-gray-900 mb-3">Rango de Precio</h4>
+                     <div class="space-y-2">
+                       <label class="flex items-center">
+                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="all" checked>
+                         <span class="ml-2 text-sm text-gray-700">Todos los precios</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="0-50">
+                         <span class="ml-2 text-sm text-gray-700">$0 - $50</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="50-100">
+                         <span class="ml-2 text-sm text-gray-700">$50 - $100</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="radio" name="price" class="text-gray-600 focus:ring-gray-500" value="100+">
+                         <span class="ml-2 text-sm text-gray-700">$100+</span>
+                       </label>
+                     </div>
+                   </div>
+
+                   <!-- Shipping Options -->
+                   <div>
+                     <h4 class="text-sm font-medium text-gray-900 mb-3">Tipo de Envío</h4>
+                     <div class="space-y-2">
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="free">
+                         <span class="ml-2 text-sm text-gray-700">Envío gratuito</span>
+                       </label>
+                       <label class="flex items-center">
+                         <input type="checkbox" class="rounded border-gray-300 text-gray-600 focus:ring-gray-500" value="express">
+                         <span class="ml-2 text-sm text-gray-700">Envío express</span>
+                       </label>
+                     </div>
+                   </div>
+
+                   <!-- Clear Filters Button -->
+                   <button class="w-full bg-gray-100 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                     Limpiar Filtros
+                   </button>
+                 </div>
+               </div>
+             </div>
+           </aside>
+
+           <!-- Products Grid -->
+           <div class="lg:col-span-5">
             <div class="mb-6">
               <div class="flex items-center justify-between">
                 <div>
@@ -173,18 +240,18 @@ export async function renderStore(container) {
           </div>
 
           <!-- Shopping Cart Sidebar - Hidden on mobile, visible on desktop -->
-          <aside class="hidden lg:block lg:col-span-1">
+          <aside class="hidden lg:block lg:col-span-3">
             <div class="sticky top-24">
               <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                 <!-- Cart Header -->
-                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 px-6 py-4">
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
                   <div class="flex items-center justify-between">
-                    <h3 class="text-lg font-semibold text-white">Carrito de Compras</h3>
+                    <h3 class="text-lg font-semibold text-gray-900">Carrito</h3>
                     <div class="flex items-center gap-2">
-                      <svg class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <svg class="h-5 w-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
                       </svg>
-                      <span id="cart-count" class="bg-white text-indigo-600 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                      <span id="cart-count" class="bg-gray-900 text-white text-xs font-medium rounded-full h-5 w-5 flex items-center justify-center">0</span>
                     </div>
                   </div>
                 </div>
@@ -222,12 +289,12 @@ export async function renderStore(container) {
                     </div>
 
                     <!-- Checkout Button -->
-                    <button id="checkout-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 px-4 rounded-lg shadow-md hover:from-green-600 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <button id="checkout-btn" class="w-full bg-gray-900 text-white font-medium py-3 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
                       <div class="flex items-center justify-center gap-2">
                         <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                         </svg>
-                        Enviar solicitud de compra
+                        Continuar
                       </div>
                     </button>
                   </div>
@@ -287,12 +354,12 @@ export async function renderStore(container) {
       gridId: 'product-grid',
       getImagePath: (img) => `assets/images/products/${img}`,
       viewMode: currentViewMode,
-      extraButton: (product) => `<button class="mt-3 w-full bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors duration-200" data-addcart="${product.id}">
+      extraButton: (product) => `<button class="mt-3 w-full bg-gray-900 text-white font-medium py-2.5 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm" data-addcart="${product.id}">
         <div class="flex items-center justify-center gap-2">
           <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          Agregar al carrito
+          Agregar
         </div>
       </button>`
     });
