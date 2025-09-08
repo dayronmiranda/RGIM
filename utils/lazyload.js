@@ -1,5 +1,8 @@
 // utils/lazyload.js
-// Sistema de lazy loading para imágenes con Intersection Observer
+// Sistema de lazy loading para imágenes con Intersection Observer y cache
+
+import { imageCache } from './imageCache.js';
+import { getConfig } from '../config/app.js';
 
 /**
  * Clase para manejar lazy loading de imágenes
@@ -37,24 +40,24 @@ class LazyImageLoader {
   }
 
   /**
-   * Carga una imagen lazy
+   * Carga una imagen lazy con cache
    * @param {HTMLElement} img - Elemento de imagen a cargar
    */
-  loadImage(img) {
+  async loadImage(img) {
     const src = img.dataset.src;
     const srcset = img.dataset.srcset;
     
     if (!src) return;
 
-    // Crear una nueva imagen para precargar
-    const tempImg = new Image();
-    
-    tempImg.onload = () => {
+    try {
+      // Usar el sistema de cache para cargar la imagen
+      const loadedImg = await imageCache.loadImage(src);
+      
       // Añadir clase de fade-in
       img.classList.add('lazy-loaded');
       
       // Establecer la fuente real
-      if (src) img.src = src;
+      if (src) img.src = loadedImg.src;
       if (srcset) img.srcset = srcset;
       
       // Remover el placeholder blur si existe
@@ -63,16 +66,20 @@ class LazyImageLoader {
       // Limpiar data attributes
       delete img.dataset.src;
       delete img.dataset.srcset;
-    };
-
-    tempImg.onerror = () => {
-      // Si hay error, cargar imagen de placeholder
-      img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23f3f4f6"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-family="system-ui" font-size="20" fill="%239ca3af"%3EImagen no disponible%3C/text%3E%3C/svg%3E';
+      
+    } catch (error) {
+      console.warn('Error loading image:', error);
+      
+      // Si hay error, cargar imagen por defecto desde config
+      const defaultImage = getConfig('images.defaultImage');
+      img.src = defaultImage;
       img.classList.add('lazy-error');
-    };
-
-    // Iniciar la carga
-    tempImg.src = src;
+      img.classList.remove('lazy-blur');
+      
+      // Limpiar data attributes
+      delete img.dataset.src;
+      delete img.dataset.srcset;
+    }
   }
 
   /**
@@ -132,9 +139,9 @@ export function createLazyImage(options) {
     placeholder = true
   } = options;
 
-  // Crear un placeholder de baja calidad
+  // Usar placeholder desde config o uno básico
   const placeholderSrc = placeholder 
-    ? 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23e5e7eb"/%3E%3C/svg%3E'
+    ? getConfig('images.defaultImage') || 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"%3E%3Crect width="400" height="400" fill="%23e5e7eb"/%3E%3C/svg%3E'
     : '';
 
   return `

@@ -1,8 +1,6 @@
 // router.js
 import { renderHome } from '../pages/home.js';
 import { renderStore } from '../pages/store.js';
-import { renderAbout } from '../pages/about.js';
-import { renderFAQ } from '../pages/faq.js';
 import { renderAdmin } from '../pages/admin.js';
 
 const routes = {
@@ -11,10 +9,10 @@ const routes = {
   '#/home': renderHome,
   '#store': renderStore,
   '#/store': renderStore,
-  '#about': renderAbout,
-  '#/about': renderAbout,
-  '#faq': renderFAQ,
-  '#/faq': renderFAQ,
+  '#about': renderHome, // Redirect to home since content is integrated
+  '#/about': renderHome,
+  '#faq': renderHome, // Redirect to home since content is integrated
+  '#/faq': renderHome,
   '#admin': renderAdmin,
   '#/admin': renderAdmin
 };

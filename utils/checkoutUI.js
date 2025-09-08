@@ -2,6 +2,7 @@
 // Renderizado y lógica de checkout minimalista
 import { getCart, getCartTotal, clearCart } from './cart.js';
 import { cartFeedback } from './feedback.js';
+import { getConfig } from '../config/app.js';
 
 export function renderCheckout(containerId = 'checkout-modal') {
   const cart = getCart();
@@ -114,27 +115,66 @@ export function renderCheckout(containerId = 'checkout-modal') {
     message += `Mi WhatsApp: ${whatsapp}\n\n`;
     message += `¡Gracias!`;
     
-    // Número de WhatsApp de RGIM (puedes cambiarlo por el número real)
-    const rgimWhatsApp = '13058462224'; // Cambiar por el número real
+    // Obtener configuración de checkout
+    const checkoutConfig = getConfig('checkout');
+    const whatsappNumber = checkoutConfig.whatsappNumber;
+    const shouldRedirect = checkoutConfig.redirectToWhatsApp;
     
     // Crear URL de WhatsApp
-    const whatsappUrl = `https://wa.me/${rgimWhatsApp}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     
-    // Feedback de éxito antes de abrir WhatsApp
+    // Guardar orden en localStorage para admin
+    const order = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      name: name,
+      email: '',
+      whatsapp: whatsapp,
+      country: '',
+      address: '',
+      shipping: 'maritime',
+      items: cart,
+      subtotal: total,
+      shippingCost: 0,
+      total: total,
+      status: 'pending'
+    };
+    
+    // Guardar en localStorage
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    
+    // Feedback de éxito
     cartFeedback.successFeedback();
     
-    // Abrir WhatsApp después de un pequeño delay para que se escuche el sonido
-    setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
-      
+    if (shouldRedirect) {
+      // Modo con redirección a WhatsApp
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        
+        // Limpiar carrito y cerrar modal
+        clearCart();
+        container.innerHTML = '';
+        
+        // Recargar página para actualizar el carrito
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }, 300);
+    } else {
+      // Modo solo admin (sin redirección)
       // Limpiar carrito y cerrar modal
       clearCart();
       container.innerHTML = '';
+      
+      // Mostrar mensaje de confirmación
+      alert(`¡Solicitud registrada correctamente!\nNúmero de solicitud: #${order.id}\nNuestro equipo se pondrá en contacto contigo pronto.`);
       
       // Recargar página para actualizar el carrito
       setTimeout(() => {
         window.location.reload();
       }, 500);
-    }, 300);
+    }
   };
 }

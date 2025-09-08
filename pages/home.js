@@ -373,6 +373,203 @@ export async function renderHome(container) {
         </div>
       </div>
     </div>
+
+    <!-- About Us Section -->
+    <div class="bg-gray-50 py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:text-center">
+          <h2 class="text-base font-semibold leading-7 text-indigo-600">Nuestra Historia</h2>
+          <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Una empresa con visión global
+          </p>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            RGIM opera con sedes estratégicas en Estados Unidos y Panamá, especializándose en el envío de productos desde Panamá hacia toda Latinoamérica y el Caribe, ofreciendo soluciones logísticas integrales.
+          </p>
+        </div>
+        
+        <!-- Mission & Values -->
+        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+          <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                  </svg>
+                </div>
+                Compromiso
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Dedicación total a la satisfacción del cliente y la excelencia en cada envío.</p>
+              </dd>
+            </div>
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                  </svg>
+                </div>
+                Innovación
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Adopción de tecnologías y procesos que mejoren continuamente nuestro servicio.</p>
+              </dd>
+            </div>
+            <div class="flex flex-col">
+              <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
+                <div class="h-10 w-10 flex items-center justify-center rounded-lg bg-indigo-600">
+                  <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3s-4.5 4.03-4.5 9 2.015 9 4.5 9z" />
+                  </svg>
+                </div>
+                Alcance Global
+              </dt>
+              <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
+                <p class="flex-auto">Conexión efectiva entre mercados internacionales y clientes regionales.</p>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-4xl">
+          <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Preguntas Frecuentes
+            </h2>
+            <p class="mt-6 text-lg leading-8 text-gray-600">
+              Encuentra respuestas claras sobre compras, pagos y envíos. Si necesitas apoyo adicional, nuestro equipo está disponible para ayudarte.
+            </p>
+          </div>
+          
+          <!-- FAQ Items with Accordion Style -->
+          <dl class="mt-16 space-y-6 divide-y divide-gray-900/10">
+            <div class="pt-6">
+              <dt>
+                <button class="faq-button flex w-full items-start justify-between text-left text-gray-900" data-target="faq-1">
+                  <span class="text-base font-semibold leading-7">¿Cómo funciona el proceso de compra?</span>
+                  <span class="ml-6 flex h-7 items-center">
+                    <svg class="faq-icon h-6 w-6 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </span>
+                </button>
+              </dt>
+              <dd class="faq-content mt-2 pr-12 hidden" id="faq-1">
+                <div class="text-base leading-7 text-gray-600 bg-gray-50 rounded-lg p-4 mt-4">
+                  <p class="mb-3">Nuestro proceso es simple y seguro:</p>
+                  <ol class="list-decimal list-inside space-y-2 ml-4">
+                    <li>Selecciona los productos deseados en nuestra tienda</li>
+                    <li>Agrégalos al carrito de compras</li>
+                    <li>Completa tus datos de contacto y envío</li>
+                    <li>Envía la solicitud de compra</li>
+                  </ol>
+                  <p class="mt-3">Recibiremos tu pedido inmediatamente y nos pondremos en contacto contigo para coordinar los detalles finales.</p>
+                </div>
+              </dd>
+            </div>
+
+            <div class="pt-6">
+              <dt>
+                <button class="faq-button flex w-full items-start justify-between text-left text-gray-900" data-target="faq-2">
+                  <span class="text-base font-semibold leading-7">¿Qué métodos de pago están disponibles?</span>
+                  <span class="ml-6 flex h-7 items-center">
+                    <svg class="faq-icon h-6 w-6 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </span>
+                </button>
+              </dt>
+              <dd class="faq-content mt-2 pr-12 hidden" id="faq-2">
+                <div class="text-base leading-7 text-gray-600 bg-gray-50 rounded-lg p-4 mt-4">
+                  <p class="mb-4">Aceptamos los siguientes métodos de pago seguros:</p>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3 p-3 bg-white rounded-lg border">
+                      <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p class="font-medium text-gray-900">Zelle</p>
+                        <p class="text-sm text-gray-600">Transferencia instantánea</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-white rounded-lg border">
+                      <div class="flex-shrink-0">
+                        <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p class="font-medium text-gray-900">Transferencia Bancaria</p>
+                        <p class="text-sm text-gray-600">Proceso seguro y confiable</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+            </div>
+
+            <div class="pt-6">
+              <dt>
+                <button class="faq-button flex w-full items-start justify-between text-left text-gray-900" data-target="faq-3">
+                  <span class="text-base font-semibold leading-7">¿Cómo se calculan los costos de envío?</span>
+                  <span class="ml-6 flex h-7 items-center">
+                    <svg class="faq-icon h-6 w-6 transform transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                  </span>
+                </button>
+              </dt>
+              <dd class="faq-content mt-2 pr-12 hidden" id="faq-3">
+                <div class="text-base leading-7 text-gray-600 bg-gray-50 rounded-lg p-4 mt-4">
+                  <p class="mb-4">Ofrecemos dos modalidades de envío flexibles:</p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white rounded-lg border-2 border-green-200 p-4">
+                      <div class="flex items-center gap-2 mb-2">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
+                        </svg>
+                        <h4 class="font-semibold text-green-800">Envío Marítimo</h4>
+                      </div>
+                      <p class="text-sm text-green-700 mb-2"><strong>Sin costo adicional</strong></p>
+                      <p class="text-sm text-gray-600">Solo pagas el precio de los productos. Tiempo de entrega: 15-30 días.</p>
+                    </div>
+                    <div class="bg-white rounded-lg border-2 border-blue-200 p-4">
+                      <div class="flex items-center gap-2 mb-2">
+                        <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        </svg>
+                        <h4 class="font-semibold text-blue-800">Envío Aéreo</h4>
+                      </div>
+                      <p class="text-sm text-blue-700 mb-2"><strong>+10% del valor total</strong></p>
+                      <p class="text-sm text-gray-600">Entrega rápida: 3-7 días hábiles.</p>
+                    </div>
+                  </div>
+                </div>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Store Button -->
+    <div id="floating-store-btn" class="fixed bottom-6 right-6 z-40">
+      <a href="#/store" class="group flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+        </svg>
+        <span class="font-semibold">Ver Tienda</span>
+        <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+      </a>
+    </div>
   `;
 
   // Cargar y mostrar destacados
@@ -399,4 +596,35 @@ export async function renderHome(container) {
   setTimeout(() => {
     lazyLoader.observeAll();
   }, 100);
+  
+  // Add accordion functionality for FAQ
+  const faqButtons = document.querySelectorAll('.faq-button');
+  faqButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.getAttribute('data-target');
+      const content = document.getElementById(targetId);
+      const icon = button.querySelector('.faq-icon');
+      
+      // Close all other FAQ items
+      faqButtons.forEach(otherButton => {
+        if (otherButton !== button) {
+          const otherTargetId = otherButton.getAttribute('data-target');
+          const otherContent = document.getElementById(otherTargetId);
+          const otherIcon = otherButton.querySelector('.faq-icon');
+          
+          otherContent.classList.add('hidden');
+          otherIcon.style.transform = 'rotate(0deg)';
+        }
+      });
+      
+      // Toggle current FAQ item
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(45deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    });
+  });
 }
