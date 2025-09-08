@@ -3,7 +3,8 @@
 
 // Configuración de Gemini AI
 const GEMINI_CONFIG = {
-  apiKey: process.env.GEMINI_API_KEY || '', // Configurar en variables de entorno
+  apiKey: (typeof window !== 'undefined' && window.GEMINI_API_KEY) ||
+          (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) || '', // Configurar en variables de entorno o global
   apiUrl: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
   maxRetries: 3,
   timeout: 10000

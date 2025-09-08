@@ -1,191 +1,240 @@
-# RGIM Store Hybrid
+# RGIM Store - Tienda Online
 
-A modern e-commerce platform for RGIM USA & Panama, specializing in international product shipping to Latin America and the Caribbean.
+Una tienda online moderna y responsiva para RGIM (USA & Panamá) especializada en compras internacionales y envíos a Latinoamérica.
 
-## 🌟 Features
+## 🚀 Características Principales
 
-- **Modern UI/UX** - Built with Tailwind CSS UI blocks for professional appearance
-- **AI-Powered Search** - Intelligent product search functionality
-- **Multi-language Support** - Spanish interface optimized for Latin American customers
-- **Dual Shipping Options** - Maritime (free) and Air (+10%) shipping methods
-- **Admin Dashboard** - Comprehensive order management system
-- **WhatsApp Integration** - Direct customer communication
-- **Responsive Design** - Works perfectly on all devices
+### 🛒 Funcionalidades de Tienda
+- **Catálogo de productos** con imágenes optimizadas
+- **Búsqueda inteligente** con IA (Gemini)
+- **Carrito de compras** persistente
+- **Sistema de pedidos** por WhatsApp
+- **Validación automática** de imágenes de productos
+- **Diseño responsive** optimizado para móviles
 
-## 🚀 Quick Start
+### 📊 Analytics y Administración
+- **Sistema de analytics** para visitantes
+- **Dashboard administrativo** completo
+- **Estadísticas de visitantes** por país y dispositivo
+- **Gestión de pedidos** y exportación CSV
+- **Panel de control** con métricas en tiempo real
 
-### Prerequisites
-- Node.js 14+ installed
-- npm or yarn package manager
+### 🤖 Inteligencia Artificial
+- **Búsqueda con Gemini AI** para resultados más precisos
+- **Comprensión contextual** de consultas de usuarios
+- **Sistema de fallback** cuando la IA no está disponible
+- **Optimización automática** de resultados
 
-### Installation
+## 🛠️ Instalación y Configuración
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/rgim/store-hybrid.git
-   cd store-hybrid
+### 1. Clonar el repositorio
+```bash
+git clone <repository-url>
+cd StoreHybrid
+```
+
+### 2. Instalar dependencias
+```bash
+npm install
+```
+
+### 3. Configurar variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+# API Key de Gemini AI (opcional, mejora la búsqueda)
+GEMINI_API_KEY=tu_api_key_de_gemini_aqui
+
+# Configuración del servidor
+PORT=3000
+NODE_ENV=development
+```
+
+### 4. Obtener API Key de Gemini (Opcional pero recomendado)
+
+1. Ve a [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Crea una nueva API key
+3. Copia la key al archivo `.env`
+4. Reinicia el servidor
+
+**Nota:** Si no configuras la API key, el sistema usará búsqueda tradicional como fallback.
+
+### 5. Iniciar el servidor
+```bash
+# Modo desarrollo
+npm run dev
+
+# Modo producción
+npm start
+```
+
+### 6. Acceder a la aplicación
+- **Tienda:** `http://localhost:3000`
+- **Admin:** `http://localhost:3000/#/admin` (usuario: admin, contraseña: admin123)
+
+## 📋 Configuración de Gemini AI
+
+### ¿Por qué usar Gemini?
+- **Búsqueda más inteligente:** Comprende el contexto y sinónimos
+- **Resultados más relevantes:** Considera intención del usuario
+- **Mejor experiencia:** Respuestas más precisas y útiles
+
+### Cómo configurar:
+
+1. **Crear cuenta en Google AI:**
+   - Ve a https://makersuite.google.com/app/apikey
+   - Inicia sesión con tu cuenta Google
+
+2. **Generar API Key:**
+   - Haz clic en "Create API Key"
+   - Copia la key generada
+
+3. **Configurar en el proyecto:**
+   ```env
+   GEMINI_API_KEY=AIzaSyD...tu_api_key_completa
    ```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+4. **Verificar funcionamiento:**
+   - El sistema detectará automáticamente si Gemini está disponible
+   - Si hay problemas, usará búsqueda tradicional
+   - Revisa la consola del navegador para logs de debug
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configuration
-   ```
+### Configuración alternativa (sin .env):
 
-4. **Start the server**
-   ```bash
-   # Development mode with auto-reload
-   npm run dev
-   
-   # Production mode
-   npm start
-   ```
+Si no puedes usar variables de entorno, configura la API key directamente en el navegador:
 
-5. **Access the application**
-   - Local: http://localhost:3000
-   - Production: http://www.rgimusa.com
+#### Opción 1: Configuración manual
+1. Abre la consola del navegador (F12 → Console)
+2. Ejecuta este comando:
+```javascript
+window.GEMINI_API_KEY = 'tu_api_key_de_gemini_aqui';
+```
+3. La aplicación detectará automáticamente la API key y activará la búsqueda con IA.
+4. **Nota:** Esta configuración es temporal y se perderá al recargar la página.
 
-## 📁 Project Structure
+#### Opción 2: Script de configuración rápida
+1. Copia y pega el contenido del archivo `setup-gemini.js` en la consola
+2. El script te guiará paso a paso para configurar la API key
+3. Incluye verificación automática y mensajes de ayuda
+
+## 📊 Sistema de Analytics
+
+### ¿Qué datos se recopilan?
+- **Visitas por página** y tiempo de navegación
+- **Información geográfica** (país, ciudad)
+- **Dispositivos utilizados** (mobile, desktop, tablet)
+- **Navegadores y sistemas operativos**
+- **Comportamiento de usuarios**
+
+### Privacidad y cumplimiento:
+- ✅ **Anonimizado:** No se recopilan datos personales
+- ✅ **Local storage:** Datos se almacenan localmente
+- ✅ **Configurable:** Se puede desactivar fácilmente
+- ✅ **Transparente:** El usuario sabe qué datos se recopilan
+
+### Ver estadísticas:
+1. Accede al panel de administración
+2. Las estadísticas aparecen automáticamente en el dashboard
+3. Incluye métricas de visitantes, países y dispositivos
+
+## 🎨 Características de UI/UX
+
+### Diseño Responsive
+- **Mobile-first approach** con optimizaciones específicas
+- **iPhone 11-16 support** con safe areas y mejoras visuales
+- **Layout adaptativo** que funciona en todos los dispositivos
+
+### Experiencia de Usuario
+- **Navegación intuitiva** sin menús complejos en mobile
+- **Carrito inmersivo** que ocupa toda la pantalla
+- **Búsqueda inteligente** con resultados contextuales
+- **Feedback visual** en todas las interacciones
+
+## 📁 Estructura del Proyecto
 
 ```
 StoreHybrid/
-├── assets/           # Static assets (images, data)
-├── pages/           # Page components
-│   ├── home.js      # Homepage with hero and features
-│   ├── store.js     # Product catalog with AI search
-│   ├── about.js     # Company information
-│   ├── faq.js       # Frequently asked questions
-│   └── admin.js     # Admin dashboard
-├── utils/           # Utility functions
-├── server.js        # Express server
-├── index.html       # Main HTML file
-├── index.js         # Client-side router
-└── package.json     # Dependencies and scripts
+├── assets/
+│   ├── images/
+│   │   └── products/          # Imágenes de productos
+│   └── styles/
+│       ├── mobile-improvements.css  # Optimizaciones mobile
+│       └── style.css               # Estilos principales
+├── config/
+│   └── app.js                      # Configuración general
+├── pages/
+│   ├── home.js                     # Página principal
+│   ├── store.js                    # Página de tienda
+│   ├── admin.js                    # Panel de administración
+│   └── ...
+├── utils/
+│   ├── analytics.js                # Sistema de analytics
+│   ├── aiSearch.js                 # Búsqueda con IA
+│   ├── cart.js                     # Gestión del carrito
+│   ├── imageValidator.js           # Validación de imágenes
+│   ├── lazyload.js                 # Carga diferida
+│   └── products.js                 # Renderizado de productos
+├── index.html                      # HTML principal
+├── index.js                        # JavaScript principal
+├── server.js                       # Servidor backend
+└── package.json                    # Dependencias
 ```
 
-## 🛍️ Pages Overview
+## 🔧 Tecnologías Utilizadas
 
-### **Home Page**
-- Modern hero section with gradient backgrounds
-- Company features and benefits
-- Statistics showcase
-- Call-to-action buttons
+- **Frontend:** Vanilla JavaScript, Tailwind CSS
+- **Backend:** Node.js con Express
+- **IA:** Google Gemini AI (opcional)
+- **Analytics:** Sistema personalizado
+- **Storage:** LocalStorage + JSON files
+- **Responsive:** Mobile-first design
 
-### **Store Page**
-- AI-powered product search
-- Professional product grid
-- Shopping cart sidebar with trust elements
-- Real-time inventory management
+## 🚀 Despliegue
 
-### **About Page**
-- Company timeline with visual milestones
-- Office locations (USA & Panama)
-- Mission and values presentation
-- Professional statistics display
-
-### **FAQ Page**
-- Interactive accordion interface
-- Rich content formatting
-- Visual icons and illustrations
-- Comprehensive shipping and payment info
-
-### **Admin Dashboard**
-- Secure login system
-- Order management interface
-- Sales statistics and analytics
-- CSV export functionality
-
-## 🔧 API Endpoints
-
-- `POST /api/orders` - Submit new customer orders
-- `GET /api/orders` - Retrieve orders (admin only)
-- `GET /api/health` - Server health check
-
-## 🌐 Deployment
-
-### Production Deployment
-
-1. **Set environment variables**
-   ```bash
-   export PORT=3000
-   export NODE_ENV=production
-   export DOMAIN=http://www.rgimusa.com
-   ```
-
-2. **Start the server**
-   ```bash
-   npm start
-   ```
-
-### Docker Deployment (Optional)
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 3000
-CMD ["npm", "start"]
+### Variables de entorno para producción:
+```env
+NODE_ENV=production
+GEMINI_API_KEY=tu_api_key_produccion
+PORT=3000
 ```
 
-## 🛡️ Security Features
+### Comandos de despliegue:
+```bash
+# Build para producción
+npm run build
 
-- CORS enabled for cross-origin requests
-- Input validation and sanitization
-- Secure admin authentication
-- Environment variable configuration
-- Graceful error handling
+# Iniciar en modo producción
+npm start
+```
 
-## 📱 Mobile Optimization
+## 📞 Soporte
 
-- Fully responsive design
-- Touch-friendly interfaces
-- Optimized loading times
-- Mobile-first approach
+Para soporte técnico o preguntas:
+- **Email:** info@rgimusa.com
+- **WhatsApp:** +1 305 846 2224
+- **Ubicación:** Miami, FL & Ciudad de Panamá
 
-## 🌍 International Features
+## 📝 Notas de Desarrollo
 
-- Spanish language interface
-- Latin American currency formatting
-- Regional shipping calculations
-- WhatsApp integration for customer support
+### Sistema de Analytics:
+- Los datos se almacenan localmente en el navegador
+- No requiere backend adicional
+- Se puede exportar e importar fácilmente
+- Configurable para diferentes niveles de detalle
 
-## 🔄 Development
+### Búsqueda con IA:
+- Funciona sin API key (fallback automático)
+- Mejora significativamente la experiencia de búsqueda
+- Context-aware y entiende sinónimos
+- Fácil de integrar con otros proveedores de IA
 
-### Available Scripts
+### Optimizaciones Mobile:
+- Safe areas para iPhone con notch
+- Prevención de zoom automático
+- Touch targets optimizados
+- Performance mejorada en dispositivos móviles
 
-- `npm start` - Start production server
-- `npm run dev` - Start development server with auto-reload
-- `npm test` - Run tests (to be implemented)
+---
 
-### Adding New Features
-
-1. Create new page components in `/pages`
-2. Add utility functions in `/utils`
-3. Update routing in `index.js`
-4. Add API endpoints in `server.js`
-
-## 📞 Support
-
-For technical support or business inquiries:
-
-- **Website**: http://www.rgimusa.com
-- **WhatsApp**: Contact through the website
-- **Email**: Available through contact form
-
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🏢 Company Information
-
-**RGIM USA & Panama** - Connecting international products with Latin American customers through reliable logistics and exceptional service.
-
-- **USA Office**: RG IM USA MULTISERVICES LLC, Miami, FL
-- **Panama Office**: RG IM PANAMA MULTISERVICES SA, Panama City, Panama
+**RGIM Store** - Conectando mercados globales con Latinoamérica 🇺🇸🇵🇦

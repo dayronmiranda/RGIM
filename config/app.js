@@ -93,7 +93,8 @@ export const APP_CONFIG = {
     // Configuración de Gemini AI
     gemini: {
       enabled: true,
-      apiKey: process.env.GEMINI_API_KEY || '', // Configurar en variables de entorno
+      apiKey: (typeof window !== 'undefined' && window.GEMINI_API_KEY) ||
+               (typeof process !== 'undefined' && process.env && process.env.GEMINI_API_KEY) || '', // Configurar en variables de entorno o global
       model: 'gemini-pro',
       maxTokens: 1000,
       temperature: 0.7
