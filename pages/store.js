@@ -8,7 +8,64 @@ import { renderCartSidebar } from '../utils/cartUI.js';
 import { renderCheckout } from '../utils/checkoutUI.js';
 import { cartFeedback } from '../utils/feedback.js';
 
+// Función para cargar categorías desde el archivo JSON
+async function loadCategories() {
+  try {
+    const response = await fetch('assets/config/categories.json');
+    const categories = await response.json();
+    return categories;
+  } catch (error) {
+    console.error('Error loading categories:', error);
+    // Fallback a categorías por defecto
+    return [
+      { id: 'pantry', name: 'Despensa y Abarrotes' },
+      { id: 'snacks', name: 'Botanas y Galletas' },
+      { id: 'candy', name: 'Dulces y Chocolates' },
+      { id: 'cereal', name: 'Cereales' },
+      { id: 'beverages', name: 'Bebidas' },
+      { id: 'dairy', name: 'Lácteos' },
+      { id: 'tobacco', name: 'Tabaco' }
+    ];
+  }
+}
+
+// Función para obtener el icono SVG basado en el ID de categoría
+function getCategoryIcon(categoryId) {
+  const icons = {
+    pantry: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+    </svg>`,
+    snacks: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C2.845 8.51 2 9.473 2 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C11.155 8.51 12 9.473 12 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C2.845 8.51 2 9.473 2 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C11.155 8.51 12 9.473 12 10.608v2.513M12 10.875v-2.513c0-.98-.797-1.773-1.75-1.75-.966 0-1.75.784-1.75 1.75v2.513m0-2.513c0-.98.797-1.773 1.75-1.75.966 0 1.75.784 1.75 1.75v2.513M12 10.875v-2.513c0-.98-.797-1.773-1.75-1.75-.966 0-1.75.784-1.75 1.75v2.513m0-2.513c0-.98.797-1.773 1.75-1.75.966 0 1.75.784 1.75 1.75v2.513M8.25 21h7.5m-7.5 0v-3m7.5 0v3m0-3c0-1.105-.895-2-2-2h-3.5c-1.105 0-2 .895-2 2m0 3h7.5" />
+    </svg>`,
+    candy: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 2.485 2.099 4.5 4.688 4.5 1.935 0 3.597-1.126 4.312-2.733.715 1.607 2.377 2.733 4.313 2.733 2.588 0 4.688-2.015 4.688-4.5zM7.5 12.75c0 1.243.897 2.25 2 2.25s2-.897 2-2.25m-4 0c0-1.243.897-2.25 2-2.25s2 .897 2 2.25m-4 0v6m4-6v6m0 0c0 1.243-.897 2.25-2 2.25s-2-.897-2-2.25" />
+    </svg>`,
+    cereal: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+    </svg>`,
+    beverages: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0112 3z" />
+    </svg>`,
+    dairy: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5h14l-4.091-4.191A2.25 2.25 0 0114.25 8.818V3.104a.75.75 0 011.5 0z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5h14l-4.091-4.191A2.25 2.25 0 0114.25 8.818V3.104a.75.75 0 011.5 0z" />
+    </svg>`,
+    tobacco: `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z" />
+    </svg>`
+  };
+
+  return icons[categoryId] || `<svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 002.25 5.25v6.75A2.25 2.25 0 004.5 14.25h.75l.75 2.25 2.25-2.25h.75A2.25 2.25 0 0012 12V5.25A2.25 2.25 0 009.75 3H9.568z" />
+  </svg>`;
+}
+
 export async function renderStore(container) {
+  // Cargar categorías dinámicamente
+  const categories = await loadCategories();
+
   container.innerHTML = `
 
     <!-- Main Store Section -->
@@ -117,34 +174,13 @@ export async function renderStore(container) {
                          <input type="checkbox" id="filter-all" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="all">
                          <span class="ml-3 text-sm font-medium text-gray-700">Todos los productos</span>
                        </label>
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="filter-electronics" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="electronics">
-                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 16.5V12" />
-                         </svg>
-                         <span class="ml-2 text-sm text-gray-700">Electrónicos</span>
-                       </label>
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="filter-home" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="home">
-                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                         </svg>
-                         <span class="ml-2 text-sm text-gray-700">Hogar</span>
-                       </label>
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="filter-sports" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="sports">
-                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                         </svg>
-                         <span class="ml-2 text-sm text-gray-700">Deportes</span>
-                       </label>
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="filter-beauty" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="beauty">
-                         <svg class="ml-3 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
-                         </svg>
-                         <span class="ml-2 text-sm text-gray-700">Belleza</span>
-                       </label>
+                       ${categories.map(category => `
+                         <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                           <input type="checkbox" id="filter-${category.id}" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="${category.id}">
+                           ${getCategoryIcon(category.id)}
+                           <span class="ml-2 text-sm text-gray-700">${category.name}</span>
+                         </label>
+                       `).join('')}
                      </div>
                    </div>
 
@@ -768,8 +804,10 @@ export async function renderStore(container) {
     }
   }
 
-  // Category filter listeners
-  ['filter-all', 'filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(id => {
+  // Category filter listeners - Dynamic categories
+  const categoryIds = ['filter-all', ...categories.map(cat => `filter-${cat.id}`)];
+
+  categoryIds.forEach(id => {
     const element = document.getElementById(id);
     if (element) {
       element.addEventListener('change', (e) => {
@@ -777,9 +815,10 @@ export async function renderStore(container) {
         if (value === 'all') {
           if (e.target.checked) {
             currentFilters.categories = ['all'];
-            // Uncheck others
-            ['filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(otherId => {
-              document.getElementById(otherId).checked = false;
+            // Uncheck all other categories
+            categories.forEach(cat => {
+              const otherElement = document.getElementById(`filter-${cat.id}`);
+              if (otherElement) otherElement.checked = false;
             });
           } else {
             currentFilters.categories = [];
@@ -846,8 +885,9 @@ export async function renderStore(container) {
 
       // Reset UI
       document.getElementById('filter-all').checked = true;
-      ['filter-electronics', 'filter-home', 'filter-sports', 'filter-beauty'].forEach(id => {
-        document.getElementById(id).checked = false;
+      categories.forEach(cat => {
+        const element = document.getElementById(`filter-${cat.id}`);
+        if (element) element.checked = false;
       });
 
       document.getElementById('price-all').checked = true;
