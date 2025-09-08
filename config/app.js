@@ -79,13 +79,35 @@ export const APP_CONFIG = {
   performance: {
     // Preload de imágenes críticas
     preloadCriticalImages: true,
-    
+
     // Service Worker para cache
     serviceWorker: {
       enabled: true,
       cacheName: 'rgim-store-v1',
       cacheStrategy: 'cacheFirst' // 'cacheFirst' | 'networkFirst'
     }
+  },
+
+  // Configuración de IA y Analytics
+  ai: {
+    // Configuración de Gemini AI
+    gemini: {
+      enabled: true,
+      apiKey: process.env.GEMINI_API_KEY || '', // Configurar en variables de entorno
+      model: 'gemini-pro',
+      maxTokens: 1000,
+      temperature: 0.7
+    }
+  },
+
+  analytics: {
+    // Configuración de analytics de visitantes
+    enabled: true,
+    trackVisitors: true,
+    trackCountries: true,
+    retentionDays: 30, // Días para mantener datos
+    excludeAdmin: true, // No contar administradores
+    excludeLocalhost: true // No contar desarrollo local
   }
 };
 

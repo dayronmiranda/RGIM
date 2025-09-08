@@ -1,4 +1,5 @@
 import './utils/router.js';
+import { analyticsTracker } from './utils/analytics.js';
 
 // Prevenir zoom en iOS y otros dispositivos móviles
 (function() {
@@ -114,3 +115,8 @@ if (mobileNavToggle && mobileNavOverlay && mobileNavClose) {
 		});
 	});
 }
+
+// Initialize Analytics Tracking
+document.addEventListener('DOMContentLoaded', () => {
+	analyticsTracker.init();
+});

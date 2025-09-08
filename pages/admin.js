@@ -1,4 +1,6 @@
 // admin.js
+import { getAnalyticsStats } from '../utils/analytics.js';
+
 export function renderAdmin(container) {
   container.innerHTML = `
     <!-- Admin Header -->
@@ -209,9 +211,98 @@ export function renderAdmin(container) {
                     </div>
                     <div class="ml-5 w-0 flex-1">
                       <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Clientes</dt>
-                        <dd class="text-lg font-medium text-gray-900" id="total-customers">0</dd>
+                        <dt class="text-sm font-medium text-gray-500 truncate">Visitantes Hoy</dt>
+                        <dd class="text-lg font-medium text-gray-900" id="today-visitors">0</dd>
                       </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Analytics Section -->
+          <div class="mb-8">
+            <div class="bg-white shadow-sm rounded-lg border border-gray-200">
+              <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="text-lg font-medium text-gray-900">Analytics de Visitantes</h3>
+                    <p class="mt-1 text-sm text-gray-500">Estadísticas de visitantes y comportamiento</p>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button id="btn-refresh-analytics" class="inline-flex items-center gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                      <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                      </svg>
+                      Actualizar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <!-- Total Visitors -->
+                  <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-medium text-blue-600">Total Visitantes</p>
+                        <p class="text-2xl font-bold text-blue-900" id="analytics-total-visitors">0</p>
+                      </div>
+                      <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Page Views -->
+                  <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-medium text-green-600">Vistas de Página</p>
+                        <p class="text-2xl font-bold text-green-900" id="analytics-page-views">0</p>
+                      </div>
+                      <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Top Country -->
+                  <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-medium text-purple-600">País Principal</p>
+                        <p class="text-lg font-bold text-purple-900" id="analytics-top-country">-</p>
+                      </div>
+                      <svg class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <!-- Device Types -->
+                  <div class="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm font-medium text-orange-600">Dispositivos</p>
+                        <p class="text-lg font-bold text-orange-900" id="analytics-devices">-</p>
+                      </div>
+                      <svg class="h-8 w-8 text-orange-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 16.5h3" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Countries Table -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                  <h4 class="text-sm font-medium text-gray-900 mb-3">Visitantes por País (Top 5)</h4>
+                  <div class="space-y-2" id="analytics-countries-list">
+                    <div class="flex items-center justify-between py-2">
+                      <span class="text-sm text-gray-600">Cargando datos...</span>
                     </div>
                   </div>
                 </div>
@@ -369,31 +460,79 @@ export function renderAdmin(container) {
   // Dashboard functionality
   function loadDashboardData() {
     console.log('🔄 Cargando datos del dashboard...');
-    
+
     // Load orders from localStorage or API
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     console.log('📦 Órdenes encontradas:', orders.length);
     console.log('📋 Órdenes completas:', orders);
-    
+
     // Update stats
     document.getElementById('total-orders').textContent = orders.length;
     document.getElementById('pending-orders').textContent = orders.filter(o => o.status === 'pending').length;
-    
+
     const totalSales = orders.reduce((sum, order) => sum + (parseFloat(order.total) || 0), 0);
-    document.getElementById('total-sales').textContent = `${totalSales.toFixed(2)}`;
-    
-    const uniqueCustomers = new Set(orders.map(o => o.whatsapp)).size;
-    document.getElementById('total-customers').textContent = uniqueCustomers;
-    
+    document.getElementById('total-sales').textContent = `$${totalSales.toFixed(2)}`;
+
+    // Load analytics data
+    loadAnalyticsData();
+
     console.log('📊 Estadísticas actualizadas:', {
       total: orders.length,
       pending: orders.filter(o => o.status === 'pending').length,
-      sales: totalSales,
-      customers: uniqueCustomers
+      sales: totalSales
     });
-    
+
     // Populate table
     populateOrdersTable(orders);
+  }
+
+  // Analytics functionality
+  function loadAnalyticsData() {
+    try {
+      const analytics = getAnalyticsStats();
+
+      // Update analytics stats
+      document.getElementById('today-visitors').textContent = analytics.summary.todayVisitors;
+      document.getElementById('analytics-total-visitors').textContent = analytics.summary.totalVisitors;
+      document.getElementById('analytics-page-views').textContent = analytics.summary.totalPageViews;
+
+      // Update top country
+      const topCountry = analytics.countries[0];
+      document.getElementById('analytics-top-country').textContent = topCountry ? topCountry[0] : 'Sin datos';
+
+      // Update devices
+      const deviceStats = Object.entries(analytics.devices)
+        .map(([device, count]) => `${device}: ${count}`)
+        .join(', ');
+      document.getElementById('analytics-devices').textContent = deviceStats || 'Sin datos';
+
+      // Update countries list
+      const countriesList = document.getElementById('analytics-countries-list');
+      if (countriesList && analytics.countries.length > 0) {
+        countriesList.innerHTML = analytics.countries.slice(0, 5).map(([country, count]) => `
+          <div class="flex items-center justify-between py-2">
+            <span class="text-sm text-gray-900">${country}</span>
+            <span class="text-sm font-medium text-gray-600">${count} visitantes</span>
+          </div>
+        `).join('');
+      } else if (countriesList) {
+        countriesList.innerHTML = `
+          <div class="flex items-center justify-between py-2">
+            <span class="text-sm text-gray-600">No hay datos de visitantes aún</span>
+          </div>
+        `;
+      }
+
+      console.log('📊 Analytics cargados:', analytics);
+    } catch (error) {
+      console.warn('Error loading analytics:', error);
+      // Fallback values
+      document.getElementById('today-visitors').textContent = '0';
+      document.getElementById('analytics-total-visitors').textContent = '0';
+      document.getElementById('analytics-page-views').textContent = '0';
+      document.getElementById('analytics-top-country').textContent = '-';
+      document.getElementById('analytics-devices').textContent = '-';
+    }
   }
 
   function populateOrdersTable(orders) {
@@ -547,6 +686,11 @@ export function renderAdmin(container) {
   // Refresh functionality
   document.getElementById('btn-refresh').onclick = function() {
     loadDashboardData();
+  };
+
+  // Analytics refresh functionality
+  document.getElementById('btn-refresh-analytics').onclick = function() {
+    loadAnalyticsData();
   };
 
   // Global functions for table actions
