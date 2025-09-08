@@ -368,8 +368,12 @@ export function renderAdmin(container) {
 
   // Dashboard functionality
   function loadDashboardData() {
+    console.log('🔄 Cargando datos del dashboard...');
+    
     // Load orders from localStorage or API
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    console.log('📦 Órdenes encontradas:', orders.length);
+    console.log('📋 Órdenes completas:', orders);
     
     // Update stats
     document.getElementById('total-orders').textContent = orders.length;
@@ -381,14 +385,28 @@ export function renderAdmin(container) {
     const uniqueCustomers = new Set(orders.map(o => o.whatsapp)).size;
     document.getElementById('total-customers').textContent = uniqueCustomers;
     
+    console.log('📊 Estadísticas actualizadas:', {
+      total: orders.length,
+      pending: orders.filter(o => o.status === 'pending').length,
+      sales: totalSales,
+      customers: uniqueCustomers
+    });
+    
     // Populate table
     populateOrdersTable(orders);
   }
 
   function populateOrdersTable(orders) {
+    console.log('📋 Poblando tabla con', orders.length, 'órdenes');
     const tbody = document.getElementById('admin-rows');
     
+    if (!tbody) {
+      console.error('❌ No se encontró el elemento admin-rows');
+      return;
+    }
+    
     if (orders.length === 0) {
+      console.log('📭 No hay órdenes, mostrando mensaje vacío');
       tbody.innerHTML = `
         <tr>
           <td colspan="8" class="px-6 py-12 text-center text-sm text-gray-500">
@@ -398,6 +416,11 @@ export function renderAdmin(container) {
               </svg>
               <p class="text-lg font-medium text-gray-900 mb-1">No hay solicitudes</p>
               <p>Las solicitudes de compra aparecerán aquí cuando los clientes realicen pedidos.</p>
+              <div class="mt-4">
+                <button onclick="createTestOrder()" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                  Crear Orden de Prueba
+                </button>
+              </div>
             </div>
           </td>
         </tr>
@@ -405,46 +428,57 @@ export function renderAdmin(container) {
       return;
     }
 
-    tbody.innerHTML = orders.map(order => `
-      <tr class="hover:bg-gray-50">
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          ${new Date(order.date).toLocaleDateString()}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <div class="text-sm font-medium text-gray-900">${order.name}</div>
-          <div class="text-sm text-gray-500">${order.email}</div>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <a href="https://wa.me/${order.whatsapp}" target="_blank" class="text-green-600 hover:text-green-900">
-            ${order.whatsapp}
-          </a>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${order.shipping === 'air' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
-            ${order.shipping === 'air' ? 'Aéreo' : 'Marítimo'}
-          </span>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-          ${parseFloat(order.total || 0).toFixed(2)}
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-          ${order.items ? order.items.length : 0} productos
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}">
-            ${getStatusText(order.status)}
-          </span>
-        </td>
-        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-          <button class="text-indigo-600 hover:text-indigo-900 mr-3" onclick="viewOrder('${order.id}')">
-            Ver
-          </button>
-          <button class="text-red-600 hover:text-red-900" onclick="deleteOrder('${order.id}')">
-            Eliminar
-          </button>
-        </td>
-      </tr>
-    `).join('');
+    console.log('✅ Generando filas de tabla para', orders.length, 'órdenes');
+    
+    // Ordenar por fecha más reciente primero
+    const sortedOrders = orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+    tbody.innerHTML = sortedOrders.map((order, index) => {
+      console.log(`📝 Procesando orden ${index + 1}:`, order);
+      
+      return `
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            ${new Date(order.date).toLocaleDateString('es-ES')}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">${order.name || 'Sin nombre'}</div>
+            <div class="text-sm text-gray-500">${order.email || 'Sin email'}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <a href="https://wa.me/${order.whatsapp?.replace(/[^0-9]/g, '')}" target="_blank" class="text-green-600 hover:text-green-900">
+              ${order.whatsapp || 'Sin WhatsApp'}
+            </a>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${order.shipping === 'air' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'}">
+              ${order.shipping === 'air' ? 'Aéreo' : 'Marítimo'}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+            ${parseFloat(order.total || 0).toFixed(2)}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+            ${order.items ? order.items.length : 0} productos
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(order.status)}">
+              ${getStatusText(order.status)}
+            </span>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <button class="text-indigo-600 hover:text-indigo-900 mr-3" onclick="viewOrder('${order.id}')">
+              Ver
+            </button>
+            <button class="text-red-600 hover:text-red-900" onclick="deleteOrder('${order.id}')">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+    
+    console.log('✅ Tabla poblada exitosamente');
   }
 
   function getStatusColor(status) {
@@ -517,19 +551,54 @@ export function renderAdmin(container) {
 
   // Global functions for table actions
   window.viewOrder = function(orderId) {
+    console.log('👁️ Viendo orden:', orderId);
     const orders = JSON.parse(localStorage.getItem('orders') || '[]');
     const order = orders.find(o => o.id === orderId);
     if (order) {
-      alert(`Detalles del pedido:\n\nCliente: ${order.name}\nTotal: ${order.total}\nProductos: ${order.items ? order.items.length : 0}`);
+      const itemsList = order.items ? order.items.map(item => `• ${item.qty}x ${item.name} - ${(item.price * item.qty).toFixed(2)}`).join('\n') : 'Sin productos';
+      alert(`Detalles del pedido #${order.id}:\n\nCliente: ${order.name}\nWhatsApp: ${order.whatsapp}\nEmail: ${order.email}\nFecha: ${new Date(order.date).toLocaleString('es-ES')}\nEnvío: ${order.shipping === 'air' ? 'Aéreo' : 'Marítimo'}\nEstado: ${getStatusText(order.status)}\n\nProductos:\n${itemsList}\n\nTotal: ${order.total}`);
+    } else {
+      alert('Orden no encontrada');
     }
   };
 
   window.deleteOrder = function(orderId) {
+    console.log('🗑️ Eliminando orden:', orderId);
     if (confirm('¿Estás seguro de que quieres eliminar esta solicitud?')) {
       let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      const initialLength = orders.length;
       orders = orders.filter(o => o.id !== orderId);
       localStorage.setItem('orders', JSON.stringify(orders));
+      console.log(`✅ Orden eliminada. Órdenes restantes: ${orders.length} (antes: ${initialLength})`);
       loadDashboardData();
     }
+  };
+  
+  // Función para crear orden de prueba
+  window.createTestOrder = function() {
+    console.log('🧪 Creando orden de prueba...');
+    const testOrder = {
+      id: Date.now().toString(),
+      date: new Date().toISOString(),
+      name: 'Cliente Prueba',
+      email: 'test@example.com',
+      whatsapp: '+507 6123-4567',
+      country: 'Panamá',
+      address: 'Ciudad de Panamá',
+      shipping: 'maritime',
+      items: [
+        { id: 1, name: 'Producto de Prueba', price: 100, qty: 1 }
+      ],
+      subtotal: 100,
+      shippingCost: 0,
+      total: 100,
+      status: 'pending'
+    };
+    
+    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+    orders.push(testOrder);
+    localStorage.setItem('orders', JSON.stringify(orders));
+    console.log('✅ Orden de prueba creada:', testOrder);
+    loadDashboardData();
   };
 }

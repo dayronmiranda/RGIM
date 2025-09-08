@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Orders - RGIM Admin</title>
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Test de Órdenes - Sistema Admin</h1>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Información del localStorage</h2>
+            <div id="localStorage-info" class="space-y-2"></div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Acciones de Prueba</h2>
+            <div class="space-x-4">
+                <button onclick="createTestOrder()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Crear Orden de Prueba
+                </button>
+                <button onclick="createMultipleOrders()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    Crear 5 Órdenes
+                </button>
+                <button onclick="clearAllOrders()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    Limpiar Todas las Órdenes
+                </button>
+                <button onclick="refreshInfo()" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">
+                    Actualizar Info
+                </button>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-semibold mb-4">Órdenes Actuales</h2>
+            <div id="orders-list" class="space-y-2"></div>
+        </div>
+        
+        <div class="mt-6 text-center">
+            <a href="/#/admin" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">
+                Ir al Panel de Admin
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function refreshInfo() {
+            // Información del localStorage
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const infoDiv = document.getElementById('localStorage-info');
+            
+            infoDiv.innerHTML = `
+                <p><strong>Número de órdenes:</strong> ${orders.length}</p>
+                <p><strong>Tamaño del localStorage:</strong> ${JSON.stringify(orders).length} caracteres</p>
+                <p><strong>Última actualización:</strong> ${new Date().toLocaleString()}</p>
+                <p><strong>Clave 'orders' existe:</strong> ${localStorage.getItem('orders') !== null ? 'Sí' : 'No'}</p>
+            `;
+            
+            // Lista de órdenes
+            const ordersList = document.getElementById('orders-list');
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<p class="text-gray-500">No hay órdenes en el sistema</p>';
+            } else {
+                ordersList.innerHTML = orders.map((order, index) => `
+                    <div class="border rounded p-4 bg-gray-50">
+                        <h3 class="font-semibold">Orden ${index + 1} - ID: ${order.id}</h3>
+                        <p><strong>Cliente:</strong> ${order.name}</p>
+                        <p><strong>WhatsApp:</strong> ${order.whatsapp}</p>
+                        <p><strong>Total:</strong> $${order.total}</p>
+                        <p><strong>Fecha:</strong> ${new Date(order.date).toLocaleString()}</p>
+                        <p><strong>Estado:</strong> ${order.status}</p>
+                        <p><strong>Items:</strong> ${order.items ? order.items.length : 0} productos</p>
+                        <button onclick="deleteOrder('${order.id}')" class="mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                            Eliminar
+                        </button>
+                    </div>
+                `).join('');
+            }
+            
+            console.log('📊 Información actualizada:', {
+                totalOrders: orders.length,
+                orders: orders
+            });
+        }
+        
+        function createTestOrder() {
+            const testOrder = {
+                id: Date.now().toString(),
+                date: new Date().toISOString(),
+                name: 'Cliente Prueba ' + Math.floor(Math.random() * 1000),
+                email: 'test@example.com',
+                whatsapp: '+507 6' + Math.floor(Math.random() * 1000000).toString().padStart(7, '0'),
+                country: 'Panamá',
+                address: 'Ciudad de Panamá',
+                shipping: Math.random() > 0.5 ? 'maritime' : 'air',
+                items: [
+                    { 
+                        id: Math.floor(Math.random() * 100), 
+                        name: 'Producto Test ' + Math.floor(Math.random() * 100), 
+                        price: Math.floor(Math.random() * 500) + 100, 
+                        qty: Math.floor(Math.random() * 3) + 1 
+                    }
+                ],
+                subtotal: Math.floor(Math.random() * 500) + 100,
+                shippingCost: 0,
+                total: Math.floor(Math.random() * 500) + 100,
+                status: 'pending'
+            };
+            
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(testOrder);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            console.log('✅ Orden de prueba creada:', testOrder);
+            alert('Orden de prueba creada exitosamente!');
+            refreshInfo();
+        }
+        
+        function createMultipleOrders() {
+            const names = ['Juan Pérez', 'María González', 'Carlos Rodríguez', 'Ana López', 'Pedro Martínez'];
+            const products = ['iPhone 15', 'Samsung Galaxy', 'MacBook Air', 'iPad Pro', 'AirPods'];
+            
+            for (let i = 0; i < 5; i++) {
+                const testOrder = {
+                    id: (Date.now() + i).toString(),
+                    date: new Date(Date.now() - (i * 86400000)).toISOString(), // Diferentes días
+                    name: names[i],
+                    email: `test${i}@example.com`,
+                    whatsapp: `+507 6${Math.floor(Math.random() * 1000000).toString().padStart(7, '0')}`,
+                    country: 'Panamá',
+                    address: 'Ciudad de Panamá',
+                    shipping: i % 2 === 0 ? 'maritime' : 'air',
+                    items: [
+                        { 
+                            id: i + 1, 
+                            name: products[i], 
+                            price: Math.floor(Math.random() * 1000) + 200, 
+                            qty: Math.floor(Math.random() * 2) + 1 
+                        }
+                    ],
+                    subtotal: Math.floor(Math.random() * 1000) + 200,
+                    shippingCost: i % 2 === 0 ? 0 : Math.floor(Math.random() * 100) + 50,
+                    total: Math.floor(Math.random() * 1000) + 200,
+                    status: ['pending', 'processing', 'shipped'][Math.floor(Math.random() * 3)]
+                };
+                
+                const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                orders.push(testOrder);
+                localStorage.setItem('orders', JSON.stringify(orders));
+            }
+            
+            console.log('✅ 5 órdenes de prueba creadas');
+            alert('5 órdenes de prueba creadas exitosamente!');
+            refreshInfo();
+        }
+        
+        function clearAllOrders() {
+            if (confirm('¿Estás seguro de que quieres eliminar todas las órdenes?')) {
+                localStorage.removeItem('orders');
+                console.log('🗑️ Todas las órdenes eliminadas');
+                alert('Todas las órdenes han sido eliminadas');
+                refreshInfo();
+            }
+        }
+        
+        function deleteOrder(orderId) {
+            if (confirm('¿Eliminar esta orden?')) {
+                let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                orders = orders.filter(o => o.id !== orderId);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                console.log('🗑️ Orden eliminada:', orderId);
+                refreshInfo();
+            }
+        }
+        
+        // Cargar información al inicio
+        refreshInfo();
+        
+        // Auto-refresh cada 5 segundos
+        setInterval(refreshInfo, 5000);
+    </script>
+</body>
+</html>
