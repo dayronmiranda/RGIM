@@ -1,8 +1,8 @@
 // utils/products.js
-import { createLazyImage, lazyLoader } from './lazyload.js';
+import { createLazyImage, lazyLoader, validateProductsImages } from './lazyload.js';
 
-// Renderizado de productos destacados para la home
-export function renderFeatured({ products, containerId = 'featured-products', getImagePath = (img) => img }) {
+// Renderizado de productos destacados para la home con validación de imágenes
+export async function renderFeatured({ products, containerId = 'featured-products', getImagePath = (img) => img }) {
   const container = document.getElementById(containerId);
   if (!container) {
     console.error('Container not found:', containerId);
@@ -13,12 +13,21 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
     container.innerHTML = '<div class="text-gray-500 text-center py-8">No hay productos destacados.</div>';
     return;
   }
-  
-  console.log('Rendering featured products:', products.map(p => ({ id: p.id, name: p.name, image: p.image })));
-  
+
+  // Validar imágenes de productos antes de renderizar
+  const validProducts = await validateProductsImages(products, 'image');
+
+  if (validProducts.length === 0) {
+    console.warn('No products with valid images found');
+    container.innerHTML = '<div class="text-gray-500 text-center py-8">No hay productos con imágenes válidas para mostrar.</div>';
+    return;
+  }
+
+  console.log('Rendering featured products with validation:', validProducts.map(p => ({ id: p.id, name: p.name, image: p.image })));
+
   container.innerHTML = `
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-      ${products.map(p => {
+      ${validProducts.map(p => {
         const imagePath = getImagePath(p.image);
         console.log(`Product ${p.id}: image="${p.image}" -> path="${imagePath}"`);
         return `
@@ -27,14 +36,15 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
               ${createLazyImage({
                 src: imagePath,
                 alt: p.name,
-                className: 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                className: 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300',
+                validate: true
               })}
             </div>
             <div class="p-4">
               <h3 class="font-semibold text-lg mb-1 group-hover:text-indigo-600 transition-colors">${p.name}</h3>
               <p class="text-gray-500 text-sm mb-2 line-clamp-2">${p.description || ''}</p>
               <div class="flex items-center justify-between">
-                <span class="font-bold text-indigo-600 text-xl">${p.price.toFixed(2)}</span>
+                <span class="font-bold text-indigo-600 text-xl">$${p.price.toFixed(2)}</span>
                 <span class="text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">
                   Ver más →
                 </span>
@@ -44,7 +54,7 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
         `;
       }).join('')}
     </div>
-    
+
     <style>
       @media (max-width: 640px) {
         #featured-products > div {
@@ -56,7 +66,7 @@ export function renderFeatured({ products, containerId = 'featured-products', ge
       }
     </style>
   `;
-  
+
   // Inicializar lazy loading para las nuevas imágenes
   setTimeout(() => lazyLoader.observeAll(), 100);
 }

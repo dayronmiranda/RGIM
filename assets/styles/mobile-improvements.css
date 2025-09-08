@@ -369,9 +369,213 @@ body.menu-open {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
+
   .mobile-margin {
     margin-left: 1rem;
     margin-right: 1rem;
+  }
+}
+
+/* ===========================================
+   iPhone 11-16 Specific Optimizations
+   =========================================== */
+
+/* Safe Area Support for iPhone X and later (including iPhone 11-16) */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .safe-area-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  /* Header adjustments for notch */
+  header {
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+  }
+
+  /* Floating button adjustments */
+  #floating-store-btn {
+    bottom: max(1.5rem, calc(1.5rem + env(safe-area-inset-bottom)));
+    right: max(1.5rem, calc(1.5rem + env(safe-area-inset-right)));
+  }
+
+  /* Mobile navigation overlay */
+  #mobile-nav-overlay {
+    padding-top: max(2rem, env(safe-area-inset-top));
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
+/* iPhone 11-16 specific viewport optimizations */
+@media screen and (device-width: 390px) and (device-height: 844px),
+       screen and (device-width: 428px) and (device-height: 926px),
+       screen and (device-width: 393px) and (device-height: 852px),
+       screen and (device-width: 430px) and (device-height: 932px) {
+
+  /* Prevent horizontal scroll on iPhone */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Better text rendering on OLED screens */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Improved touch targets for iPhone screens */
+  button, a, input, select, textarea {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* Better button styling for iPhone */
+  .touch-optimized {
+    -webkit-tap-highlight-color: rgba(0, 123, 255, 0.1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* iPhone-specific input improvements */
+  input, textarea, select {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 8px;
+    background-clip: padding-box;
+  }
+
+  /* Better focus states for iPhone */
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    border-color: #2563eb;
+  }
+
+  /* iPhone Safari specific fixes */
+  @supports (-webkit-touch-callout: none) {
+    /* Fix for iOS Safari momentum scrolling */
+    .scroll-container {
+      -webkit-overflow-scrolling: touch;
+      overflow-scrolling: touch;
+    }
+
+    /* Better image rendering on iPhone */
+    img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
+
+    /* iPhone-specific gradient improvements */
+    .gradient-bg {
+      background-attachment: fixed;
+      -webkit-background-attachment: fixed;
+    }
+  }
+}
+
+/* iPhone 11-16 Dark Mode Optimizations */
+@media (prefers-color-scheme: dark) and (max-width: 768px) {
+  /* Better contrast for dark mode on iPhone */
+  .dark-mode-optimized {
+    background-color: #1f2937;
+    color: #f9fafb;
+  }
+
+  /* Improved shadows for OLED screens */
+  .shadow-optimized {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* iPhone Landscape Mode Optimizations */
+@media screen and (max-width: 896px) and (orientation: landscape) {
+  /* Adjust header height for landscape */
+  header {
+    height: 48px;
+  }
+
+  body {
+    padding-top: 48px;
+  }
+
+  /* Better spacing for landscape mode */
+  .landscape-optimized {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  /* Adjust floating button position */
+  #floating-store-btn {
+    bottom: 1rem;
+    right: 1rem;
+    transform: scale(0.9);
+  }
+}
+
+/* iPhone-specific animation optimizations */
+@media screen and (device-width: 390px) and (device-height: 844px),
+       screen and (device-width: 428px) and (device-height: 926px),
+       screen and (device-width: 393px) and (device-height: 852px),
+       screen and (device-width: 430px) and (device-height: 932px) {
+
+  /* Reduce motion for better performance on iPhone */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Hardware acceleration for iPhone */
+  .hardware-accelerated {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+  }
+}
+
+/* iPhone 11-16 specific font improvements */
+@media screen and (device-width: 390px) and (device-height: 844px),
+       screen and (device-width: 428px) and (device-height: 926px),
+       screen and (device-width: 393px) and (device-height: 852px),
+       screen and (device-width: 430px) and (device-height: 932px) {
+
+  /* Better font rendering for iPhone screens */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Improved text legibility */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  /* Better paragraph spacing */
+  p {
+    line-height: 1.7;
+    font-weight: 400;
   }
 }

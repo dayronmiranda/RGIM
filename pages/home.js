@@ -4,48 +4,70 @@ import { createLazyImage, lazyLoader } from '../utils/lazyload.js';
 
 export async function renderHome(container) {
   container.innerHTML = `
-    <!-- Hero Section with professional copywriting and corporate imagery -->
+    <!-- Hero Section with enhanced corporate design -->
     <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      <!-- Background Pattern -->
+      <div class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,white,rgba(255,255,255,0.6))] -z-10"></div>
+
       <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
         <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
           <div class="sm:max-w-lg">
-            <div class="mb-4">
-              <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                🌎 Líder en comercio internacional
+            <div class="mb-6">
+              <span class="inline-flex items-center rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 px-4 py-2 text-sm font-semibold text-blue-700 ring-1 ring-inset ring-blue-200/50 shadow-sm">
+                <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                Líder en Comercio Internacional
               </span>
             </div>
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              <span class="text-blue-600">RGIM</span><br>
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">RGIM</span><br>
               <span class="text-gray-800">USA & PANAMÁ</span>
             </h1>
-            <p class="mt-6 text-xl leading-8 text-gray-600">
-              <strong>Conectamos mercados globales</strong> con Latinoamérica y el Caribe. 
-              Soluciones integrales de importación con la confianza de más de una década de experiencia.
+            <p class="mt-8 text-xl leading-8 text-gray-600 max-w-md">
+              <strong class="text-gray-900">Puente entre mercados globales</strong> y Latinoamérica.
+              Soluciones integrales de importación con más de una década de experiencia y confianza.
             </p>
-            <div class="mt-10 flex items-center gap-x-6">
-              <a href="#/store" class="rounded-md bg-blue-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-200">
+            <div class="mt-12 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <a href="#/store" class="group inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-indigo-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-all duration-300 transform hover:scale-105">
+                <svg class="w-5 h-5 mr-3" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+                </svg>
                 Explorar Catálogo
               </a>
-              <a href="#/about" class="text-base font-semibold leading-6 text-gray-900 hover:text-blue-600 transition-colors duration-200">
-                Nuestra Historia <span aria-hidden="true">→</span>
+              <a href="#/about" class="group inline-flex items-center text-lg font-semibold leading-6 text-gray-900 hover:text-blue-600 transition-all duration-300">
+                Nuestra Historia
+                <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
               </a>
             </div>
-            <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div class="flex items-center gap-x-3 text-sm text-gray-600">
+            <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div class="group flex items-center gap-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200/50 shadow-sm hover:shadow-md transition-all duration-300">
                 <div class="flex-shrink-0">
-                  <svg class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.757.433l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
-                  </svg>
+                  <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                    <svg class="h-6 w-6 text-white" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.757.433l.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
                 </div>
-                <span><strong>Oficinas:</strong> Miami & Ciudad de Panamá</span>
+                <div>
+                  <p class="text-sm font-medium text-gray-900">Oficinas Estratégicas</p>
+                  <p class="text-sm text-gray-600">Miami & Ciudad de Panamá</p>
+                </div>
               </div>
-              <div class="flex items-center gap-x-3 text-sm text-gray-600">
+              <div class="group flex items-center gap-x-4 p-4 bg-white/60 backdrop-blur-sm rounded-xl border border-gray-200/50 shadow-sm hover:shadow-md transition-all duration-300">
                 <div class="flex-shrink-0">
-                  <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                  </svg>
+                  <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                    </svg>
+                  </div>
                 </div>
-                <span><strong>Garantía:</strong> 100% en cada envío</span>
+                <div>
+                  <p class="text-sm font-medium text-gray-900">Garantía Total</p>
+                  <p class="text-sm text-gray-600">100% en cada envío</p>
+                </div>
               </div>
             </div>
           </div>
@@ -154,6 +176,129 @@ export async function renderHome(container) {
     </div>
 
 
+
+    <!-- Services Section - Enhanced corporate presentation -->
+    <div class="bg-white py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            Nuestros Servicios Especializados
+          </h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+            Soluciones completas para tu comercio internacional con Panamá
+          </p>
+        </div>
+
+        <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
+          <div class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
+            <!-- Servicio 1: Importación -->
+            <div class="group relative bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-100/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div class="absolute -top-4 left-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Importación Directa</h3>
+                <p class="text-gray-600 mb-6">Acceso directo a proveedores internacionales con procesos optimizados y costos competitivos.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Productos bajo pedido
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Catálogo personalizado
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Consultoría especializada
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Servicio 2: Envíos -->
+            <div class="group relative bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-100/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div class="absolute -top-4 left-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Logística Integral</h3>
+                <p class="text-gray-600 mb-6">Soluciones de envío eficientes con cobertura completa a Latinoamérica y el Caribe.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Envío marítimo gratuito
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Envío aéreo express
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Seguimiento en tiempo real
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Servicio 3: Consultoría -->
+            <div class="group relative bg-gradient-to-br from-purple-50 to-indigo-50 p-8 rounded-2xl border border-purple-100/50 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div class="absolute -top-4 left-8">
+                <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
+                  </svg>
+                </div>
+              </div>
+              <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Asesoría Personalizada</h3>
+                <p class="text-gray-600 mb-6">Orientación experta en cada paso de tu proceso de importación internacional.</p>
+                <ul class="space-y-3 text-sm text-gray-600">
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Análisis de mercado
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Optimización de costos
+                  </li>
+                  <li class="flex items-center">
+                    <svg class="w-4 h-4 text-green-500 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    Soporte continuo
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Commercial Partnerships Section -->
     <div class="bg-gradient-to-br from-slate-50 to-blue-50 py-24 sm:py-32">
@@ -586,7 +731,7 @@ export async function renderHome(container) {
   console.log('Featured products found:', featuredProducts.length);
   console.log('Featured products:', featuredProducts);
   
-  renderFeatured({
+  await renderFeatured({
     products: featuredProducts,
     containerId: 'featured-products',
     getImagePath: (img) => `assets/images/products/${img}`
