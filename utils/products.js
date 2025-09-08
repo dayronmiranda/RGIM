@@ -110,7 +110,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
           <div class="product-info">
             <div>
               <h3 class="product-name">${p.name}</h3>
-              <p class="text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
+              <p class="text-xs text-gray-500 truncate">${p.short || ''}</p>
               <p class="product-price">${p.price.toFixed(2)}</p>
             </div>
             <div class="product-actions">
@@ -137,7 +137,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="text-lg font-medium text-gray-900">${p.name}</h3>
-              <p class="mt-1 text-sm text-gray-500 line-clamp-2">${p.short || ''}</p>
+              <p class="mt-1 text-sm text-gray-500 truncate">${p.short || ''}</p>
               <div class="mt-2 flex items-center gap-4">
                 <p class="text-xl font-bold text-indigo-600">${p.price.toFixed(2)}</p>
                 <span class="text-xs text-gray-400">Envío gratis marítimo</span>
@@ -162,7 +162,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
         </div>
         <div class="p-4">
           <h3 class="text-sm font-medium text-gray-900 truncate">${p.name}</h3>
-          <p class="mt-1 text-xs text-gray-500 line-clamp-2">${p.short || ''}</p>
+          <p class="mt-1 text-xs text-gray-500 truncate">${p.short || ''}</p>
           <div class="mt-3 flex items-center justify-between">
             <p class="text-sm font-semibold text-gray-900">$${p.price.toFixed(2)}</p>
           </div>

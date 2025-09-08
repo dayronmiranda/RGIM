@@ -13,7 +13,7 @@ export async function renderStore(container) {
 
     <!-- Main Store Section -->
     <div class="bg-gray-50 min-h-screen">
-      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <div class="mx-auto w-[95%] max-w-none px-2 py-16 sm:px-4 lg:px-6">
         
          
         <!-- Mobile Cart (Collapsible) - Only visible on mobile -->
