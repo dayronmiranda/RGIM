@@ -7,6 +7,13 @@ export async function renderHome(container) {
     document.head.appendChild(link);
   }
 
+  // Asegurar que no haya scroll
+  document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
+  container.style.overflow = 'hidden';
+  container.style.height = '100vh';
+  container.style.width = '100vw';
+
   container.innerHTML = `
     <div class="home-container">
     	<img id="Mask_Group_2" src="assets/images/Mask_Group_2.png" srcset="assets/images/Mask_Group_2.png 1x, assets/images/Mask_Group_2@2x.png 2x">

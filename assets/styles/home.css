@@ -27,14 +27,24 @@
 	border: none;
 }
 
+html, body {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
 /* Contenedor principal del home - mobile only */
 .home-container {
-	position: absolute;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	font-family: Brinova;
 	background-color: rgba(255,255,255,1);
 	overflow: hidden;
+	top: 0;
+	left: 0;
 }
 
 #Mask_Group_2 {
