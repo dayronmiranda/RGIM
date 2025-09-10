@@ -30,7 +30,7 @@ export async function renderHome(container) {
 
   container.innerHTML = `
     <div class="home-container">
-    	<img id="wallpaper" src="C:\Users\Usuario1\Documents\Roy\Site images\wallpaper.png">
+    	<img id="wallpaper" src="assets/images/wallpaper.png">
     	<div id="Text_logo">
     		<span>RGIM</span>
     	</div>
