@@ -1,7 +1,6 @@
-// router.js
+// router.js - Simplified for clean home page display
 import { renderHome } from '../pages/home.js';
 import { renderStore } from '../pages/store.js';
-import { renderAdmin } from '../pages/admin.js';
 
 const routes = {
   '': renderHome,
@@ -9,12 +8,12 @@ const routes = {
   '#/home': renderHome,
   '#store': renderStore,
   '#/store': renderStore,
-  '#about': renderHome, // Redirect to home since content is integrated
+  '#about': renderHome,
   '#/about': renderHome,
-  '#faq': renderHome, // Redirect to home since content is integrated
+  '#faq': renderHome,
   '#/faq': renderHome,
-  '#admin': renderAdmin,
-  '#/admin': renderAdmin
+  '#admin': renderHome,
+  '#/admin': renderHome
 };
 
 export function router() {

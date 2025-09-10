@@ -1,0 +1,12 @@
+/* Webfont: Brinova-Regular */@font-face {
+    font-family: 'Brinova';
+    src: url('Brinova-Regular.eot'); /* IE9 Compat Modes */
+    src: url('Brinova-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('Brinova-Regular.woff') format('woff'), /* Modern Browsers */
+         url('Brinova-Regular.woff2') format('woff2'), /* Modern Browsers */
+         url('Brinova-Regular.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+

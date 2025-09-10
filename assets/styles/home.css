@@ -1,0 +1,171 @@
+/* Fuente Brinova original */
+@font-face {
+    font-family: 'Brinova';
+    src: url('../fonts/Brinova-Regular.woff2') format('woff2'),
+         url('../fonts/Brinova-Regular.woff') format('woff'),
+         url('../fonts/Brinova-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+@font-face {
+    font-family: 'Brinova';
+    src: url('../fonts/Brinova-Italic.woff2') format('woff2'),
+         url('../fonts/Brinova-Italic.woff') format('woff'),
+         url('../fonts/Brinova-Italic.ttf') format('truetype');
+    font-style: italic;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
+/* Reset básico */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+}
+
+/* Contenedor principal del home - mobile only */
+.home-container {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	font-family: Brinova;
+	background-color: rgba(255,255,255,1);
+	overflow: hidden;
+}
+
+#Mask_Group_2 {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	left: 0px;
+	top: 0px;
+	overflow: visible;
+}
+
+#contrast {
+	opacity: 0;
+	fill: rgba(166,166,166,1);
+}
+
+.contrast {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	overflow: visible;
+	transform: matrix(1,0,0,1,0,0) rotate(180deg);
+	transform-origin: center;
+}
+
+/* Hero image descansando en la base */
+#hero_image {
+	position: absolute;
+	width: 120vw;
+	height: 120vw;
+	left: 50%;
+	bottom: 0px;
+	transform: translateX(-50%);
+	overflow: visible;
+}
+
+#shadom_m {
+	fill: url(#shadom_m);
+}
+
+.shadom_m {
+	position: fixed;
+	overflow: visible;
+	width: 100vw;
+	height: 60vh;
+	left: 0px;
+	bottom: 0px;
+	z-index: 2;
+}
+
+/* Text logo ancho completo */
+#Text_logo {
+	opacity: 0.89;
+	left: 0px;
+	top: 20px;
+	position: absolute;
+	overflow: visible;
+	width: 100vw;
+	white-space: nowrap;
+	text-align: center;
+	font-family: Brinova, Brinova;
+	font-style: normal;
+	font-weight: normal;
+	font-size: clamp(200px, 30vw, 300px);
+	color: rgba(27,27,27,1);
+	letter-spacing: -0.26px;
+	z-index: 1;
+}
+
+#menu_area {
+	position: absolute;
+	width: calc(100vw - 40px);
+	height: 40px;
+	left: 20px;
+	bottom: 40px;
+	overflow: visible;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 3;
+}
+
+#text_visitStore {
+	opacity: 0.89;
+	cursor: pointer;
+	text-align: right;
+	font-family: Brinova, Brinova;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 22px;
+	color: rgba(255,255,255,1);
+	letter-spacing: -0.14px;
+	transition: opacity 0.3s ease;
+}
+
+#text_visitStore:hover {
+	opacity: 1;
+}
+
+#text_contact {
+	opacity: 0.89;
+	cursor: pointer;
+	text-align: left;
+	font-family: Brinova, Brinova;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 18px;
+	color: rgba(255,255,255,1);
+	letter-spacing: -0.14px;
+	transition: opacity 0.3s ease;
+}
+
+#text_contact:hover {
+	opacity: 1;
+}
+
+#Line_5 {
+	fill: transparent;
+	stroke: rgba(112,112,112,1);
+	stroke-width: 1px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+
+.Line_5 {
+	overflow: visible;
+	position: absolute;
+	width: 50%;
+	height: 1px;
+	right: 0px;
+	top: 0px;
+}
