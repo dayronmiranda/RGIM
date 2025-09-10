@@ -1,25 +1,217 @@
-/* Estilos básicos para la tienda */
-body {
-  font-family: Arial, sans-serif;
+/* Importar fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Reset básico para asegurar que no haya elementos residuales */
+* {
   margin: 0;
   padding: 0;
-  background: #f9f9f9;
-}
-#app {
-  max-width: 900px;
-  margin: 2rem auto;
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-sizing: border-box;
 }
 
-/* Agrega aquí tus estilos personalizados para las páginas */
-.featured-grid { display: flex; gap: 1rem; margin-top: 2rem; }
-.featured-box { flex: 1; aspect-ratio: 1/1; background: #e0e0e0; border-radius: 8px; }
-.btn { display: inline-block; background: #007bff; color: #fff; padding: 0.5rem 1.5rem; border-radius: 4px; text-decoration: none; margin-top: 1rem; }
-.search-bar { margin: 1rem 0; }
-.product-list { margin-top: 2rem; }
-.faq-list { margin: 2rem 0; }
-.faq-item { background: #fff; border: 1px solid #eee; border-radius: 6px; padding: 1rem; margin-bottom: 1rem; }
-.faq-contact { background: #f0f8ff; padding: 1rem; border-radius: 6px; text-align: center; }
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* Estilos del diseño original de home page */
+.mediaViewInfo {
+	--web-view-name: iPhone X, XS, 11 Pro – 1;
+	--web-view-id: iPhone_X_XS_11_Pro__1;
+	--web-scale-on-resize: true;
+	--web-enable-deep-linking: true;
+	--web-page-font: Inter;
+}
+
+:root {
+	--web-view-ids: iPhone_X_XS_11_Pro__1;
+}
+
+#iPhone_X_XS_11_Pro__1 {
+	position: absolute;
+	width: 375px;
+	height: 812px;
+	font-family: 'Playfair Display', serif;
+	background-color: rgba(255,255,255,1);
+	overflow: hidden;
+	--web-view-name: iPhone X, XS, 11 Pro – 1;
+	--web-view-id: iPhone_X_XS_11_Pro__1;
+	--web-scale-on-resize: true;
+	--web-enable-deep-linking: true;
+	--web-page-font: Inter;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#Mask_Group_2 {
+	position: absolute;
+	width: 375px;
+	height: 812px;
+	left: 0px;
+	top: 1px;
+	overflow: visible;
+}
+
+#contrast {
+	opacity: 0;
+	fill: rgba(166,166,166,1);
+}
+
+.contrast {
+	width: 375px;
+	height: 812px;
+	position: absolute;
+	overflow: visible;
+	transform: matrix(1,0,0,1,0,0) rotate(180deg);
+	transform-origin: center;
+}
+
+#hero_image {
+	position: absolute;
+	width: 577px;
+	height: 577px;
+	left: -101px;
+	top: 235px;
+	overflow: visible;
+}
+
+#shadom_m {
+	fill: url(#shadom_m);
+}
+
+.shadom_m {
+	position: absolute;
+	overflow: visible;
+	width: 375px;
+	height: 374px;
+	left: 0px;
+	top: 438px;
+}
+
+#Text_logo {
+	opacity: 0.89;
+	left: -10px;
+	top: -8px;
+	position: absolute;
+	overflow: visible;
+	width: 398px;
+	white-space: nowrap;
+	text-align: left;
+	font-family: 'Playfair Display', serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 277px;
+	color: rgba(27,27,27,1);
+	letter-spacing: -0.26px;
+}
+
+#menu_area {
+	position: absolute;
+	width: 330.5px;
+	height: 27.5px;
+	left: 18px;
+	top: 730.25px;
+	overflow: visible;
+}
+
+#text_visitStore {
+	opacity: 0.89;
+	left: 179px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 100px;
+	white-space: nowrap;
+	cursor: pointer;
+	text-align: left;
+	font-family: 'Playfair Display', serif;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 25px;
+	color: rgba(255,255,255,1);
+	letter-spacing: -0.14px;
+}
+
+#text_contact {
+	opacity: 0.89;
+	left: 0px;
+	top: 2.75px;
+	position: absolute;
+	overflow: visible;
+	width: 56px;
+	white-space: nowrap;
+	text-align: left;
+	font-family: 'Playfair Display', serif;
+	font-style: italic;
+	font-weight: normal;
+	font-size: 20px;
+	color: rgba(255,255,255,1);
+	letter-spacing: -0.14px;
+}
+
+#Line_5 {
+	fill: transparent;
+	stroke: rgba(112,112,112,1);
+	stroke-width: 1px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+
+.Line_5 {
+	overflow: visible;
+	position: absolute;
+	width: 151px;
+	height: 1px;
+	left: 179.5px;
+	top: 27.5px;
+	transform: matrix(1,0,0,1,0,0);
+}
+
+/* Asegurar que el contenedor principal ocupe toda la pantalla */
+#app {
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Limpiar cualquier elemento residual */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Centrar el diseño de iPhone en pantallas grandes */
+@media (min-width: 769px) {
+  #iPhone_X_XS_11_Pro__1 {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 50px rgba(0,0,0,0.3);
+    border-radius: 30px;
+  }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+  #iPhone_X_XS_11_Pro__1 {
+    width: 100vw;
+    height: 100vh;
+    max-width: 375px;
+    max-height: 812px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

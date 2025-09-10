@@ -215,34 +215,6 @@ export async function renderStore(container) {
                      </div>
                    </div>
 
-                   <!-- Shipping Options -->
-                   <div class="border-b border-gray-100 pb-6">
-                     <div class="flex items-center gap-2 mb-4">
-                       <svg class="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                         <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM12 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5zM15.75 18.75a1.5 1.5 0 01-3 0V8.25a1.5 1.5 0 013 0v10.5z" />
-                       </svg>
-                       <h4 class="text-base font-semibold text-gray-900">Tipo de Envío</h4>
-                     </div>
-                     <div class="space-y-3">
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="shipping-free" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="free">
-                         <svg class="ml-3 h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.623 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                         </svg>
-                         <span class="ml-2 text-sm font-medium text-gray-700">Envío gratuito</span>
-                         <span class="ml-auto text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">Gratis</span>
-                       </label>
-                       <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
-                         <input type="checkbox" id="shipping-express" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4" value="express">
-                         <svg class="ml-3 h-4 w-4 text-orange-500" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                           <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
-                         </svg>
-                         <span class="ml-2 text-sm text-gray-700">Envío express</span>
-                         <span class="ml-auto text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded-full">+10%</span>
-                       </label>
-                     </div>
-                   </div>
-
                    <!-- Clear Filters Button -->
                    <div class="pt-2">
                      <button id="clear-filters" class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-3 px-4 rounded-xl hover:from-indigo-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">

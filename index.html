@@ -89,42 +89,8 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-slate-50 text-slate-800">
-  <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-brand-600 text-white px-3 py-2 rounded">Saltar al contenido</a>
-
-  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-200/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-14 md:h-16">
-        <a href="#/home" class="flex items-center gap-2 group">
-          <div class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-gradient-to-br from-brand-500 to-brand-600 text-white grid place-items-center font-bold text-sm md:text-base shadow-sm">RG</div>
-          <div class="hidden sm:block">
-            <div class="text-base md:text-lg font-semibold text-gray-900">RGIM</div>
-            <div class="text-xs text-gray-500">USA & Panamá</div>
-          </div>
-        </a>
-
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a href="#/home" class="py-2 text-gray-600 hover:text-brand-600 transition-colors">Inicio</a>
-          <a href="#/store" class="py-2 text-gray-600 hover:text-brand-600 transition-colors">Tienda</a>
-        </nav>
-
-        <!-- Mobile Navigation Button - Hidden -->
-        <button id="mobile-nav-toggle" class="md:hidden p-2 -mr-2 opacity-0 pointer-events-none" aria-label="Menú">
-          <svg class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </div>
-    </div>
-  </header>
-
-  <!-- Page Loader -->
-  <div id="page-loader" class="page-loader">
-    <div class="loader-spinner"></div>
-  </div>
-
-  <main id="app" class="flex-1"></main>
+<body>
+  <main id="app"></main>
   <script type="module" src="index.js"></script>
 </body>
 </html>
