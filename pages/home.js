@@ -7,32 +7,30 @@ export async function renderHome(container) {
     document.head.appendChild(link);
   }
 
-  // Asegurar que no haya scroll
+  // Asegurar que no haya scroll y altura correcta en Safari
+  const setViewportHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
+    // Forzar altura real del viewport
+    const realHeight = window.innerHeight;
+    document.body.style.height = `${realHeight}px`;
+    document.documentElement.style.height = `${realHeight}px`;
+    container.style.height = `${realHeight}px`;
+  };
+
+  setViewportHeight();
+  window.addEventListener('resize', setViewportHeight);
+  window.addEventListener('orientationchange', setViewportHeight);
+
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
   container.style.overflow = 'hidden';
-  container.style.height = '100vh';
   container.style.width = '100vw';
 
   container.innerHTML = `
     <div class="home-container">
-    	<img id="Mask_Group_2" src="assets/images/Mask_Group_2.png" srcset="assets/images/Mask_Group_2.png 1x, assets/images/Mask_Group_2@2x.png 2x">
-
-    	<svg class="contrast">
-    		<rect id="contrast" rx="0" ry="0" x="0" y="0" width="375" height="812">
-    		</rect>
-    	</svg>
-    	<img id="hero_image" src="assets/images/hero_image.png" srcset="assets/images/hero_image.png 1x, assets/images/hero_image@2x.png 2x">
-
-    	<svg class="shadom_m" viewBox="0 0 100 100" preserveAspectRatio="none">
-    		<linearGradient id="shadom_m" spreadMethod="pad" x1="0.5" x2="0.5" y1="0" y2="1">
-    			<stop offset="0" stop-color="#000" stop-opacity="0"></stop>
-    			<stop offset="0.5356" stop-color="#000" stop-opacity="0.62"></stop>
-    			<stop offset="1" stop-color="#000" stop-opacity="1"></stop>
-    		</linearGradient>
-    		<rect id="shadom_m" rx="0" ry="0" x="0" y="0" width="100" height="100">
-    		</rect>
-    	</svg>
+    	<img id="wallpaper" src="C:\Users\Usuario1\Documents\Roy\Site images\wallpaper.png">
     	<div id="Text_logo">
     		<span>RGIM</span>
     	</div>
