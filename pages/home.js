@@ -155,31 +155,45 @@ export async function renderHome(container) {
       <div class="mx-auto w-[95%] max-w-none px-2 py-16 sm:px-4 lg:px-6">
 
 
-        <!-- Mobile Cart (Collapsible) - Only visible on mobile -->
-        <div id="mobile-cart-container" class="lg:hidden mobile-cart-collapsed">
-          <button id="mobile-cart-toggle" class="cart-toggle-btn">
-            <div class="flex items-center gap-2">
-              <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+        <!-- Mobile Search Bar (Sticky when scrolling) -->
+        <div class="lg:hidden mobile-search-sticky hidden">
+          <div class="relative">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
               </svg>
-              <span>Carrito (<span id="mobile-cart-count">0</span>)</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span id="mobile-cart-total" class="font-bold">$0.00</span>
-              <svg id="mobile-cart-arrow" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-              </svg>
+            <input id="ai-search-mobile-sticky" type="text" placeholder="Buscar productos..." class="block w-full rounded-md border-0 bg-white py-3 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm shadow-lg" />
+          </div>
+        </div>
+
+        <!-- Mobile Cart (Fixed at bottom) -->
+        <div id="mobile-cart-container" class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg">
+          <button id="mobile-cart-toggle" class="w-full cart-toggle-btn">
+            <div class="flex items-center justify-between p-4">
+              <div class="flex items-center gap-2">
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119.993z" />
+                </svg>
+                <span>Carrito (<span id="mobile-cart-count">0</span>)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span id="mobile-cart-total" class="font-bold text-indigo-600">$0.00</span>
+                <svg id="mobile-cart-arrow" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </div>
             </div>
           </button>
 
-          <div id="mobile-cart-content" class="cart-content-mobile">
-            <div class="p-4">
-              <div id="mobile-cart-items" class="space-y-3 max-h-64 overflow-y-auto mb-4">
+          <div id="mobile-cart-content" class="cart-content-mobile hidden">
+            <div class="p-4 max-h-64 overflow-y-auto">
+              <div id="mobile-cart-items" class="space-y-3 mb-4">
                 <!-- Cart items will be rendered here -->
               </div>
 
               <div class="border-t pt-4">
-                <button id="mobile-checkout-btn" class="w-full bg-gray-900 text-white font-medium py-3 px-4 rounded-xl hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-all duration-200 shadow-sm">
+                <button id="mobile-checkout-btn" class="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-xl hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 transition-all duration-200 shadow-sm">
                   <div class="flex items-center justify-center gap-2">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
@@ -490,6 +504,45 @@ export async function renderHome(container) {
 
     <!-- Checkout Modal Container -->
     <div id="checkout-modal"></div>
+
+    <style>
+      /* Mobile cart and search bar styles */
+      @media (max-width: 1023px) {
+        #full-store-section {
+          padding-bottom: 120px; /* Space for fixed cart */
+        }
+
+        .mobile-search-sticky {
+          transition: all 0.3s ease;
+        }
+
+        .mobile-search-sticky.fixed {
+          animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+          from {
+            transform: translateY(-100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        /* Ensure cart content doesn't overflow */
+        #mobile-cart-content {
+          max-height: 60vh;
+          overflow-y: auto;
+        }
+
+        /* Adjust spacing when search is visible */
+        .mobile-search-sticky.fixed ~ #full-store-section {
+          padding-top: 80px;
+        }
+      }
+    </style>
   `;
 
   // Función para toggle del menú móvil
@@ -549,14 +602,15 @@ export async function renderHome(container) {
       gridId: 'featured-products-grid',
       getImagePath: (img) => `assets/images/products/${img}`,
       viewMode: 'grid',
-      extraButton: (product) => `<button class="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-1.5 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105 text-sm" data-addcart="${product.id}">
+      extraButton: (product) => `<button class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-1.5 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-all duration-200 shadow-sm hover:shadow-md transform hover:scale-105 text-sm" data-addcart="${product.id}">
         <div class="flex items-center justify-center gap-1.5">
           <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
-          <span class="text-xs font-semibold">Destacado</span>
+          <span class="text-xs font-semibold">Agregar</span>
         </div>
-      </button>`
+      </button>`,
+      isFeatured: true
     });
   }
 
@@ -794,6 +848,59 @@ export async function renderHome(container) {
   // Initialize cart count from session
   document.getElementById('cart-count').textContent = getCartItemCount();
 
+  // Mobile search bar functionality (sticky on scroll)
+  const mobileSearchSticky = document.getElementById('mobile-search-sticky');
+  const mobileSearchInput = document.getElementById('ai-search-mobile-sticky');
+
+  // Show/hide search bar on scroll
+  let lastScrollTop = 0;
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const storeSection = document.getElementById('full-store-section');
+
+    if (storeSection) {
+      const storeRect = storeSection.getBoundingClientRect();
+      const isStoreVisible = storeRect.top < window.innerHeight && storeRect.bottom > 0;
+
+      if (isStoreVisible && window.innerWidth < 1024) {
+        mobileSearchSticky.classList.remove('hidden');
+        mobileSearchSticky.classList.add('fixed', 'top-0', 'left-0', 'right-0', 'z-40', 'bg-white', 'border-b', 'border-gray-200', 'p-4', 'shadow-sm');
+      } else {
+        mobileSearchSticky.classList.add('hidden');
+        mobileSearchSticky.classList.remove('fixed', 'top-0', 'left-0', 'right-0', 'z-40', 'bg-white', 'border-b', 'border-gray-200', 'p-4', 'shadow-sm');
+      }
+    }
+  });
+
+  // Mobile search functionality
+  if (mobileSearchInput) {
+    mobileSearchInput.addEventListener('input', async (e) => {
+      const query = e.target.value.trim();
+
+      let searchResults = products;
+      if (query !== '') {
+        searchResults = await aiProductSearch(products, query);
+      }
+
+      // Apply current filters to search results
+      currentProducts = applyFiltersToProducts(searchResults);
+
+      // Update product count
+      document.getElementById('product-count').textContent = `${currentProducts.length} productos encontrados`;
+
+      // Show/hide no results state
+      if (currentProducts.length === 0) {
+        document.getElementById('product-grid').classList.add('hidden');
+        document.getElementById('no-results').classList.remove('hidden');
+      } else {
+        document.getElementById('no-results').classList.add('hidden');
+        document.getElementById('product-grid').classList.remove('hidden');
+
+        renderCurrentProducts();
+      }
+    });
+  }
+
   // Mobile cart functionality
   const mobileCartToggle = document.getElementById('mobile-cart-toggle');
   const mobileCartContainer = document.getElementById('mobile-cart-container');
@@ -804,19 +911,15 @@ export async function renderHome(container) {
   if (mobileCartToggle) {
     // Toggle mobile cart
     mobileCartToggle.addEventListener('click', () => {
-      const isExpanded = mobileCartContent.classList.contains('expanded');
+      const isExpanded = !mobileCartContent.classList.contains('hidden');
 
       if (isExpanded) {
         // Collapse
-        mobileCartContent.classList.remove('expanded');
-        mobileCartContainer.classList.remove('mobile-cart-expanded');
-        mobileCartContainer.classList.add('mobile-cart-collapsed');
+        mobileCartContent.classList.add('hidden');
         mobileCartArrow.style.transform = 'rotate(0deg)';
       } else {
         // Expand
-        mobileCartContent.classList.add('expanded');
-        mobileCartContainer.classList.remove('mobile-cart-collapsed');
-        mobileCartContainer.classList.add('mobile-cart-expanded');
+        mobileCartContent.classList.remove('hidden');
         mobileCartArrow.style.transform = 'rotate(180deg)';
 
         // Render mobile cart items
