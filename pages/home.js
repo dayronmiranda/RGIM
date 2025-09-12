@@ -98,14 +98,6 @@ export async function renderHome(container) {
               Especialistas en envíos internacionales desde Panamá hacia Latinoamérica y el Caribe.
               Ofrecemos soluciones eficientes, seguras y competitivas para su negocio.
             </p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a href="#store" class="rounded-md bg-brand-600 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-brand-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 transition duration-300">
-                Explorar Productos
-              </a>
-              <a href="#about" class="text-base font-semibold leading-6 text-gray-900 hover:text-brand-600 transition duration-300">
-                Conocer Más <span aria-hidden="true">→</span>
-              </a>
-            </div>
           </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
@@ -113,42 +105,6 @@ export async function renderHome(container) {
         </div>
       </div>
     </div>
-
-
-    <!-- Información Básica RGIM -->
-    <section class="bg-gradient-to-br from-brand-50 to-blue-50 py-16">
-      <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Conectando Panamá con el Mundo
-          </h2>
-          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-            RGIM es líder en servicios de envío y logística internacional desde Panamá hacia Latinoamérica y el Caribe.
-            Ofrecemos soluciones eficientes, seguras y competitivas para su negocio.
-          </p>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-lg p-6 shadow-sm">
-              <div class="text-2xl font-bold text-brand-600 mb-2">15+</div>
-              <div class="text-sm text-gray-600">Años de Experiencia</div>
-            </div>
-            <div class="bg-white rounded-lg p-6 shadow-sm">
-              <div class="text-2xl font-bold text-brand-600 mb-2">25+</div>
-              <div class="text-sm text-gray-600">Países Destino</div>
-            </div>
-            <div class="bg-white rounded-lg p-6 shadow-sm">
-              <div class="text-2xl font-bold text-brand-600 mb-2">99%</div>
-              <div class="text-sm text-gray-600">Satisfacción</div>
-            </div>
-          </div>
-          <a href="#store-preview" class="inline-flex items-center px-8 py-3 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition duration-300">
-            <span>Explorar Productos</span>
-            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
 
     <!-- Tienda Principal -->
     <div class="bg-gray-50 min-h-screen">
