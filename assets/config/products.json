@@ -439,5 +439,59 @@
     "price": 15,
     "categoryId": "beverages",
     "image": "products_0050_IMG_20231206_123431.png"
+  },
+  {
+    "id": "p50",
+    "name": "Cerveza 86 Original",
+    "short": "Cerveza premium panameña",
+    "description": "Cerveza 86 Original, una cerveza premium panameña con un sabor único y refrescante. Perfecta para cualquier ocasión.",
+    "price": 2.5,
+    "categoryId": "beverages",
+    "image": "cerveza_86_original.png"
+  },
+  {
+    "id": "p51",
+    "name": "Cerveza Claro",
+    "short": "Cerveza clara premium",
+    "description": "Cerveza Claro, una cerveza clara premium con un sabor suave y equilibrado. Ideal para disfrutar en compañía.",
+    "price": 2.2,
+    "categoryId": "beverages",
+    "image": "cerveza_claro.png"
+  },
+  {
+    "id": "p52",
+    "name": "Cerveza Hollandia",
+    "short": "Cerveza holandesa premium",
+    "description": "Cerveza Hollandia, una cerveza premium de origen holandés con un sabor distintivo y de alta calidad.",
+    "price": 2.8,
+    "categoryId": "beverages",
+    "image": "cerveza_hollandia.png"
+  },
+  {
+    "id": "p53",
+    "name": "Cerveza Lander Brau",
+    "short": "Cerveza artesanal panameña",
+    "description": "Cerveza Lander Brau, una cerveza artesanal panameña con carácter único y sabor excepcional.",
+    "price": 3.0,
+    "categoryId": "beverages",
+    "image": "cerveza_lander_brau.png"
+  },
+  {
+    "id": "p54",
+    "name": "Cerveza Windmill",
+    "short": "Cerveza premium holandesa",
+    "description": "Cerveza Windmill, una cerveza premium holandesa con un sabor suave y refrescante. Tradición cervecera en cada sorbo.",
+    "price": 2.7,
+    "categoryId": "beverages",
+    "image": "cerveza_windmill.png"
+  },
+  {
+    "id": "p55",
+    "name": "Cerveza Bavaria",
+    "short": "Cerveza holandesa clásica",
+    "description": "Cerveza Bavaria, una cerveza holandesa clásica con más de 300 años de tradición cervecera. Sabor inconfundible.",
+    "price": 2.9,
+    "categoryId": "beverages",
+    "image": "cerveza_bavaria.png"
   }
 ]

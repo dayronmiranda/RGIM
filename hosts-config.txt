@@ -1,0 +1,21 @@
+INSTRUCCIONES PARA CONFIGURAR SUBDOMINIO STORE.LOCALHOST
+
+Para que funcione el subdominio store.localhost, necesitas editar el archivo hosts del sistema.
+
+MÉTODO 1 - Manual (Recomendado):
+1. Clic derecho en el Bloc de notas
+2. Seleccionar "Ejecutar como administrador"
+3. Abrir archivo: C:\Windows\System32\drivers\etc\hosts
+4. Agregar esta línea al final del archivo:
+   127.0.0.1 store.localhost
+5. Guardar el archivo
+
+MÉTODO 2 - Comando PowerShell (como Administrador):
+Ejecuta este comando en PowerShell como Administrador:
+Add-Content -Path 'C:\Windows\System32\drivers\etc\hosts' -Value '127.0.0.1 store.localhost'
+
+DESPUÉS DE CONFIGURAR:
+- http://localhost:3000 → Página home limpia (solo elementos de home page)
+- http://store.localhost:3000 → Página de tienda dedicada
+
+NOTA: Si no configuras el archivo hosts, store.localhost no funcionará, pero localhost:3000 sí mostrará la página home limpia.

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(copy:*)",
+      "Bash(cp:*)",
+      "Bash(node server.js)",
+      "Read(//c/Users/Usuario1/Downloads/brinova-2024-12-16-08-10-25-utc/**)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Read(//c/Users/Usuario1/Documents/Roy/Site images/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
