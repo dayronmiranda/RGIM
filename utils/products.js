@@ -153,7 +153,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
       // Vista de grid mejorada con mejor proporción
       card.className = 'group relative product-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300';
       card.innerHTML = `
-        <div class="aspect-[4/3] w-full overflow-hidden bg-gray-100 relative">
+        <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
           ${imagePath ? createLazyImage({
             src: imagePath,
             alt: p.name,

@@ -447,7 +447,7 @@
     "description": "Cerveza 86 Original, una cerveza premium panameña con un sabor único y refrescante. Perfecta para cualquier ocasión.",
     "price": 2.5,
     "categoryId": "beverages",
-    "image": "cerveza_86_original.png"
+    "image": "86 Original.png"
   },
   {
     "id": "p51",
@@ -456,7 +456,7 @@
     "description": "Cerveza Claro, una cerveza clara premium con un sabor suave y equilibrado. Ideal para disfrutar en compañía.",
     "price": 2.2,
     "categoryId": "beverages",
-    "image": "cerveza_claro.png"
+    "image": "Claro.png"
   },
   {
     "id": "p52",
@@ -465,7 +465,7 @@
     "description": "Cerveza Hollandia, una cerveza premium de origen holandés con un sabor distintivo y de alta calidad.",
     "price": 2.8,
     "categoryId": "beverages",
-    "image": "cerveza_hollandia.png"
+    "image": "Hollandia.png"
   },
   {
     "id": "p53",
@@ -474,7 +474,7 @@
     "description": "Cerveza Lander Brau, una cerveza artesanal panameña con carácter único y sabor excepcional.",
     "price": 3.0,
     "categoryId": "beverages",
-    "image": "cerveza_lander_brau.png"
+    "image": "Lander Brau.png"
   },
   {
     "id": "p54",
@@ -483,7 +483,7 @@
     "description": "Cerveza Windmill, una cerveza premium holandesa con un sabor suave y refrescante. Tradición cervecera en cada sorbo.",
     "price": 2.7,
     "categoryId": "beverages",
-    "image": "cerveza_windmill.png"
+    "image": "Windmill.png"
   },
   {
     "id": "p55",
@@ -492,6 +492,6 @@
     "description": "Cerveza Bavaria, una cerveza holandesa clásica con más de 300 años de tradición cervecera. Sabor inconfundible.",
     "price": 2.9,
     "categoryId": "beverages",
-    "image": "cerveza_bavaria.png"
+    "image": "Bavaria.png"
   }
 ]

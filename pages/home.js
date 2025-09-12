@@ -361,21 +361,21 @@ export async function renderHome(container) {
             <!-- Loading State -->
             <div id="loading-state" class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
               <div class="animate-pulse">
-                <div class="aspect-square w-full bg-gray-200 rounded-lg"></div>
+                <div class="aspect-square w-full bg-gray-200 rounded-xl"></div>
                 <div class="mt-4 space-y-2">
                   <div class="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div class="h-4 bg-gray-200 rounded w-1/2"></div>
                 </div>
               </div>
               <div class="animate-pulse">
-                <div class="aspect-square w-full bg-gray-200 rounded-lg"></div>
+                <div class="aspect-square w-full bg-gray-200 rounded-xl"></div>
                 <div class="mt-4 space-y-2">
                   <div class="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div class="h-4 bg-gray-200 rounded w-1/2"></div>
                 </div>
               </div>
               <div class="animate-pulse">
-                <div class="aspect-square w-full bg-gray-200 rounded-lg"></div>
+                <div class="aspect-square w-full bg-gray-200 rounded-xl"></div>
                 <div class="mt-4 space-y-2">
                   <div class="h-4 bg-gray-200 rounded w-3/4"></div>
                   <div class="h-4 bg-gray-200 rounded w-1/2"></div>
