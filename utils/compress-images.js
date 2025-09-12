@@ -14,11 +14,11 @@ const path = require('path');
 
 // Configuración
 const CONFIG = {
-  imageDir: path.join(__dirname, 'assets', 'images', 'products'),
+  imageDir: path.join(__dirname, '..', 'assets', 'images', 'products'),
   targetSize: 500,
   quality: 85, // Calidad de compresión (1-100)
   formats: ['.jpg', '.jpeg', '.png', '.webp'],
-  backupDir: path.join(__dirname, 'assets', 'images', 'products-backup')
+  backupDir: path.join(__dirname, '..', 'assets', 'images', 'products-backup')
 };
 
 // Colores para la consola
