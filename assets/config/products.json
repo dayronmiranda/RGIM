@@ -297,60 +297,6 @@
     "image": "products_0034_20231206_132642.png"
   },
   {
-    "id": "p34",
-    "name": "Cremica Cremelo Orange",
-    "short": "Galletas de crema sabor naranja",
-    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a naranja.",
-    "price": 0.7,
-    "categoryId": "snacks",
-    "image": "products_0035_20231206_132718.png"
-  },
-  {
-    "id": "p35",
-    "name": "Cremica Cremelo Strawberry",
-    "short": "Galletas de crema sabor fresa",
-    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a fresa.",
-    "price": 0.7,
-    "categoryId": "snacks",
-    "image": "products_0036_20231206_132722.png"
-  },
-  {
-    "id": "p36",
-    "name": "Cremica Cremelo Vanilla",
-    "short": "Galletas de crema sabor vainilla",
-    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a vainilla.",
-    "price": 0.7,
-    "categoryId": "snacks",
-    "image": "products_0037_20231206_132728.png"
-  },
-  {
-    "id": "p37",
-    "name": "Cremica Cremelo Chocolate",
-    "short": "Galletas de crema sabor chocolate",
-    "description": "Galletas tipo wafer con un delicioso relleno cremoso sabor a chocolate.",
-    "price": 0.7,
-    "categoryId": "snacks",
-    "image": "products_0038_20231206_132733.png"
-  },
-  {
-    "id": "p38",
-    "name": "Kirkland Signature Palomitas",
-    "short": "Palomitas de maíz sabor mantequilla",
-    "description": "Palomitas para microondas con saborizante natural a mantequilla. Hechas con grano entero de maíz y sin gluten.",
-    "price": 1.2,
-    "categoryId": "snacks",
-    "image": "products_0039_20231206_132759.png"
-  },
-  {
-    "id": "p39",
-    "name": "Member's Mark Malvaviscos",
-    "short": "Malvaviscos sabor fresa y vainilla",
-    "description": "Bolsa de 1kg de suaves malvaviscos con sabores de fresa y vainilla.",
-    "price": 4.5,
-    "categoryId": "candy",
-    "image": "products_0040_20231206_133000.png"
-  },
-  {
     "id": "p40",
     "name": "Knorr Caldo de Pollo en Polvo",
     "short": "Caldo de pollo en polvo 1kg",
@@ -493,5 +439,203 @@
     "price": 2.9,
     "categoryId": "beverages",
     "image": "Bavaria.png"
+  },
+  {
+    "id": "p56",
+    "name": "5th AIR Black London Dry Gin",
+    "short": "Ginebra seca negra premium",
+    "description": "Ginebra premium de Panamá elaborada con ingredientes naturales, destacando notas de enebro, cítricos y un toque ahumado característico. Ideal para cócteles sofisticados.",
+    "price": 25,
+    "categoryId": "beverages",
+    "image": "5th AIR Black London Dry Gin.png"
+  },
+  {
+    "id": "p57",
+    "name": "5th Earth Citrics Gin",
+    "short": "Ginebra cítrica artesanal",
+    "description": "Ginebra artesanal de Panamá con un perfil cítrico intenso, elaborada con botánicos locales. Perfecta para cócteles refrescantes y gin tonics.",
+    "price": 24,
+    "categoryId": "beverages",
+    "image": "5th Earth Citrics Gin.png"
+  },
+  {
+    "id": "p58",
+    "name": "5TH Gin WATER",
+    "short": "Ginebra infusionada ligera",
+    "description": "Ginebra ligera y refrescante de la marca 5TH, infusionada con agua para un sabor suave. Ideal para disfrutar sola o en cócteles simples.",
+    "price": 23,
+    "categoryId": "beverages",
+    "image": "5TH Gin WATER.png"
+  },
+  {
+    "id": "p59",
+    "name": "Capitán Fresón Strawberry Tequila Cream",
+    "short": "Crema de tequila con fresa",
+    "description": "Licor cremoso a base de tequila con un delicioso sabor a fresa. Perfecto para postres, cócteles o como digestivo dulce.",
+    "price": 15,
+    "categoryId": "beverages",
+    "image": "Capitán Fresón – Strawberry Tequila Cream.png"
+  },
+  {
+    "id": "p60",
+    "name": "Carne de Res Fresca 1",
+    "short": "Carne de res premium",
+    "description": "Pieza de carne de res de alta calidad, jugosa y tierna. Ideal para asados, guisos o preparaciones gourmet.",
+    "price": 12,
+    "categoryId": "pantry",
+    "image": "carne_res_1.png"
+  },
+  {
+    "id": "p61",
+    "name": "Carne de Res Fresca 2",
+    "short": "Carne de res selecta",
+    "description": "Corte selecto de carne de res con excelente marmoleo, garantizando máxima ternura y sabor en cada preparación.",
+    "price": 13,
+    "categoryId": "pantry",
+    "image": "carne_res_2.png"
+  },
+  {
+    "id": "p62",
+    "name": "Cerveza Bucanero",
+    "short": "Cerveza lager cubana",
+    "description": "Cerveza lager clásica de Cuba, con un sabor refrescante, equilibrado y ligero. Tradición cervecera en cada sorbo.",
+    "price": 2,
+    "categoryId": "beverages",
+    "image": "cerveza_bucanero.png"
+  },
+  {
+    "id": "p63",
+    "name": "Cerveza Cristal Verde",
+    "short": "Cerveza pilsner panameña",
+    "description": "Cerveza pilsner premium de Panamá, con un sabor ligero, refrescante y un toque afrutado característico.",
+    "price": 2.5,
+    "categoryId": "beverages",
+    "image": "cerveza_cristal_green.png"
+  },
+  {
+    "id": "p64",
+    "name": "Cerveza Cristal Lata",
+    "short": "Cerveza en lata",
+    "description": "Cerveza Cristal en presentación conveniente de lata, manteniendo la frescura y el sabor original de la pilsner panameña.",
+    "price": 2.2,
+    "categoryId": "beverages",
+    "image": "cerveza_cristal_lata.png"
+  },
+  {
+    "id": "p65",
+    "name": "Cerveza Cristal Blanca",
+    "short": "Cerveza blanca panameña",
+    "description": "Cerveza blanca suave y refrescante de Panamá, con un perfil afrutado y ligero, perfecta para climas cálidos.",
+    "price": 2.3,
+    "categoryId": "beverages",
+    "image": "cerveza_cristal_white.png"
+  },
+  {
+    "id": "p66",
+    "name": "Cream Heroes Passion Fruit Lupita",
+    "short": "Licor cremoso de maracuyá",
+    "description": "Licor cremoso con intenso sabor a maracuyá, dulce y tropical. Ideal para cócteles o como bebida después de comidas.",
+    "price": 18,
+    "categoryId": "beverages",
+    "image": "Cream Heroes Passion Fruit Lupita.png"
+  },
+  {
+    "id": "p67",
+    "name": "Ginebra Southport",
+    "short": "Ginebra artesanal",
+    "description": "Ginebra elaborada con botánicos locales, ofreciendo un perfil único y sofisticado. Perfecta para amantes de gins premium.",
+    "price": 22,
+    "categoryId": "beverages",
+    "image": "Ginebra southport.png"
+  },
+  {
+    "id": "p68",
+    "name": "Holland Import Beer",
+    "short": "Cerveza importada holandesa",
+    "description": "Cerveza premium importada de Holanda, con el sabor tradicional europeo y una calidad excepcional.",
+    "price": 3,
+    "categoryId": "beverages",
+    "image": "Holland Import.png"
+  },
+  {
+    "id": "p69",
+    "name": "Hollandia Premium",
+    "short": "Cerveza premium holandesa",
+    "description": "Cerveza holandesa de alta calidad, con un sabor distintivo, refrescante y un toque de tradición cervecera.",
+    "price": 2.8,
+    "categoryId": "beverages",
+    "image": "Hollandia Premiun.png"
+  },
+  {
+    "id": "p70",
+    "name": "Las Antillas Ron Añejo",
+    "short": "Ron añejo dominicano",
+    "description": "Ron añejo de República Dominicana, envejecido en barriles para desarrollar notas ricas de vainilla, caramelo y roble.",
+    "price": 20,
+    "categoryId": "beverages",
+    "image": "Las Antillas Ron Añejo.png"
+  },
+  {
+    "id": "p71",
+    "name": "Louisville American Whiskey",
+    "short": "Whisky americano premium",
+    "description": "Whisky americano premium, con un sabor suave, ahumado y con cuerpo. Ideal para degustación o cócteles.",
+    "price": 30,
+    "categoryId": "beverages",
+    "image": "Louisville American Whiskey.png"
+  },
+  {
+    "id": "p72",
+    "name": "Malta Bucanero",
+    "short": "Malta cubana no alcohólica",
+    "description": "Bebida malteada no alcohólica de Cuba, refrescante y con propiedades energéticas naturales.",
+    "price": 1.5,
+    "categoryId": "beverages",
+    "image": "malta_bucanero.png"
+  },
+  {
+    "id": "p73",
+    "name": "Muzlos de Pollo Frescos",
+    "short": "Piezas de pollo",
+    "description": "Muzlos de pollo frescos y de calidad, perfectos para guisos, asados, frituras o cualquier preparación culinaria.",
+    "price": 5,
+    "categoryId": "pantry",
+    "image": "Muzlos de pollo.png"
+  },
+  {
+    "id": "p74",
+    "name": "Ron Añejo Lupe",
+    "short": "Ron añejo artesanal",
+    "description": "Ron añejo elaborado artesanalmente, con un sabor robusto, complejo y notas de vainilla y especias.",
+    "price": 18,
+    "categoryId": "beverages",
+    "image": "Ron anejo Lupe.png"
+  },
+  {
+    "id": "p75",
+    "name": "Rum Añejo Lupe",
+    "short": "Ron añejo premium",
+    "description": "Variante premium del ron añejo Lupe, con envejecimiento prolongado para un sabor más refinado.",
+    "price": 19,
+    "categoryId": "beverages",
+    "image": "Rum Anejo Lupe.png"
+  },
+  {
+    "id": "p76",
+    "name": "Tabay Cream Liqueur",
+    "short": "Licor cremoso",
+    "description": "Licor cremoso con un sabor suave y dulce, elaborado con ingredientes naturales. Ideal para cócteles o postres.",
+    "price": 16,
+    "categoryId": "beverages",
+    "image": "Tabay Cream Liqueur.png"
+  },
+  {
+    "id": "p77",
+    "name": "Windmill Large Beer",
+    "short": "Cerveza holandesa grande",
+    "description": "Cerveza Windmill en formato grande, ofreciendo más cantidad para compartir, con el sabor refrescante tradicional holandés.",
+    "price": 3.5,
+    "categoryId": "beverages",
+    "image": "Windmill Large.png"
   }
 ]

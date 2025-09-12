@@ -611,6 +611,24 @@ export async function renderHome(container) {
       </button>`,
       isFeatured: true
     });
+
+    // Animación de scroll para productos destacados
+    const featuredGrid = document.getElementById('featured-products-grid');
+    if (featuredGrid) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const products = entry.target.querySelectorAll('.featured-product');
+            products.forEach(product => {
+              product.classList.add('animate');
+            });
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(featuredGrid);
+    }
   }
 
   // Hide loading state and show products

@@ -71,6 +71,7 @@ export async function renderFeatured({ products, containerId = 'featured-product
   setTimeout(() => lazyLoader.observeAll(), 100);
 }
 
+
 export function renderProducts({ products = [], category = '', gridId = 'product-grid', getImagePath = (img) => img, extraButton = null, viewMode = 'grid', isFeatured = false }) {
   const grid = document.getElementById(gridId);
   if (!grid) return;
@@ -80,7 +81,8 @@ export function renderProducts({ products = [], category = '', gridId = 'product
     grid.innerHTML = '<div class="col-span-full text-center py-8 text-slate-500">No hay productos disponibles</div>';
     return;
   }
-  
+
+
   // Cambiar clases del contenedor según el modo de vista
   if (viewMode === 'list') {
     grid.className = 'space-y-4';
@@ -151,7 +153,7 @@ export function renderProducts({ products = [], category = '', gridId = 'product
       }
     } else {
       // Vista de grid mejorada con mejor proporción
-      card.className = 'group relative product-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300';
+      card.className = `group relative product-card bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg hover:border-indigo-200 transition-all duration-300${isFeatured ? ' featured-product' : ''}`;
       card.innerHTML = `
         <div class="aspect-square w-full overflow-hidden bg-gray-100 relative">
           ${imagePath ? createLazyImage({

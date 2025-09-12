@@ -87,6 +87,48 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    /* Animaciones para productos destacados */
+    .featured-product {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+    .featured-product.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .featured-product:nth-child(1) { transition-delay: 0.1s; }
+    .featured-product:nth-child(2) { transition-delay: 0.2s; }
+    .featured-product:nth-child(3) { transition-delay: 0.3s; }
+    .featured-product:nth-child(4) { transition-delay: 0.4s; }
+    .featured-product:nth-child(5) { transition-delay: 0.5s; }
+    .featured-product:nth-child(6) { transition-delay: 0.6s; }
+    .featured-product:nth-child(7) { transition-delay: 0.7s; }
+    .featured-product:nth-child(8) { transition-delay: 0.8s; }
+
+    /* Scroll horizontal suave para productos destacados en móvil */
+    @media (max-width: 767px) {
+      #featured-products-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+      #featured-products-grid > div {
+        flex: 0 0 280px;
+        min-width: 280px;
+      }
+      #featured-products-grid::-webkit-scrollbar {
+        display: none;
+      }
+      #featured-products-grid {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    }
   </style>
 </head>
 <body>
